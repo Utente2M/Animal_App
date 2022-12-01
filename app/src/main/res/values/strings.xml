@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Animal App</string>
+    <string name="Button_CreateAccount">Create Account</string>
+    <string name="Button_Logout">Logout</string>
+    <string name="Text_fild_email_login" />
+    <string name="Text_hint_email">Inserisci la tua email</string>
+    <string name="Hint_password">inserisci la tua password</string>
 </resources>

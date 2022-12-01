@@ -3,6 +3,7 @@ package it.uniba.dib.sms222315;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -64,7 +65,7 @@ public class EmailPasswordActivity extends AppCompatActivity {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-                                    //rimandare a stringa TODO
+                                    //rimandare a stringa questo toast non si vede, è in basso  TODO
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -83,11 +84,19 @@ public class EmailPasswordActivity extends AppCompatActivity {
 
     }
 
-    public void create_new_account_button(View view) {
+
+
+    public void button_create_new_account(View view) {
         password_view = findViewById(R.id.password_text);
         email_view = findViewById(R.id.email_text);
         String email = email_view.getText().toString();
         String password = email_view.getText().toString();
         createAccount(email , password);
-    }
+    }//END chiamata bottone
+
+    public void button_logout(View view) {
+        FirebaseAuth.getInstance().signOut();
+        Intent okLogut = new Intent(this, MainActivity.class);
+        startActivity(okLogut);
+    }//END loggout button
 }//END Activity
