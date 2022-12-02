@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -33,6 +34,8 @@ public class EmailPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_password);
+
+
         // [START initialize_auth]
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -50,12 +53,9 @@ public class EmailPasswordActivity extends AppCompatActivity {
     // [START on_start_check_user]
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater MyInflater = getMenuInflater();
-        MyInflater.inflate(R.menu.menu_1,menu);
-        return true;
-    }
+
+
+
 
     @Override
     public void onStart() {

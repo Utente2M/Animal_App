@@ -43,4 +43,9 @@ dependencies {
     // Add the dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-auth'
+
+    //fragment
+    def fragment_version = "1.5.4"
+    // Java language implementation
+    implementation "androidx.fragment:fragment:$fragment_version"
 }

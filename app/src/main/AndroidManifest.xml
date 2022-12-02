@@ -13,11 +13,22 @@
         android:theme="@style/Theme.AnimalApp"
         tools:targetApi="31">
         <activity
-            android:name=".EmailPasswordActivity"
-            android:exported="false">
+            android:name=".UserActivity"
+            android:exported="false"
+            android:label="User Activity"
+            android:parentActivityName=".MainActivity">
             <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".EmailPasswordActivity"
+            android:exported="false"
+            android:label="log Activity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".MainActivity"
