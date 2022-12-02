@@ -96,6 +96,7 @@ public class EmailPasswordActivity extends AppCompatActivity {
 
     public void button_logout(View view) {
         FirebaseAuth.getInstance().signOut();
+        //Richiama la main activity
         Intent okLogut = new Intent(this, MainActivity.class);
         startActivity(okLogut);
     }//END loggout button

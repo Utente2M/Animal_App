@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        //CONTROLLO AUTENTICAZIONE UTENTE
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             // User is signed in
@@ -41,9 +42,9 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "User isn't Logged");
 
         }
-
     }//END onStart
-        public void lunchLogin (View view){
+
+        public void button_lunchLogin (View view){
             Intent login_prova = new Intent(this, EmailPasswordActivity.class);
             startActivity(login_prova);
         }//END LunchLogin
