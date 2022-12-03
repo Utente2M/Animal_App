@@ -27,7 +27,7 @@ public class UserActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+        Log.d(TAG, "Inside onStart");
         // Create a new user with a first and last name
         Map<String, Object> user_Map = new HashMap<>();
         user_Map.put("first", "Ada");
