@@ -19,4 +19,7 @@
     <string name="skills">Skills</string>
     <string name="ratings">Star Ratings</string>
     <string name="samplereview">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pretium bibendum sapien, ut euismod massa. Duis convallis sem sed turpis elementum auctor.</string>
+    <string name="home">Torna alla Home</string>
+    <string name="cerca">Cerca</string>
+    <string name="il_mio_profilo">Il mio profilo</string>
 </resources>
