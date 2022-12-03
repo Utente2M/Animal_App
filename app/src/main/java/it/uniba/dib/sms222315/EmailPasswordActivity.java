@@ -95,7 +95,9 @@ public class EmailPasswordActivity extends AppCompatActivity {
 
 
     private void reload() {
-        Log.d(TAG, "User is Logged");
+        Log.d(TAG, "RELOAD ");
+        Intent intent_ok_log = new Intent(this, UserActivity.class);
+        startActivity(intent_ok_log);
     }
 
 
@@ -106,11 +108,13 @@ public class EmailPasswordActivity extends AppCompatActivity {
 
 
     public void button_create_new_account(View view) {
+        Log.d(TAG, "BUTTON CREATE OK ");
         password_view = findViewById(R.id.password_text);
         email_view = findViewById(R.id.email_text);
         String email = email_view.getText().toString();
         String password = email_view.getText().toString();
         createAccount(email , password);
+        reload();
     }//END chiamata bottone
 
     public void button_logout(View view) {

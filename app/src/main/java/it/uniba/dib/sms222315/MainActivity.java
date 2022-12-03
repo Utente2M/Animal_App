@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "User isn't Logged");
 
         }
+
     }//END onStart
 
         public void button_lunchLogin (View view){
@@ -70,12 +71,31 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.action_profile:
-                Intent intent = new Intent(this, UserActivity.class);
-                startActivity(intent);
-                return true;
+                Log.d(TAG, "collegamento profilo utente");
+
+                //CONTROLLO AUTENTICAZIONE UTENTE
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "User is Logged");
+                    Intent intent_ok_log = new Intent(this, UserActivity.class);
+                    startActivity(intent_ok_log);
+                    return true;
+
+                } else {
+                    // No user is signed in
+                    Log.d(TAG, "User isn't Logged");
+                    Intent login_prova = new Intent(this, EmailPasswordActivity.class);
+                    startActivity(login_prova);
+                    return true;
+
+                }
+
+
             case R.id.action_find:
-                Intent intent2 = new Intent(this, SearchActivity.class);
-                startActivity(intent2);
+                Intent intent_search = new Intent(this, SearchActivity.class);
+                startActivity(intent_search);
+                Log.d(TAG, "search activity");
                 return true;
             default:
                 // If we got here, the user's action was not recognized.
