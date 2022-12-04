@@ -18,8 +18,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -33,10 +37,11 @@ public class UserActivity extends AppCompatActivity {
     AlertDialog MyDialog_edit;
 
     TextView ProfileInfo_var;
+    String userID;
 
-
-
+    //DB variable
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseAuth dbAuth;
     private static final String TAG = "TAG_UserActivity";
 
 
@@ -50,21 +55,19 @@ public class UserActivity extends AppCompatActivity {
 
         //load name profile
         ProfileInfo_var = findViewById(R.id.ProfileName);
+        //get map from db
+        Map<String, Object> user_Map_get = new HashMap<>();
+        //TODO da completare sono arrivato qui
+        // Create a reference to the cities collection
+        CollectionReference NameProfile = db.collection("users_basic_information");
 
-        db.collection("users_basic_information")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
-                        }
-                    }
-                });
+        // Create a query against the collection.
+        Query query = NameProfile.whereEqualTo("Name",true );
+
+
+        //get first field from map
+        user_Map_get.get("Name");
+
 
 
         ProfileInfo_var.setText("info da db");
@@ -126,10 +129,15 @@ public class UserActivity extends AppCompatActivity {
         user_Map.put("Second", "poi 2");
         user_Map.put("Anno", 118);
 
-        // Add a new document with a generated ID
-        db.collection("users_basic_information")
-                .add(user_Map)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        // Add a new document with a document = ID
+        userID = dbAuth.getCurrentUser().getUid();
+
+        DocumentReference MyDocReference = db.collection("users_basic_information").document(userID);
+
+                MyDocReference.set(user_Map);
+
+                //TODO UID INSERIMENTO COME DOCUMENT ID request.auth != null
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
