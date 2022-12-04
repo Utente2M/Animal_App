@@ -14,10 +14,14 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,27 +32,51 @@ public class UserActivity extends AppCompatActivity {
     Button edit;
     AlertDialog MyDialog_edit;
 
+    TextView ProfileInfo_var;
 
 
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "TAG_UserActivity";
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "Inside onCreate");
         setContentView(R.layout.activity_user);
-        edit = findViewById(R.id.edit_button_UserProfile);
 
-        buildDialog();
+        //load name profile
+        ProfileInfo_var = findViewById(R.id.ProfileName);
 
-//TODO forse da modificare edit per controllare se è primo avvio
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MyDialog_edit.show();
-            }
-        });
+        db.collection("users_basic_information")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
 
+
+        ProfileInfo_var.setText("info da db");
+
+        String checkInfo = ProfileInfo_var.getText().toString();
+        Log.d(TAG, checkInfo);
+
+        if (checkInfo == "info da db") {
+            buildDialog();
+            MyDialog_edit.show();
+
+        }
 
     }
 
@@ -59,7 +87,7 @@ public class UserActivity extends AppCompatActivity {
         EditText aboutMe = view.findViewById(R.id.dialog_text_edit);
 
         builder.setView(view);
-        builder.setTitle(R.string.Text_dialog_AboutYou_Edit)
+        builder.setTitle("Insert Your Name here")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -83,22 +111,22 @@ public class UserActivity extends AppCompatActivity {
 
     private void addText_aboutMe(String textAboutMe) {
 
-        TextView AboutMeTextView = findViewById(R.id.TextView_AboutMe);
-        AboutMeTextView.setText(textAboutMe);
+        TextView NameTextView = findViewById(R.id.ProfileName);
+        //todo ProfileName id del nome profilo
+        NameTextView.setText(textAboutMe);
 
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "Inside onStart");
+        ProfileInfo_var = findViewById(R.id.ProfileName);
+        String SaveNameDb_String = ProfileInfo_var.getText().toString();
+        Log.d(TAG, SaveNameDb_String);
+
         // Create a new user with a first and last name
         Map<String, Object> user_Map = new HashMap<>();
-        user_Map.put("first", "vito");
-        user_Map.put("last", "Lovelace");
-        user_Map.put("born", 1815);
+        user_Map.put("Name", SaveNameDb_String);
+        user_Map.put("Second", "poi 2");
+        user_Map.put("Anno", 118);
 
-// Add a new document with a generated ID
+        // Add a new document with a generated ID
         db.collection("users_basic_information")
                 .add(user_Map)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -113,17 +141,23 @@ public class UserActivity extends AppCompatActivity {
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
-    }
-
-    public void launch_hamburger_menu(View view) {
 
 
     }
 
-    public void button_edit_AboutMe(View view) {
-        //SETUP DIALOG
-        AlertDialog MyDialogVar = null;
-        MyDialogVar.show();
-        //todo MASSI ARRIVATO QUI
-    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "Inside onStart");
+
+
+
+
+
+
+            }//END onStart
+
+
+
+
 }//END ACTIVITY
