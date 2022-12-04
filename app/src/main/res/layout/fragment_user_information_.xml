@@ -5,9 +5,21 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="#FA0202"
+    android:backgroundTintMode="add"
     tools:context=".User_information_Fragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <FrameLayout
+        android:layout_width="410dp"
+        android:layout_height="478dp"
+        android:background="#0B49E4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/textView2"
@@ -55,15 +67,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button2" />
-
-    <FrameLayout
-        android:layout_width="410dp"
-        android:layout_height="478dp"
-        android:background="#DFE7FB"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

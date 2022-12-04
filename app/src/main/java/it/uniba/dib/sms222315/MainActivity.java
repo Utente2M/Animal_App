@@ -37,7 +37,12 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
 
-
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.fragmentContainerView, User_information_Fragment.class, null)
+                    .commit();
+        }
 
 
     }//END OnCreate
@@ -60,11 +65,17 @@ public class MainActivity extends AppCompatActivity {
     }//END onStart
 
         public void button_lunchLogin (View view){
+            /**
+             * TODO federica : launch fragment from a button
+             * transizioni , managerfragment
+             *
+             * oscurare quello che c'è sotto
+             */
 
-
-
+/**
             Intent login_prova = new Intent(this, EmailPasswordActivity.class);
             startActivity(login_prova);
+ **/
         }//END LunchLogin
 
     @Override

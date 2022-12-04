@@ -18,8 +18,6 @@ import java.util.Map;
 
 public class UserActivity extends AppCompatActivity {
 
-    
-
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "TAG_UserActivity";
