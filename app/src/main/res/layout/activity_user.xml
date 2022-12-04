@@ -333,6 +333,7 @@
                             android:layout_marginTop="10dp"
                             android:text="@string/my_desc" />
                     </LinearLayout>
+                    <!-- TODO massi soluzione problema nel codelab-->
 
                 </LinearLayout>
 

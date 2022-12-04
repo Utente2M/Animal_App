@@ -41,7 +41,7 @@ public class UserActivity extends AppCompatActivity {
 
         buildDialog();
 
-
+//TODO forse da modificare edit per controllare se è primo avvio
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,6 +65,8 @@ public class UserActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Log.d(TAG, "dialog button ok");
 
+                        addText_aboutMe(aboutMe.getText().toString());
+
                         // TODO qua va inserito il salvataggio dei nuovi dati
                     }
 
@@ -76,6 +78,13 @@ public class UserActivity extends AppCompatActivity {
                     }
                 });
         MyDialog_edit = builder.create();
+
+    }
+
+    private void addText_aboutMe(String textAboutMe) {
+
+        TextView AboutMeTextView = findViewById(R.id.TextView_AboutMe);
+        AboutMeTextView.setText(textAboutMe);
 
     }
 
