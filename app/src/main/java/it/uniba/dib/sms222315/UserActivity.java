@@ -1,10 +1,12 @@
 package it.uniba.dib.sms222315;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -16,6 +18,9 @@ import java.util.Map;
 
 public class UserActivity extends AppCompatActivity {
 
+    
+
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "TAG_UserActivity";
     @Override
@@ -23,12 +28,7 @@ public class UserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .setReorderingAllowed(true)
-                    .add(R.id.fragmentContainerView, User_information_Fragment.class, null)
-                    .commit();
-        }
+
 
     }
 
@@ -57,5 +57,13 @@ public class UserActivity extends AppCompatActivity {
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
+    }
+
+    public void launch_hamburger_menu(View view) {
+        //SETUP DIALOG
+        AlertDialog MyDialogVar = null;
+        MyDialogVar.show();
+        //todo MASSI ARRIVATO QUI
+
     }
 }//END ACTIVITY

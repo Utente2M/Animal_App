@@ -6,13 +6,14 @@
     android:layout_height="match_parent"
     android:background="@color/grey"
     android:orientation="vertical"
-    tools:context=".UserActivity">
+    android:visibility="visible"
+    tools:context=".UserActivity"
+    tools:visibility="visible">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="240dp"
-        android:background="#293859"/>
-
+        android:background="#293859" />
 
 
     <!-- TODO prova per federica devo modificare questo colore con un altro -->
@@ -54,9 +55,11 @@
             android:layout_height="50dp">
 
             <ImageView
+                android:id="@+id/button_menu_hamburger"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_centerInParent="true"
+                android:onClick="launch_hamburger_menu"
                 android:padding="6dp"
                 android:src="@drawable/hamburger_menu" />
 
@@ -75,8 +78,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:layout_below="@+id/topbar">
+        android:layout_below="@+id/topbar"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -113,6 +116,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -308,8 +312,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/about_me"
                                 android:fontFamily="@font/proximanovaregular"
+                                android:text="@string/about_me"
                                 android:textSize="17sp"
                                 android:textStyle="bold" />
 
@@ -321,10 +325,10 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Edit"
-                                android:fontFamily="@font/proximanovaregular"
-                                android:textColor="#FFCF66"
                                 android:layout_marginEnd="10dp"
+                                android:fontFamily="@font/proximanovaregular"
+                                android:text="Edit"
+                                android:textColor="#FFCF66"
                                 android:textSize="14sp" />
                         </LinearLayout>
 
@@ -353,9 +357,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/proximanovaregular"
                             android:text="@string/contact"
                             android:textSize="17sp"
-                            android:fontFamily="@font/proximanovaregular"
                             android:textStyle="bold" />
 
                         <Space
@@ -366,9 +370,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
                             android:text="Edit"
                             android:textColor="#FFCF66"
-                            android:layout_marginEnd="10dp"
                             android:textSize="14sp" />
                     </LinearLayout>
 
@@ -395,10 +399,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
+                                android:fontFamily="@font/proximanovaregular"
                                 android:text="+91 7999193854"
-                                android:textSize="15sp"
                                 android:textColor="@color/goodgrey"
-                                android:fontFamily="@font/proximanovaregular" />
+                                android:textSize="15sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -419,10 +423,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
-                                android:textColor="@color/goodgrey"
+                                android:fontFamily="@font/proximanovaregular"
                                 android:text="sanskar@theindianappguy.com"
-                                android:textSize="15sp"
-                                android:fontFamily="@font/proximanovaregular" />
+                                android:textColor="@color/goodgrey"
+                                android:textSize="15sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -443,10 +447,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
+                                android:fontFamily="@font/proximanovaregular"
                                 android:text="Leeds, United Kingdom"
-                                android:textSize="15sp"
                                 android:textColor="@color/goodgrey"
-                                android:fontFamily="@font/proximanovaregular" />
+                                android:textSize="15sp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -510,7 +514,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
                                 android:text="Expert in Photoshop, Adobe XD"
-                                android:textSize="15sp"/>
+                                android:textSize="15sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -944,12 +948,7 @@
 
             </LinearLayout>
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/fragmentContainerView"
-                android:name="it.uniba.dib.sms222315.User_information_Fragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true" />
+
 
         </LinearLayout>
 
