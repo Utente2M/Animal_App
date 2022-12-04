@@ -68,11 +68,11 @@
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/ProfileFullPannel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/topbar"
-        android:scrollbars="none"
-        android:visibility="gone">
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"

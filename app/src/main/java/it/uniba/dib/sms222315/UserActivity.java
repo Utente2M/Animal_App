@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,6 +39,7 @@ public class UserActivity extends AppCompatActivity {
 
     TextView ProfileInfo_var;
     String userID;
+    ScrollView MyScrollFullProfile_var;
 
     //DB variable
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -60,13 +62,18 @@ public class UserActivity extends AppCompatActivity {
         //TODO da completare sono arrivato qui
         // Create a reference to the cities collection
         CollectionReference NameProfile = db.collection("users_basic_information");
+        /**
+         *
+         *
+         * // Create a query against the collection.
+         *         Query query = NameProfile.whereEqualTo("Name",true );
+         *
+         *
+         *         //get first field from map
+         *         user_Map_get.get("Name");
+         *
+         */
 
-        // Create a query against the collection.
-        Query query = NameProfile.whereEqualTo("Name",true );
-
-
-        //get first field from map
-        user_Map_get.get("Name");
 
 
 
@@ -76,8 +83,11 @@ public class UserActivity extends AppCompatActivity {
         Log.d(TAG, checkInfo);
 
         if (checkInfo == "info da db") {
+            MyScrollFullProfile_var = findViewById(R.id.ProfileFullPannel);
+            MyScrollFullProfile_var.setVisibility(View.INVISIBLE);
             buildDialog();
             MyDialog_edit.show();
+
 
         }
 
@@ -87,7 +97,7 @@ public class UserActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.my_dialog , null );
 
-        EditText aboutMe = view.findViewById(R.id.dialog_text_edit);
+        EditText aboutMe_var = view.findViewById(R.id.dialog_text_edit);
 
         builder.setView(view);
         builder.setTitle("Insert Your Name here")
@@ -96,9 +106,10 @@ public class UserActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Log.d(TAG, "dialog button ok");
 
-                        addText_aboutMe(aboutMe.getText().toString());
+                        addText_aboutMe(aboutMe_var.getText().toString());
 
-                        // TODO qua va inserito il salvataggio dei nuovi dati
+                        MyScrollFullProfile_var = findViewById(R.id.ProfileFullPannel);
+                        MyScrollFullProfile_var.setVisibility(View.VISIBLE);
                     }
 
                 })
@@ -132,24 +143,7 @@ public class UserActivity extends AppCompatActivity {
         // Add a new document with a document = ID
         userID = dbAuth.getCurrentUser().getUid();
 
-        DocumentReference MyDocReference = db.collection("users_basic_information").document(userID);
-
-                MyDocReference.set(user_Map);
-
-                //TODO UID INSERIMENTO COME DOCUMENT ID request.auth != null
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
-
+        db.collection("users_basic_information").document(userID).set(user_Map);
 
     }
 
@@ -158,12 +152,7 @@ public class UserActivity extends AppCompatActivity {
         super.onStart();
         Log.d(TAG, "Inside onStart");
 
-
-
-
-
-
-            }//END onStart
+    }//END onStart
 
 
 
