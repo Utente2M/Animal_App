@@ -36,6 +36,15 @@ public class MainActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.fragmentContainerView, User_information_Fragment.class, null)
+                    .commit();
+        }
+
+
     }//END OnCreate
 
     @Override

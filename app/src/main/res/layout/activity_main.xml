@@ -47,5 +47,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView2"
+        android:name="it.uniba.dib.sms222315.User_information_Fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="90dp"
+        tools:layout_editor_absoluteY="128dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

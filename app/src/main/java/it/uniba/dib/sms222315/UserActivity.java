@@ -22,6 +22,14 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.fragmentContainerView, User_information_Fragment.class, null)
+                    .commit();
+        }
+
     }
 
     @Override
@@ -30,7 +38,7 @@ public class UserActivity extends AppCompatActivity {
         Log.d(TAG, "Inside onStart");
         // Create a new user with a first and last name
         Map<String, Object> user_Map = new HashMap<>();
-        user_Map.put("first", "Ada");
+        user_Map.put("first", "vito");
         user_Map.put("last", "Lovelace");
         user_Map.put("born", 1815);
 
