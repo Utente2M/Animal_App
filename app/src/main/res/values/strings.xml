@@ -22,4 +22,6 @@
     <string name="home">Torna alla Home</string>
     <string name="cerca">Cerca</string>
     <string name="il_mio_profilo">Il mio profilo</string>
+    <string name="Text_dialog_AboutYou_Edit">Enter text about you</string>
+    <string name="Back_Dialog">Back</string>
 </resources>

@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         public void button_lunchLogin (View view){
             /**
-             * TODO federica : launch fragment from a button
+             * TODO federica : launch fragment from a button in android studio
              * transizioni , managerfragment
              *
              * oscurare quello che c'è sotto
