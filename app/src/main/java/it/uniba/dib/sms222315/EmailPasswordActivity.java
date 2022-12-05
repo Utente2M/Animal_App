@@ -71,6 +71,7 @@ public class EmailPasswordActivity extends AppCompatActivity {
 
     private void createAccount(String email, String password) {
         // [START create_user_with_email]
+        //TODO : prova login , login è null ? fai creaione vito e massi
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
