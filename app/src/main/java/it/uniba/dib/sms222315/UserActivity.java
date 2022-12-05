@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,6 +49,10 @@ public class UserActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private static final String TAG = "TAG_UserActivity";
+    private FirebaseAuth mAuth;
+    private Button but_logout;
+
+
 
 
 
@@ -61,6 +67,7 @@ public class UserActivity extends AppCompatActivity {
 
         ProfileInfo_var = findViewById(R.id.ProfileName);
 
+        mAuth = FirebaseAuth.getInstance();
 
 
 
@@ -181,6 +188,12 @@ public class UserActivity extends AppCompatActivity {
     }//END onStart
 
 
+    public void Logout_hard_test(View view) {
+        mAuth.signOut();
+        Intent Intent = new Intent(UserActivity.this, MainActivity.class);
+        startActivity(Intent);
+        finish();
+        Toast.makeText(UserActivity.this,"Logout successfull", Toast.LENGTH_SHORT).show();
 
-
+    }
 }//END ACTIVITY
