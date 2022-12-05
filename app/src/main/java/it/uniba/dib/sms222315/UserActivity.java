@@ -16,12 +16,16 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
@@ -51,44 +55,56 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "Inside onCreate");
+        //load name profile
+
         setContentView(R.layout.activity_user);
 
-        //load name profile
         ProfileInfo_var = findViewById(R.id.ProfileName);
-
-
-        /**
-         *
-         * //get map from db
-         *         Map<String, Object> user_Map_get = new HashMap<>();
-         *         //TODO da completare sono arrivato qui
-         *         // Create a reference to the cities collection
-         * CollectionReference NameProfile = db.collection("users_basic_information");
-         *
-         * // Create a query against the collection.
-         *         Query query = NameProfile.whereEqualTo("Name",true );
-         *
-         *
-         *         //get first field from map
-         *         user_Map_get.get("Name");
-         *
-         */
+        ProfileInfo_var.setVisibility(View.INVISIBLE);
 
 
 
 
-        ProfileInfo_var.setText("info da db");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = user.getUid();
+        Log.d(TAG,"This is UID " + userID);
 
+        DocumentReference docRef = db.collection("users_basic_information").document(userID);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+
+                        //Salva nome del profile
+                        ProfileInfo_var.setText(document.getString("Name"));
+                        //todo altre info da salvare al caricamento
+
+
+
+
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+        ProfileInfo_var.setVisibility(View.VISIBLE);
         String checkInfo = ProfileInfo_var.getText().toString();
         Log.d(TAG, checkInfo);
 
-        if (checkInfo == "info da db") {
+
+        if (checkInfo == "New User") {
             MyScrollFullProfile_var = findViewById(R.id.ProfileFullPannel);
             MyScrollFullProfile_var.setVisibility(View.INVISIBLE);
             buildDialog();
             MyDialog_edit.show();
             Log.d(TAG, "inside checkInfo");
-
 
         }
 
