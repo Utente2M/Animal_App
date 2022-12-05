@@ -1,32 +1,31 @@
 package it.uniba.dib.sms222315;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
-import android.os.Build;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+
+
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,12 +37,11 @@ public class UserActivity extends AppCompatActivity {
     AlertDialog MyDialog_edit;
 
     TextView ProfileInfo_var;
-    String userID;
     ScrollView MyScrollFullProfile_var;
 
     //DB variable
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    FirebaseAuth dbAuth;
+
     private static final String TAG = "TAG_UserActivity";
 
 
@@ -57,13 +55,15 @@ public class UserActivity extends AppCompatActivity {
 
         //load name profile
         ProfileInfo_var = findViewById(R.id.ProfileName);
-        //get map from db
-        Map<String, Object> user_Map_get = new HashMap<>();
-        //TODO da completare sono arrivato qui
-        // Create a reference to the cities collection
-        CollectionReference NameProfile = db.collection("users_basic_information");
+
+
         /**
          *
+         * //get map from db
+         *         Map<String, Object> user_Map_get = new HashMap<>();
+         *         //TODO da completare sono arrivato qui
+         *         // Create a reference to the cities collection
+         * CollectionReference NameProfile = db.collection("users_basic_information");
          *
          * // Create a query against the collection.
          *         Query query = NameProfile.whereEqualTo("Name",true );
@@ -87,6 +87,7 @@ public class UserActivity extends AppCompatActivity {
             MyScrollFullProfile_var.setVisibility(View.INVISIBLE);
             buildDialog();
             MyDialog_edit.show();
+            Log.d(TAG, "inside checkInfo");
 
 
         }
@@ -141,10 +142,25 @@ public class UserActivity extends AppCompatActivity {
         user_Map.put("Anno", 118);
 
         // Add a new document with a document = ID
-        userID = dbAuth.getCurrentUser().getUid();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = user.getUid();
+        Log.d(TAG,"This is UID " + userID);
 
-        db.collection("users_basic_information").document(userID).set(user_Map);
 
+        db.collection("users_basic_information").document(userID)
+                .set(user_Map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
     }
 
     @Override
