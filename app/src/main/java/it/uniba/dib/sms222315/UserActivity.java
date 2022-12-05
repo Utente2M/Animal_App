@@ -60,7 +60,7 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user);
 
         ProfileInfo_var = findViewById(R.id.ProfileName);
-        ProfileInfo_var.setVisibility(View.INVISIBLE);
+
 
 
 
@@ -94,12 +94,12 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
-        ProfileInfo_var.setVisibility(View.VISIBLE);
+
         String checkInfo = ProfileInfo_var.getText().toString();
         Log.d(TAG, checkInfo);
 
 
-        if (checkInfo == "New User") {
+        if (checkInfo == "") { //TODO PROVARE A METTERE CAMPO VUOTO
             MyScrollFullProfile_var = findViewById(R.id.ProfileFullPannel);
             MyScrollFullProfile_var.setVisibility(View.INVISIBLE);
             buildDialog();

@@ -116,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/proximanovaregular"
-                        android:text="@string/new_user_check"
+                        android:text=""
                         android:textColor="#424242"
                         android:textSize="21sp"
                         android:textStyle="bold" />
