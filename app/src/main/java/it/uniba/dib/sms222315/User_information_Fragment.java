@@ -1,5 +1,6 @@
 package it.uniba.dib.sms222315;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,5 +63,12 @@ public class User_information_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_user_information_, container, false);
+    }
+
+    public void Logout(View view) {
+
+        FirebaseAuth.getInstance().signOut();
+        //Richiama la main activity
+
     }
 }
