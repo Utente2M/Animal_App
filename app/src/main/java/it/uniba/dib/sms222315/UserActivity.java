@@ -87,6 +87,13 @@ public class UserActivity extends AppCompatActivity {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                     } else {
                         Log.d(TAG, "No such document");
+                        MyScrollFullProfile_var = findViewById(R.id.ProfileFullPannel);
+                        MyScrollFullProfile_var.setVisibility(View.INVISIBLE);
+                        buildDialog();
+                        MyDialog_edit.show();
+
+
+
                     }
                 } else {
                     Log.d(TAG, "get failed with ", task.getException());
@@ -94,19 +101,6 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
-
-        String checkInfo = ProfileInfo_var.getText().toString();
-        Log.d(TAG, checkInfo);
-
-
-        if (checkInfo == "") { //TODO PROVARE A METTERE CAMPO VUOTO
-            MyScrollFullProfile_var = findViewById(R.id.ProfileFullPannel);
-            MyScrollFullProfile_var.setVisibility(View.INVISIBLE);
-            buildDialog();
-            MyDialog_edit.show();
-            Log.d(TAG, "inside checkInfo");
-
-        }
 
     }
 
