@@ -91,8 +91,31 @@ public class EmailPasswordActivity extends AppCompatActivity {
                         }
                     }
                 });
-        // [END create_user_with_email]
-    }
+
+    }// [END create_user_with_email]
+
+    private void signInAccount(String email, String password) {
+
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                    }
+                });
+
+    }//END signin Account
 
 
     private void reload() {
@@ -118,10 +141,24 @@ public class EmailPasswordActivity extends AppCompatActivity {
         reload();
     }//END chiamata bottone
 
+    public void button_SignIn_account(View view) {
+        Log.d(TAG, "BUTTON SIGNIN OK ");
+        password_view = findViewById(R.id.password_text);
+        email_view = findViewById(R.id.email_text);
+        String email = email_view.getText().toString();
+        String password = email_view.getText().toString();
+        signInAccount(email , password);
+        reload();
+    }//End bottone sign in
+
+
+
     public void button_logout(View view) {
         FirebaseAuth.getInstance().signOut();
         //Richiama la main activity
         Intent okLogut = new Intent(this, MainActivity.class);
         startActivity(okLogut);
     }//END loggout button
+
+
 }//END Activity
