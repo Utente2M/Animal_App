@@ -213,6 +213,12 @@
 
                 </LinearLayout>
 
+                <Button
+                    android:id="@+id/button_logout_hard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="LOGOUT HARD" />
+
             </LinearLayout>
 
             <!--Option Bar-->
