@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     // No user is signed in
                     Log.d(TAG, "User isn't Logged");
-                    Intent login_prova = new Intent(this, EmailPasswordActivity.class);
+                    Intent login_prova = new Intent(this, LoginOrRegisterActivity.class);
                     startActivity(login_prova);
                     return true;
 
