@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class EmailPasswordActivity extends AppCompatActivity {
 
-    private static final String TAG = "EmailPassword";
+    private static final String TAG = "TAG_EmailPassword";
     // [START declare_auth]
     private FirebaseAuth mAuth;
     // [END declare_auth]
@@ -96,13 +96,19 @@ public class EmailPasswordActivity extends AppCompatActivity {
 
 
     private void reload() {
-        Log.d(TAG, "RELOAD ");
-        Intent intent_ok_log = new Intent(this, UserActivity.class);
-        startActivity(intent_ok_log);
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            Intent intent_ok_log = new Intent(this, UserActivity.class);
+            startActivity(intent_ok_log);
+        }Log.d(TAG, "RELOAD ");
+
+
+
     }
 
 
     private void updateUI(FirebaseUser user) {
+        reload();
 
     }
 

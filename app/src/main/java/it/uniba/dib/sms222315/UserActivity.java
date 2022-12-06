@@ -51,6 +51,7 @@ public class UserActivity extends AppCompatActivity {
     private static final String TAG = "TAG_UserActivity";
     private FirebaseAuth mAuth;
     private Button but_logout;
+    private FirebaseUser userAuth;
 
 
 
@@ -60,56 +61,87 @@ public class UserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "Inside onCreate");
+        Log.d(TAG, "Inside onCreate UserActivity");
         //load name profile
 
         setContentView(R.layout.activity_user);
 
-        ProfileInfo_var = findViewById(R.id.ProfileName);
-
         mAuth = FirebaseAuth.getInstance();
 
 
+        userAuth = mAuth.getCurrentUser();
+
+        if (userAuth != null) {
+            // User is signed in
+            //andiamo in onStart
+        } else {
+            // No user is signed in
+            //altrimenti dovremmo uscire
+        }
 
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userID = user.getUid();
-        Log.d(TAG,"This is UID " + userID);
-
-        DocumentReference docRef = db.collection("users_basic_information").document(userID);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-
-                        //Salva nome del profile
-                        ProfileInfo_var.setText(document.getString("Name"));
-                        //todo altre info da salvare al caricamento
+    } //end onCreate
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "Inside onStart");
+
+        userAuth = mAuth.getCurrentUser();
+
+        if (userAuth != null) {
+            // User is signed in
+            String userID = userAuth.getUid();
+            Log.d(TAG,"This is UID " + userID);
 
 
-                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+            //qua bisognerebbe popolare una classe
+            DocumentReference docRef = db.collection("users_basic_information").document(userID);
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+
+                            //Salva nome del profile
+                            ProfileInfo_var.setText(document.getString("Name"));
+                            //todo altre info da salvare al caricamento
+
+
+
+
+                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        } else {
+                            Log.d(TAG, "No such document");
+                            MyScrollFullProfile_var = findViewById(R.id.ProfileFullPannel);
+                            MyScrollFullProfile_var.setVisibility(View.INVISIBLE);
+                            buildDialog();
+                            MyDialog_edit.show();
+
+                            MyScrollFullProfile_var = findViewById(R.id.ProfileFullPannel);
+                            MyScrollFullProfile_var.setVisibility(View.VISIBLE);
+
+
+
+                        }
                     } else {
-                        Log.d(TAG, "No such document");
-                        MyScrollFullProfile_var = findViewById(R.id.ProfileFullPannel);
-                        MyScrollFullProfile_var.setVisibility(View.INVISIBLE);
-                        buildDialog();
-                        MyDialog_edit.show();
-
-
-
+                        Log.d(TAG, "get failed with ", task.getException());
                     }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
                 }
-            }
-        });
+            });
+        } else {
+            Log.d(TAG,"user = null");
+            // No user is signed in
+            //finish();
+        }
 
 
-    }
+
+
+    }//END onStart
+
 
     private void buildDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -126,8 +158,7 @@ public class UserActivity extends AppCompatActivity {
 
                         addText_aboutMe(aboutMe_var.getText().toString());
 
-                        MyScrollFullProfile_var = findViewById(R.id.ProfileFullPannel);
-                        MyScrollFullProfile_var.setVisibility(View.VISIBLE);
+
                     }
 
                 })
@@ -148,8 +179,8 @@ public class UserActivity extends AppCompatActivity {
         NameTextView.setText(textAboutMe);
 
 
-        ProfileInfo_var = findViewById(R.id.ProfileName);
-        String SaveNameDb_String = ProfileInfo_var.getText().toString();
+
+        String SaveNameDb_String = NameTextView.getText().toString();
         Log.d(TAG, SaveNameDb_String);
 
         // Create a new user with a first and last name
@@ -180,12 +211,7 @@ public class UserActivity extends AppCompatActivity {
                 });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "Inside onStart");
 
-    }//END onStart
 
 
     public void Logout_hard_test(View view) {
