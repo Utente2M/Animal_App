@@ -189,11 +189,11 @@ public class UserActivity extends AppCompatActivity {
 
 
     public void Logout_hard_test(View view) {
-        mAuth.signOut();
-        Intent Intent = new Intent(UserActivity.this, MainActivity.class);
-        startActivity(Intent);
-        finish();
-        Toast.makeText(UserActivity.this,"Logout successfull", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "BUTTON LOGOUT OK ");
+        FirebaseAuth.getInstance().signOut();
+        //Richiama la main activity
+        Intent okLogut = new Intent(this, MainActivity.class);
+        startActivity(okLogut);
 
     }
 }//END ACTIVITY

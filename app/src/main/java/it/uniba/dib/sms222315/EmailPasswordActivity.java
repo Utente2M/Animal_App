@@ -2,6 +2,7 @@ package it.uniba.dib.sms222315;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +11,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -22,7 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class EmailPasswordActivity extends AppCompatActivity {
 
-    private static final String TAG = "EmailPassword";
+    private static final String TAG = "TAG_EmailPassword";
     // [START declare_auth]
     private FirebaseAuth mAuth;
     // [END declare_auth]
@@ -30,10 +33,28 @@ public class EmailPasswordActivity extends AppCompatActivity {
     private EditText password_view;
     private EditText email_view;
 
+    private ConstraintLayout layout_login , layout_create ;
+    private Button button_login , button_createAccount;
+    private TextView text_tit_login , text_tit_create , text_NoAccount , text_AlreadyAccount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_password);
+
+        //disattiva funzioni CREA ACCOUNT
+
+        layout_create = findViewById(R.id.LayoutCreateAccount);
+        layout_create.setVisibility(View.INVISIBLE);
+        text_tit_create = findViewById(R.id.titl_create);
+        text_tit_create.setVisibility(View.INVISIBLE);
+        text_AlreadyAccount = findViewById(R.id.txt_View_Creat_To_Login);
+        button_createAccount = findViewById(R.id.bottone_salva);
+        button_createAccount.setVisibility(View.INVISIBLE);
+        text_AlreadyAccount.setVisibility(View.INVISIBLE);
+
+
+
 
 
         // [START initialize_auth]
@@ -69,53 +90,9 @@ public class EmailPasswordActivity extends AppCompatActivity {
     }//END onStart
     // [END on_start_check_user]
 
-    private void createAccount(String email, String password) {
-        // [START create_user_with_email]
-        //TODO : prova login , login è null ? fai creaione vito e massi
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-                                    //rimandare a stringa questo toast non si vede, è in basso  TODO
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-                    }
-                });
 
-    }// [END create_user_with_email]
 
-    private void signInAccount(String email, String password) {
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-                    }
-                });
-
-    }//END signin Account
 
 
     private void reload() {
@@ -141,6 +118,34 @@ public class EmailPasswordActivity extends AppCompatActivity {
         reload();
     }//END chiamata bottone
 
+
+    private void createAccount(String email, String password) {
+        // [START create_user_with_email]
+        Log.d(TAG, "db createAccount");
+        //TODO : prova login , login è null ? fai creaione vito e massi
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
+                                    //rimandare a stringa questo toast non si vede, è in basso  TODO
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                    }
+                });
+
+    }// [END create_user_with_email]
+
+
     public void button_SignIn_account(View view) {
         Log.d(TAG, "BUTTON SIGNIN OK ");
         password_view = findViewById(R.id.password_text);
@@ -151,9 +156,33 @@ public class EmailPasswordActivity extends AppCompatActivity {
         reload();
     }//End bottone sign in
 
+    private void signInAccount(String email, String password) {
+
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                    }
+                });
+
+    }//END signin Account
+
 
 
     public void button_logout(View view) {
+        Log.d(TAG, "BUTTON LOGOUT OK ");
         FirebaseAuth.getInstance().signOut();
         //Richiama la main activity
         Intent okLogut = new Intent(this, MainActivity.class);
@@ -161,4 +190,66 @@ public class EmailPasswordActivity extends AppCompatActivity {
     }//END loggout button
 
 
+    public void ChangeViewLogin_To_Create(View view) {
+        Log.d(TAG, "TEXT CLICK NOT HAVE ACCOUNT OK ");
+        //private Button button_login , button_createAccount;
+        //private TextView text_NoAccount , text_AlreadyAccount;
+        //disattiva login
+        layout_login = findViewById(R.id.LayoutLogInInAccount);
+        layout_login.setVisibility(View.INVISIBLE);
+
+        text_tit_login = findViewById(R.id.title_login);
+        text_tit_login.setVisibility(View.INVISIBLE);
+        text_NoAccount = findViewById(R.id.txt_View_Login_to_Create);
+        button_login = findViewById(R.id.Bottone_login);
+        text_NoAccount.setVisibility(View.INVISIBLE);
+        button_login.setVisibility(View.INVISIBLE);
+
+        //attiva funzioni CREA ACCOUNT
+        layout_create = findViewById(R.id.LayoutCreateAccount);
+        layout_create.setVisibility(View.VISIBLE);
+        text_AlreadyAccount = findViewById(R.id.txt_View_Creat_To_Login);
+        button_createAccount = findViewById(R.id.bottone_salva);
+        button_createAccount.setVisibility(View.VISIBLE);
+        text_AlreadyAccount.setVisibility(View.VISIBLE);
+        text_tit_create = findViewById(R.id.titl_create);
+        text_tit_create.setVisibility(View.VISIBLE);
+
+
+    }//END TEXT CHANGE
+
+    public void ChangeViewCreate_to_Login(View view) {
+        Log.d(TAG, "TEXT CLICK ALREADY ACCOUNT OK ");
+        //private Button button_login , button_createAccount;
+        //private TextView text_NoAccount , text_AlreadyAccount;
+        //attiva login
+        layout_login = findViewById(R.id.LayoutLogInInAccount);
+        layout_login.setVisibility(View.VISIBLE);
+
+        text_tit_login = findViewById(R.id.title_login);
+        text_tit_login.setVisibility(View.VISIBLE);
+        text_NoAccount = findViewById(R.id.txt_View_Login_to_Create);
+        button_login = findViewById(R.id.Bottone_login);
+        text_NoAccount.setVisibility(View.VISIBLE);
+        button_login.setVisibility(View.VISIBLE);
+
+        //DISATTIVA funzioni CREA ACCOUNT
+        layout_create = findViewById(R.id.LayoutCreateAccount);
+        layout_create.setVisibility(View.INVISIBLE);
+
+        text_AlreadyAccount = findViewById(R.id.txt_View_Creat_To_Login);
+        button_createAccount = findViewById(R.id.bottone_salva);
+        button_createAccount.setVisibility(View.INVISIBLE);
+        text_AlreadyAccount.setVisibility(View.INVISIBLE);
+        text_tit_create = findViewById(R.id.titl_create);
+        text_tit_create.setVisibility(View.INVISIBLE);
+
+
+    }//END TEXT CHANGE
+
+
+    public void back_toPrevisuActivity(View view) {
+        finish();
+
+    }//END BUTTON BACK
 }//END Activity
