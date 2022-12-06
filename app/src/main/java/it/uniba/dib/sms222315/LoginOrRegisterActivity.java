@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
-public class LoginOrRegisterActivity extends AppCompatActivity {
+public class LoginOrRegisterActivity extends AppCompatActivity implements CallbackFragment {
 
     //inizialiamo i fragment
     Fragment my_fragment;
@@ -27,7 +27,9 @@ public class LoginOrRegisterActivity extends AppCompatActivity {
 
     public void addFragment(){
         //con new scegliamo il fragment da istanziare
-        my_fragment = new Fragment_Login();
+
+        Fragment_Login  my_fragment = new Fragment_Login();
+        my_fragment.setMy_callbackFragment(this);
         my_frag_manager = getSupportFragmentManager();
         my_frag_trans = my_frag_manager.beginTransaction();
 
@@ -48,4 +50,10 @@ public class LoginOrRegisterActivity extends AppCompatActivity {
         my_frag_trans.commit();
 
     }//END addFrag
+
+
+    @Override
+    public void changeFragment() {
+        replaceFragment();
+    }
 }

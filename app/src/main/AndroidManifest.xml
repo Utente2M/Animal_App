@@ -30,20 +30,18 @@
         <activity
             android:name=".UserActivity"
             android:exported="false"
-            android:label="User Activity"
-            android:parentActivityName=".MainActivity">
+            android:label="User Activity">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
         <activity
             android:name=".EmailPasswordActivity"
             android:exported="false"
-            android:label="log Activity"
-            android:parentActivityName=".MainActivity">
+            android:label="log Activity">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
         <activity
             android:name=".MainActivity"

@@ -11,12 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import javax.security.auth.callback.Callback;
 
 
 public class Fragment_Login extends Fragment {
 
     Button button_login , button_register ;
     EditText ET_username , ET_password ;
+
+    CallbackFragment my_callbackFragment;
 
 
     @Nullable
@@ -41,6 +44,9 @@ public class Fragment_Login extends Fragment {
             @Override
             public void onClick(View view) {
                 //
+                if ( my_callbackFragment != null ) {
+                    my_callbackFragment.changeFragment();
+                }
             }
         });
 
@@ -48,4 +54,11 @@ public class Fragment_Login extends Fragment {
 
         return my_view;
     }
-}//end class
+
+
+    //potenziale errore
+    public void setMy_callbackFragment (CallbackFragment my_callFrag ){
+        this.my_callbackFragment = my_callFrag;
+    }
+
+}//end classFragment login
