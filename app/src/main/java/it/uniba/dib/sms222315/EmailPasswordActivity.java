@@ -42,22 +42,7 @@ public class EmailPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_password);
 
-        //disattiva funzioni CREA ACCOUNT
-
-        layout_create = findViewById(R.id.LayoutCreateAccount);
-        layout_create.setVisibility(View.INVISIBLE);
-        text_tit_create = findViewById(R.id.titl_create);
-        text_tit_create.setVisibility(View.INVISIBLE);
-        text_AlreadyAccount = findViewById(R.id.txt_View_Creat_To_Login);
-        button_createAccount = findViewById(R.id.bottone_salva);
-        button_createAccount.setVisibility(View.INVISIBLE);
-        text_AlreadyAccount.setVisibility(View.INVISIBLE);
-
-
-
-
-
-        // [START initialize_auth]
+                // [START initialize_auth]
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
@@ -192,58 +177,13 @@ public class EmailPasswordActivity extends AppCompatActivity {
 
     public void ChangeViewLogin_To_Create(View view) {
         Log.d(TAG, "TEXT CLICK NOT HAVE ACCOUNT OK ");
-        //private Button button_login , button_createAccount;
-        //private TextView text_NoAccount , text_AlreadyAccount;
-        //disattiva login
-        layout_login = findViewById(R.id.LayoutLogInInAccount);
-        layout_login.setVisibility(View.INVISIBLE);
 
-        text_tit_login = findViewById(R.id.title_login);
-        text_tit_login.setVisibility(View.INVISIBLE);
-        text_NoAccount = findViewById(R.id.txt_View_Login_to_Create);
-        button_login = findViewById(R.id.Bottone_login);
-        text_NoAccount.setVisibility(View.INVISIBLE);
-        button_login.setVisibility(View.INVISIBLE);
-
-        //attiva funzioni CREA ACCOUNT
-        layout_create = findViewById(R.id.LayoutCreateAccount);
-        layout_create.setVisibility(View.VISIBLE);
-        text_AlreadyAccount = findViewById(R.id.txt_View_Creat_To_Login);
-        button_createAccount = findViewById(R.id.bottone_salva);
-        button_createAccount.setVisibility(View.VISIBLE);
-        text_AlreadyAccount.setVisibility(View.VISIBLE);
-        text_tit_create = findViewById(R.id.titl_create);
-        text_tit_create.setVisibility(View.VISIBLE);
 
 
     }//END TEXT CHANGE
 
     public void ChangeViewCreate_to_Login(View view) {
         Log.d(TAG, "TEXT CLICK ALREADY ACCOUNT OK ");
-        //private Button button_login , button_createAccount;
-        //private TextView text_NoAccount , text_AlreadyAccount;
-        //attiva login
-        layout_login = findViewById(R.id.LayoutLogInInAccount);
-        layout_login.setVisibility(View.VISIBLE);
-
-        text_tit_login = findViewById(R.id.title_login);
-        text_tit_login.setVisibility(View.VISIBLE);
-        text_NoAccount = findViewById(R.id.txt_View_Login_to_Create);
-        button_login = findViewById(R.id.Bottone_login);
-        text_NoAccount.setVisibility(View.VISIBLE);
-        button_login.setVisibility(View.VISIBLE);
-
-        //DISATTIVA funzioni CREA ACCOUNT
-        layout_create = findViewById(R.id.LayoutCreateAccount);
-        layout_create.setVisibility(View.INVISIBLE);
-
-        text_AlreadyAccount = findViewById(R.id.txt_View_Creat_To_Login);
-        button_createAccount = findViewById(R.id.bottone_salva);
-        button_createAccount.setVisibility(View.INVISIBLE);
-        text_AlreadyAccount.setVisibility(View.INVISIBLE);
-        text_tit_create = findViewById(R.id.titl_create);
-        text_tit_create.setVisibility(View.INVISIBLE);
-
 
     }//END TEXT CHANGE
 
