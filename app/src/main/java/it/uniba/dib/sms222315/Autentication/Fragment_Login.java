@@ -1,7 +1,6 @@
-package it.uniba.dib.sms222315;
+package it.uniba.dib.sms222315.Autentication;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import javax.security.auth.callback.Callback;
+import it.uniba.dib.sms222315.R;
 
 
 public class Fragment_Login extends Fragment {

@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222315;
+package it.uniba.dib.sms222315.Autentication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +16,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import it.uniba.dib.sms222315.R;
+import it.uniba.dib.sms222315.UserActivity;
 
 public class LoginOrRegisterActivity extends AppCompatActivity implements CallbackFragment {
 

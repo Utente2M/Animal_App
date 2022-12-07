@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222315;
+package it.uniba.dib.sms222315.Autentication;
 
 public interface CallbackFragment {
 

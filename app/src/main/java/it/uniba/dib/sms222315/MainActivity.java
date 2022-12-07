@@ -14,7 +14,7 @@ import android.view.View;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.zip.Inflater;
+import it.uniba.dib.sms222315.Autentication.LoginOrRegisterActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -125,4 +125,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void hard_logout(View view) {
+
+        Log.d(TAG, "BUTTON LOGOUT OK ");
+        FirebaseAuth.getInstance().signOut();
+    }
 }//END MainActivity
