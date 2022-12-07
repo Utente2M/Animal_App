@@ -9,11 +9,4 @@ public interface CallbackFragment {
     void changeFragment();
     void sendData (String email);
 
-
-
-
-
-
-
-
 }

@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222315;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,8 @@ import androidx.fragment.app.Fragment;
 public class Fragment_Register extends Fragment {
 
     private static final String TAG = "TAG_FragRegister";
+
+    CallbackFragment myListnerCall;
 
     Button button_login , button_register ;
     EditText ET_username , ET_password , ET_email  ;
@@ -103,8 +106,16 @@ public class Fragment_Register extends Fragment {
         return my_view;
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        myListnerCall = (CallbackFragment) context;
+
+    }
+
     private void createAccount(String email, String password) {
 
+        myListnerCall.sendData(email);
        //dobbiamo rimandare dati all activity
     }
 
