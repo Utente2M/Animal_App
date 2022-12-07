@@ -61,6 +61,7 @@ public class UserActivity extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +93,8 @@ public class UserActivity extends AppCompatActivity {
         Log.d(TAG, "Inside onStart");
 
         userAuth = mAuth.getCurrentUser();
+
+
 
         if (userAuth != null) {
             // User is signed in

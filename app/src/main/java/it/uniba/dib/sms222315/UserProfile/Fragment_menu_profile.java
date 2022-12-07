@@ -26,7 +26,10 @@ public class Fragment_menu_profile extends Fragment {
 
     Interf_UserProfile myCallBackFrag;
 
+
     private static final String TAG = "TAG_Frag_UserProfile";
+
+
 
     @Nullable
     @Override
