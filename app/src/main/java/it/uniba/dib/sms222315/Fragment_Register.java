@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222315;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -106,6 +107,13 @@ public class Fragment_Register extends Fragment {
     private void createAccount(String email, String password) {
 
        //dobbiamo rimandare dati all activity
+        Intent intent_send = new Intent(getActivity() , LoginOrRegisterActivity.class);
+        intent_send.putExtra("email", email );
+        intent_send.putExtra("password" , password);
+        Log.d(TAG, "OK putExtra in INTENT ");
+        startActivity(intent_send);
+
+
     }
 
     private void updateUI(Object o) {
