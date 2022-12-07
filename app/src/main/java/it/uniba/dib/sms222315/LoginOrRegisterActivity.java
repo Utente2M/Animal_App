@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 public class LoginOrRegisterActivity extends AppCompatActivity implements CallbackFragment {
-    private static final String TAG = "TAG_LogorReg_ACTIVITY";
+
 
     //inizialiamo i fragment
     Fragment my_fragment;
