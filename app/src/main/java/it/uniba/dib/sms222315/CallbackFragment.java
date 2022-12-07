@@ -5,6 +5,6 @@ public interface CallbackFragment {
 
 
     void changeFragment();
-    void sendData (String email , String password);
+    void createUSerWithMailPassword(String email , String password);
 
 }

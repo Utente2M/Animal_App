@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -50,6 +51,20 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
 
         Log.d(TAG, "on Start activity log or register ");
 
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            reload();
+        }
+
+
+    }
+
+    private void reload() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            Intent intent_ok_log = new Intent(this, UserActivity.class);
+            startActivity(intent_ok_log);
+        }Log.d(TAG, "RELOAD ");
 
     }
 
@@ -86,9 +101,9 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
     }
 
     @Override
-    public void sendData(String email, String password) {
-        Log.d(TAG , "sendData mail = " + email);
-        Log.d(TAG , "sendData pass = " + password);
+    public void createUSerWithMailPassword(String email, String password) {
+        Log.d(TAG , "createUSerWithMailPassword mail = " + email);
+        Log.d(TAG , "createUSerWithMailPassword pass = " + password);
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -114,5 +129,7 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
     }
 
     private void updateUI(FirebaseUser user) {
+        reload();
+
     }
 }

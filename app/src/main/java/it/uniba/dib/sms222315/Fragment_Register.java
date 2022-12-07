@@ -112,7 +112,7 @@ public class Fragment_Register extends Fragment {
 
     private void createAccount(String email, String password) {
 
-        myListnerCall.sendData(email, password );
+        myListnerCall.createUSerWithMailPassword(email, password );
        //dobbiamo rimandare dati all activity
 
 
