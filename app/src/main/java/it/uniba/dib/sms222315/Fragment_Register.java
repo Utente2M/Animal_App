@@ -1,8 +1,8 @@
 package it.uniba.dib.sms222315;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,19 +14,30 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+
+
 public class Fragment_Register extends Fragment {
+
+    private static final String TAG = "TAG_FragRegister";
 
     Button button_login , button_register ;
     EditText ET_username , ET_password , ET_email  ;
 
     String str_username , str_email , str_password;
-    SharedPreferences my_share_preference;
-    SharedPreferences.Editor myEditor;
-
+    //TODO utili per salvare dati permanenti su disco
+    //SharedPreferences my_share_preference;
+    //SharedPreferences.Editor myEditor;
 
 
     //questo viene copiato da Frag_login per semplicità
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    /**
     @Override
     public void onAttach(@NonNull Context context) {
          my_share_preference = context.
@@ -35,6 +46,9 @@ public class Fragment_Register extends Fragment {
 
         super.onAttach(context);
     }
+*/
+
+
 
 
     @Nullable
@@ -61,13 +75,24 @@ public class Fragment_Register extends Fragment {
                 str_username = ET_username.getText().toString();
                 str_email = ET_email.getText().toString();
 
+                //salvataggio dei dati sul db
+                createAccount(str_email , str_password );
+
+
+
+                /**
+                 * //salva sul disco le preferenze, nel file nominato prima
                 myEditor.putString("E-Mail" , str_email);
                 myEditor.putString("Username " , str_username );
                 myEditor.putString("Password" , str_password );
+                 */
 
                // myEditor.apply();
                 //todo sostituire con stringa
                 Toast.makeText(getContext() , "Registered" , Toast.LENGTH_SHORT).show();
+
+                // da qui se la registrazione va a buon fine lanciamo user_Activity
+                //login automatico
 
 
             }
@@ -76,5 +101,14 @@ public class Fragment_Register extends Fragment {
 
 
         return my_view;
+    }
+
+    private void createAccount(String email, String password) {
+
+       //dobbiamo rimandare dati all activity
+    }
+
+    private void updateUI(Object o) {
+        Log.d(TAG, "UPDATE UI ");
     }
 }//end class

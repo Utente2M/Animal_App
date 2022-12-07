@@ -42,15 +42,14 @@
         android:hint="email" />
 
 
-
     <EditText
         android:id="@+id/et_password_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Password" />
+        android:hint="Password"
+        android:inputType="textPassword" />
 
 
     <Button
