@@ -24,9 +24,9 @@ public class Fragment_Register extends Fragment {
     CallbackFragment myListnerCall;
 
     Button button_login , button_register ;
-    EditText ET_username , ET_password , ET_email  ;
+    EditText  ET_password , ET_email  ;
 
-    String str_username , str_email , str_password;
+    String  str_email , str_password;
 
 
     @Override
@@ -57,9 +57,9 @@ public class Fragment_Register extends Fragment {
         //cambiamo il layout
         View my_view = inflater.inflate(R.layout.fragm_register, container, false);
 
-        ET_username = my_view.findViewById(R.id.et_username_login);
-        ET_password = my_view.findViewById(R.id.et_password_login);
-        ET_email = my_view.findViewById(R.id.et_mail_login);
+
+        ET_password = my_view.findViewById(R.id.et_password_registr);
+        ET_email = my_view.findViewById(R.id.et_mail_registr);
 
         button_register = my_view.findViewById(R.id.btn_register);
 
@@ -71,7 +71,6 @@ public class Fragment_Register extends Fragment {
             public void onClick(View view) {
                 //click bottone registrati
                 str_password = ET_password.getText().toString();
-                str_username = ET_username.getText().toString();
                 str_email = ET_email.getText().toString();
 
                 //salvataggio dei dati sul db
