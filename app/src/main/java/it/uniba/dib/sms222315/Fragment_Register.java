@@ -1,7 +1,6 @@
 package it.uniba.dib.sms222315;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -102,31 +101,11 @@ public class Fragment_Register extends Fragment {
 
 
         return my_view;
-    }//END onCreateView
-
-
-
-    CallbackFragment myFrRegListner;
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        //attiva listner
-        myFrRegListner = (CallbackFragment) context;
-
     }
-
-
 
     private void createAccount(String email, String password) {
 
        //dobbiamo rimandare dati all activity
-        //onclick del video
-
-        myFrRegListner.sendData(email);
-
-
-
     }
 
     private void updateUI(Object o) {
