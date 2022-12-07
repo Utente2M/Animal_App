@@ -17,9 +17,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import it.uniba.dib.sms222315.ProfileUserActivity;
+import it.uniba.dib.sms222315.UserProfile.ProfileUserActivity;
 import it.uniba.dib.sms222315.R;
-import it.uniba.dib.sms222315.ui.UserActivity;
 
 public class LoginOrRegisterActivity extends AppCompatActivity implements CallbackFragment {
 

@@ -1,5 +1,6 @@
-package it.uniba.dib.sms222315;
+package it.uniba.dib.sms222315.UserProfile;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import it.uniba.dib.sms222315.Autentication.CallbackFragment;
+import it.uniba.dib.sms222315.R;
+import it.uniba.dib.sms222315.UserProfile.Interf_UserProfile;
 
 public class Fragment_menu_profile extends Fragment {
 
@@ -43,6 +48,14 @@ public class Fragment_menu_profile extends Fragment {
 
 
         return my_view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        //listner di Class Interface per scambio dati
+       // myListnerCall = (CallbackFragment) context;
+
     }
 
 

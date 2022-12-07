@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222315;
+package it.uniba.dib.sms222315.UserProfile;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -12,8 +12,11 @@ import android.util.Log;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import it.uniba.dib.sms222315.Autentication.Fragment_Login;
-import it.uniba.dib.sms222315.Autentication.Fragment_Register;
+import it.uniba.dib.sms222315.MainActivity;
+import it.uniba.dib.sms222315.R;
+import it.uniba.dib.sms222315.UserProfile.Fragment_UserProfile;
+import it.uniba.dib.sms222315.UserProfile.Fragment_menu_profile;
+import it.uniba.dib.sms222315.UserProfile.Interf_UserProfile;
 
 public class ProfileUserActivity extends AppCompatActivity implements Interf_UserProfile {
 

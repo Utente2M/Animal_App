@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import it.uniba.dib.sms222315.Autentication.LoginOrRegisterActivity;
-import it.uniba.dib.sms222315.ui.UserActivity;
+import it.uniba.dib.sms222315.UserProfile.ProfileUserActivity;
 
 public class MainActivity extends AppCompatActivity {
 

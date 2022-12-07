@@ -1,5 +1,6 @@
-package it.uniba.dib.sms222315;
+package it.uniba.dib.sms222315.UserProfile;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,10 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import it.uniba.dib.sms222315.Autentication.CallbackFragment;
+import it.uniba.dib.sms222315.R;
+import it.uniba.dib.sms222315.UserProfile.Interf_UserProfile;
 
 public class Fragment_UserProfile extends Fragment {
 
@@ -56,13 +59,16 @@ public class Fragment_UserProfile extends Fragment {
             }
         });
 
-
-
-
-
         return my_view;
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        //listner di Class Interface per scambio dati
+       // myListnerCall = (CallbackFragment) context;
+    }
 
     public void setMyCallBackFrag (Interf_UserProfile varCallback ){
         this.myCallBackFrag = varCallback;
