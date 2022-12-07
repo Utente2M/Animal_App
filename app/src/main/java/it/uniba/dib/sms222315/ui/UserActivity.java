@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222315;
+package it.uniba.dib.sms222315.ui;
 
 
 import androidx.annotation.NonNull;
@@ -35,6 +35,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import it.uniba.dib.sms222315.MainActivity;
+import it.uniba.dib.sms222315.R;
 
 public class UserActivity extends AppCompatActivity {
 

@@ -17,8 +17,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import it.uniba.dib.sms222315.ProfileUserActivity;
 import it.uniba.dib.sms222315.R;
-import it.uniba.dib.sms222315.UserActivity;
+import it.uniba.dib.sms222315.ui.UserActivity;
 
 public class LoginOrRegisterActivity extends AppCompatActivity implements CallbackFragment {
 
@@ -27,11 +28,11 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
 
 
     //inizialiamo i fragment
+
     Fragment my_fragment;
     FragmentManager my_frag_manager;
     FragmentTransaction my_frag_trans;
     private static final String TAG = "TAG_Act_LogOrRegis";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,7 +160,7 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
     private void reload() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            Intent intent_ok_log = new Intent(this, UserActivity.class);
+            Intent intent_ok_log = new Intent(this, ProfileUserActivity.class);
             startActivity(intent_ok_log);
         }Log.d(TAG, "RELOAD ");
 

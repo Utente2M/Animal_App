@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import it.uniba.dib.sms222315.Autentication.LoginOrRegisterActivity;
+import it.uniba.dib.sms222315.ui.UserActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "User is Logged");
-                    Intent intent_ok_log = new Intent(this, UserActivity.class);
+                    Intent intent_ok_log = new Intent(this, ProfileUserActivity.class);
                     startActivity(intent_ok_log);
                     return true;
 

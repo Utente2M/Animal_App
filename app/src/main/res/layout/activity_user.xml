@@ -7,7 +7,7 @@
     android:background="@color/grey"
     android:orientation="vertical"
     android:visibility="visible"
-    tools:context=".UserActivity"
+    tools:context=".ui.UserActivity"
     tools:visibility="visible">
 
     <LinearLayout
