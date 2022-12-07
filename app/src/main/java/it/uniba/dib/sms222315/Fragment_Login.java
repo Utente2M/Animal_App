@@ -19,24 +19,19 @@ import javax.security.auth.callback.Callback;
 
 public class Fragment_Login extends Fragment {
 
+
+    CallbackFragment myListnerCall;
     Button button_login , button_register ;
-    EditText ET_username , ET_password ;
+    EditText ET_mail , ET_password ;
 
     CallbackFragment my_callbackFragment;
 
-    String str_username , str_password;
+    String str_mail , str_password;
 
-    SharedPreferences my_share_preference;
-    SharedPreferences.Editor myEditor;
+    //SharedPreferences my_share_preference;
+    //SharedPreferences.Editor myEditor;
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        my_share_preference = context.
-                getSharedPreferences("User_file" , Context.MODE_PRIVATE);
-        myEditor = my_share_preference.edit();
-
-        super.onAttach(context);
-    }
+   
 
     @Nullable
     @Override
@@ -44,7 +39,7 @@ public class Fragment_Login extends Fragment {
 
         View my_view = inflater.inflate(R.layout.fragm_login, container, false);
 
-        ET_username = my_view.findViewById(R.id.et_username_login);
+        ET_mail = my_view.findViewById(R.id.et_mail_login);
         ET_password = my_view.findViewById(R.id.et_password_login);
         button_login = my_view.findViewById(R.id.btn_login);
         button_register = my_view.findViewById(R.id.btn_register);
@@ -55,22 +50,12 @@ public class Fragment_Login extends Fragment {
             public void onClick(View view) {
                 //BOTTONE LOGIN
                 //queste due variabili contengono username e password in formato Stringa
-                str_username = ET_username.getText().toString();
+                str_mail = ET_mail.getText().toString();
                 str_password = ET_password.getText().toString();
-
-                String u_name , u_password ;
-                u_name = my_share_preference.getString("Username" , null);
-                u_password = my_share_preference.getString("Password" , null);
-
-                if (str_username.equals(u_name) && str_password.equals(u_password)){
-                    //TODO sistemare messaggi
-                    Toast.makeText(getContext() , "Login MIAO" , Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    Toast.makeText(getContext() , "Error Login" , Toast.LENGTH_SHORT).show();
-                }
-
+                
+                loginAccount (str_mail , str_password);
+                //todo sostituire con stringa
+                Toast.makeText(getContext() , "Login ??????" , Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -88,6 +73,20 @@ public class Fragment_Login extends Fragment {
 
 
         return my_view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        //listner di Class Interface per scambio dati
+        myListnerCall = (CallbackFragment) context;
+
+    }
+    
+
+    private void loginAccount(String str_mail, String str_password) {
+        
+        myListnerCall.logAccountWithMailePass (str_mail , str_password);
     }
 
 
