@@ -27,12 +27,7 @@ public class Fragment_Register extends Fragment {
     EditText ET_username , ET_password , ET_email  ;
 
     String str_username , str_email , str_password;
-    //TODO utili per salvare dati permanenti su disco
-    //SharedPreferences my_share_preference;
-    //SharedPreferences.Editor myEditor;
 
-
-    //questo viene copiato da Frag_login per semplicità
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +36,7 @@ public class Fragment_Register extends Fragment {
     }
 
     /**
+     * salva prefrenze su disco
     @Override
     public void onAttach(@NonNull Context context) {
          my_share_preference = context.
@@ -109,14 +105,18 @@ public class Fragment_Register extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        //listner di Class Interface per scambio dati
         myListnerCall = (CallbackFragment) context;
 
     }
 
     private void createAccount(String email, String password) {
 
-        myListnerCall.sendData(email);
+        myListnerCall.sendData(email, password );
        //dobbiamo rimandare dati all activity
+
+
+
     }
 
     private void updateUI(Object o) {

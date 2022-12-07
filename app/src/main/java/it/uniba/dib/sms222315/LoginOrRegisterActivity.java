@@ -1,15 +1,25 @@
 package it.uniba.dib.sms222315;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginOrRegisterActivity extends AppCompatActivity implements CallbackFragment {
+
+    //FIREBASE VAR
+    private FirebaseAuth mAuth;
 
 
     //inizialiamo i fragment
@@ -23,23 +33,12 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_or_register);
         Log.d(TAG, "on create activity log or register ");
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
 
 
         //carichiamo i due frgment
         addFragment();
-
-        Intent register_intent = getIntent();
-
-        Log.d(TAG, "register_intent NOT NULL ");
-
-       String str_email = register_intent.getStringExtra("email");
-       String str_password = register_intent.getStringExtra("password");
-
-        //Log.d(TAG, str_password);
-       // Log.d(TAG, str_email);
-        // createAccount (str_email, str_password);
-
-
 
 
 
@@ -87,8 +86,33 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
     }
 
     @Override
-    public void sendData(String email) {
-        Log.d(TAG , "Inside sendData" + email);
+    public void sendData(String email, String password) {
+        Log.d(TAG , "sendData mail = " + email);
+        Log.d(TAG , "sendData pass = " + password);
 
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(LoginOrRegisterActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                    }
+                });
+
+
+
+    }
+
+    private void updateUI(FirebaseUser user) {
     }
 }
