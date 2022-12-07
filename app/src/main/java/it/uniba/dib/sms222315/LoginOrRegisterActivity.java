@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 
 public class LoginOrRegisterActivity extends AppCompatActivity implements CallbackFragment {
 
@@ -13,6 +14,7 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
     Fragment my_fragment;
     FragmentManager my_frag_manager;
     FragmentTransaction my_frag_trans;
+    private static final String TAG = "TAG_Act_LogOrRegis";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,5 +57,11 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
     @Override
     public void changeFragment() {
         replaceFragment();
+    }
+
+    @Override
+    public void sendData(String email) {
+        Log.d(TAG , "Inside sendData" + email);
+
     }
 }
