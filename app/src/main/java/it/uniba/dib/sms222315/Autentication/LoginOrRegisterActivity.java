@@ -41,8 +41,15 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
         mAuth = FirebaseAuth.getInstance();
 
 
-        //carichiamo i due frgment
-        addFragment();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            Intent intent_ok_log = new Intent(this, ProfileUserActivity.class);
+            startActivity(intent_ok_log);
+        }else{
+            //carichiamo i due frgment
+            addFragment();
+        }
+
 
 
 
@@ -115,7 +122,7 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(LoginOrRegisterActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+                            reload();
                         }
                     }
                 });
@@ -137,13 +144,13 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            reload();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginOrRegisterActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+                            reload();
                         }
                     }
                 });
@@ -151,7 +158,15 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
     }
 
     private void updateUI(FirebaseUser user) {
-        reload();
+        my_fragment = new Fragment_Regis_Basic_info();
+        my_frag_manager = getSupportFragmentManager();
+        my_frag_trans = my_frag_manager.beginTransaction();
+        //si aggiunge il richiamo allo stack
+        my_frag_trans.addToBackStack(null);
+        //add diventa replace
+        my_frag_trans.replace(R.id.FragAutentic , my_fragment);
+        my_frag_trans.commit();
+        //reload();
 
     }
 
