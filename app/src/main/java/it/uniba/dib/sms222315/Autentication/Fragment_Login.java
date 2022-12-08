@@ -51,10 +51,18 @@ public class Fragment_Login extends Fragment {
                 //queste due variabili contengono username e password in formato Stringa
                 str_mail = ET_mail.getText().toString();
                 str_password = ET_password.getText().toString();
-                
-                loginAccount (str_mail , str_password);
-                //todo sostituire con stringa
-                Toast.makeText(getContext() , "Login ??????" , Toast.LENGTH_SHORT).show();
+
+                if( str_mail.isEmpty()){
+                    ET_mail.setError("Email is required");
+                }
+                if(str_password.isEmpty()){
+                    ET_password.setError("Password is required");
+                }
+                else{
+                    loginAccount (str_mail , str_password);
+                    //todo sostituire con stringa
+                    Toast.makeText(getContext() , "ok field Login " , Toast.LENGTH_SHORT).show();
+                }
 
             }
         });

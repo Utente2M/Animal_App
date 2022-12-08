@@ -74,10 +74,18 @@ public class Fragment_Register extends Fragment {
                 str_password = ET_password.getText().toString();
                 str_email = ET_email.getText().toString();
 
-                //salvataggio dei dati sul db
-                createAccount(str_email , str_password );
-
-
+                if( str_email.isEmpty()){
+                    ET_email.setError("Email is required");
+                }
+                if(str_password.isEmpty()){
+                    ET_password.setError("Password is required");
+                }
+                else{
+                    //salvataggio dei dati sul db
+                    createAccount(str_email , str_password );
+                    //todo sostituire con stringa
+                    Toast.makeText(getContext() , "ok field register " , Toast.LENGTH_SHORT).show();
+                }
 
                 /**
                  * //salva sul disco le preferenze, nel file nominato prima
