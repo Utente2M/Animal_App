@@ -7,9 +7,21 @@
     tools:context=".Autentication.LoginOrRegisterActivity">
 
     <FrameLayout
+        android:id="@+id/autocomplete_fragment"
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/FragAutentic" />
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/FragAutentic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

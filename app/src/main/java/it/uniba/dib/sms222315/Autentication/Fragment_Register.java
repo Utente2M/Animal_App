@@ -120,6 +120,8 @@ public class Fragment_Register extends Fragment {
 
     private void createAccount(String email, String password) {
 
+        Fragment_Register my_cont = null;
+        my_cont = this;
         myListnerCall.createUSerWithMailPassword(email, password );
        //dobbiamo rimandare dati all activity
 
