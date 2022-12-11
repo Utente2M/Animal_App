@@ -36,6 +36,7 @@ public class Fragment_Regis_Basic_info extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View my_view = inflater.inflate(R.layout.fragment__regis__basic_info, container, false);
 
         ET_Name = my_view.findViewById(R.id.FragRegi_basiInfo_ET_name);

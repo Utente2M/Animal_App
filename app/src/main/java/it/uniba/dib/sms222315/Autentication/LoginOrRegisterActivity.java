@@ -53,6 +53,7 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_or_register);
         Log.d(TAG, "on create activity log or register ");
+
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 

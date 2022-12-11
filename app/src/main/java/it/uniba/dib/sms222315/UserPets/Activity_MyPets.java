@@ -1,6 +1,10 @@
 package it.uniba.dib.sms222315.UserPets;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -8,25 +12,91 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import it.uniba.dib.sms222315.R;
 import it.uniba.dib.sms222315.TestListView.Person;
 import it.uniba.dib.sms222315.TestListView.PersonListAdapter;
 import it.uniba.dib.sms222315.UserProfile.Fragment_UserProfile;
+import it.uniba.dib.sms222315.UserProfile.Fragment_menu_profile;
 
-public class Activity_MyPets extends AppCompatActivity {
+public class Activity_MyPets extends AppCompatActivity implements Interf_UserPets{
 
     private static final String TAG = "TAG_Act_MyPets";
 
-    Button BT_new_pet;
+    //DB VARIABLE
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth;
+
+    //FRAGMENT VAR
+    Fragment my_fragment;
+    FragmentManager my_frag_manager;
+    FragmentTransaction my_frag_trans;
+
+
+
+    FloatingActionButton BT_new_pet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_pets);
         Log.d(TAG, "onCreate: Started.");
+
+
+
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        Log.d(TAG, "DB started.");
+
+
+
+
         ListView mListView = (ListView) findViewById(R.id.listView_MyPets);
+
+        BT_new_pet = findViewById(R.id.BT_Act_myPets_addAnimal);
+        Log.d(TAG, "ok button find.");
+        BT_new_pet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                //primo fragment profile classico
+                //con new scegliamo il fragment da istanziare
+
+                my_fragment = new Fragment_AddNewPet();
+                my_frag_manager = getSupportFragmentManager();
+                my_frag_trans = my_frag_manager.beginTransaction();
+                //si aggiunge il richiamo allo stack
+                my_frag_trans.addToBackStack(null);
+                //add diventa replace
+                my_frag_trans.replace(R.id.FRa , my_fragment);
+                my_frag_trans.commit();
+
+
+            }
+        });
+
+        if (currentUser != null) {
+            // User is signed in
+            //load animal from db
+        } else {
+            // No user is signed in
+            //altrimenti dovremmo uscire
+        }
 
         //Create Pets example
         //TODO con il db funzionante questa diventerà una query che rimepie l'array
@@ -59,32 +129,47 @@ public class Activity_MyPets extends AppCompatActivity {
         MyPetsListAdapter adapter = new MyPetsListAdapter(this, R.layout.adapter_my_pets_list, petList);
         mListView.setAdapter(adapter);
 
-        BT_new_pet = mListView.findViewById(R.id.BT_addAnimal);
-        BT_new_pet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*
 
-
-                //primo fragment profile classico
-                //con new scegliamo il fragment da istanziare
-
-                Fragment_UserProfile my_fragment = new Fragment_UserProfile();
-
-                //Fragment_UserProfile my_fragment = new Fragment_UserProfile();
-                my_fragment.setMyCallBackFrag(this);
-                //my_fragment.myCallBackFrag(this);
-                my_frag_manager = getSupportFragmentManager();
-                my_frag_trans = my_frag_manager.beginTransaction();
-
-                my_frag_trans.add(R.id.FragProfileUser , my_fragment);
-                my_frag_trans.commit();
-
-                */
-            }
-        });
 
     }//END ON CREATE
 
 
+    @Override
+    public void createAnimalInDB(String Name, String Specie, String Sex, String Razza) {
+        //qui vanno creati gli animali nel DB con le info base
+        //Questa risposta arriva dal Fragment Add new Pet
+
+        // Create a new user with a first and last name
+        Map<String, Object> pets_map = new HashMap<>();
+        pets_map.put("Name", Name);
+        pets_map.put("Specie", "Specie");
+        pets_map.put("Sex", Sex);
+        pets_map.put("Razza", Razza);
+
+        // Add a new document with a document = ID
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = user.getUid();
+        Log.d(TAG,"This is UID " + userID);
+
+
+        //PROVA DI CREAZIONE SUBCOLLECTION
+
+        db.collection("Animal From User").document(userID).
+                collection("List Pets").document()
+                .set(pets_map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+
+
+    }
 }
