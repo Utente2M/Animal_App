@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,10 +16,9 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import it.uniba.dib.sms222315.Autentication.CallbackFragment;
+import it.uniba.dib.sms222315.UserPets.Activity_MyPets;
 import it.uniba.dib.sms222315.MainActivity;
 import it.uniba.dib.sms222315.R;
-import it.uniba.dib.sms222315.UserProfile.Interf_UserProfile;
 
 public class Fragment_menu_profile extends Fragment {
 
@@ -49,9 +47,9 @@ public class Fragment_menu_profile extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.d(TAG , "Try start Activity my pets");
-                //Intent myPets = new Intent(getActivity(), );
-                //startActivity(myPets);
-            }
+                Intent myPets = new Intent(getActivity(),Activity_MyPets.class);
+                startActivity(myPets);
+            }//end onClick myPets
         });
 
         //bottone logout

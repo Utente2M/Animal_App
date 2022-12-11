@@ -23,7 +23,7 @@ import it.uniba.dib.sms222315.TestListView.Person;
 
 public class PersonListAdapter extends ArrayAdapter<Person> {
 
-    private static final String TAG = "PersonListAdapter";
+    private static final String TAG = "TAG_PersonListAdapter";
 
     private Context mContext;
     private int mResource;

@@ -18,7 +18,7 @@ public class Activity_MemberList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_list);
         Log.d(TAG, "onCreate: Started.");
-        ListView mListView = (ListView) findViewById(R.id.listView);
+        ListView mListView = (ListView) findViewById(R.id.listViewMemberList);
 
         //Create the Person objects
         Person john = new Person("John","12-20-1998","Male");
