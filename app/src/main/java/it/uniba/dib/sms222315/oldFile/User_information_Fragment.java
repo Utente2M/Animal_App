@@ -1,6 +1,5 @@
-package it.uniba.dib.sms222315;
+package it.uniba.dib.sms222315.oldFile;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import it.uniba.dib.sms222315.R;
 
 /**
  * A simple {@link Fragment} subclass.

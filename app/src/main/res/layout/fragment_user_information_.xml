@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:backgroundTint="#FA0202"
     android:backgroundTintMode="add"
-    tools:context=".User_information_Fragment">
+    tools:context=".oldFile.User_information_Fragment">
 
     <!-- TODO: Update blank fragment layout -->
 

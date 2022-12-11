@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222315;
+package it.uniba.dib.sms222315.TestListView;
 
 public class Person {
     private String name;

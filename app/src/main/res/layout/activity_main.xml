@@ -35,7 +35,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
-        android:name="it.uniba.dib.sms222315.User_information_Fragment"
+        android:name="it.uniba.dib.sms222315.oldFile.User_information_Fragment"
         android:layout_width="409dp"
         android:layout_height="723dp"
         app:layout_constraintBottom_toBottomOf="parent"

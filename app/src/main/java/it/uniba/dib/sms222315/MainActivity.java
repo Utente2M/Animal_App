@@ -15,7 +15,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import it.uniba.dib.sms222315.Autentication.LoginOrRegisterActivity;
+import it.uniba.dib.sms222315.TestListView.Activity_MemberList;
 import it.uniba.dib.sms222315.UserProfile.ProfileUserActivity;
+import it.uniba.dib.sms222315.oldFile.User_information_Fragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,20 +66,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }//END onStart
-
-        public void button_lunchLogin (View view){
-            /**
-             * TODO federica : launch fragment from a button in android studio
-             * transizioni , managerfragment
-             *
-             * oscurare quello che c'è sotto
-             */
-
-/**
-            Intent login_prova = new Intent(this, EmailPasswordActivity.class);
-            startActivity(login_prova);
- **/
-        }//END LunchLogin
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

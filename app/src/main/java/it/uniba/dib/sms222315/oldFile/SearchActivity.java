@@ -1,8 +1,10 @@
-package it.uniba.dib.sms222315;
+package it.uniba.dib.sms222315.oldFile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import it.uniba.dib.sms222315.R;
 
 public class SearchActivity extends AppCompatActivity {
 

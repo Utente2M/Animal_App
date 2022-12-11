@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222315;
+package it.uniba.dib.sms222315.TestListView;
 
 import android.content.Context;
 
@@ -13,7 +13,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import it.uniba.dib.sms222315.R;
+import it.uniba.dib.sms222315.TestListView.Person;
 
 /**
  * Created by User on 3/14/2017.
