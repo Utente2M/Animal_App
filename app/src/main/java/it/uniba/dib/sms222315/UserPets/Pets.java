@@ -3,17 +3,19 @@ package it.uniba.dib.sms222315.UserPets;
 public class Pets {
 
     private String prv_str_namePets;
-    private Boolean prv_isMale;
+    private String prv_sex;
     private String prv_Razza;
     private String prv_Mantello;
     private String prv_DataNascita;
     private String prv_SegniParticolari;
+    private String prv_specie;
 
-    public Pets(String namePets, Boolean isMale, String razza,
+    public Pets(String namePets,String specie,  String sex, String razza,
                 String mantello, String dataNascita, String segniParticolari) {
 
         prv_str_namePets = namePets;
-        prv_isMale = isMale;
+        prv_specie = specie;
+        prv_sex = sex;
         prv_Razza = razza;
         prv_Mantello = mantello;
         prv_DataNascita = dataNascita;
@@ -25,8 +27,8 @@ public class Pets {
         return prv_str_namePets;
     }
 
-    public Boolean getPrv_isMale() {
-        return prv_isMale;
+    public String getPrv_sex() {
+        return prv_sex;
     }
 
     public String getPrv_Razza() {
@@ -44,4 +46,11 @@ public class Pets {
     public String getPrv_SegniParticolari() {
         return prv_SegniParticolari;
     }
+
+    public String getPrv_specie() {
+        return prv_specie;
+    }
+
+
+
 }//END CLASS

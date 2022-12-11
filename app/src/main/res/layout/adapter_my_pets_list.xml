@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="100">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="50"
+        android:weightSum="100">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="50"
+            android:id="@+id/image_MyPets"
+            />
+
+        <TextView
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:text="Pluto"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/tV_ListV_my_pets_nome"
+            android:layout_weight="50"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="50">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:weightSum="100">
+
+            <TextView
+                android:id="@+id/tV_ListV_my_pets_razza"
+                android:layout_width="154dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="Coocker" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Cane"
+                android:id="@+id/tV_ListV_my_pets_specie"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:gravity="center"
+            android:text="Maschio"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:id="@+id/tV_ListV_my_pets_sex"
+            android:layout_below="@+id/tV_ListV_my_pets_razza"/>
+
+
+        </LinearLayout>
+
+
+
+</LinearLayout>

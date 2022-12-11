@@ -11,7 +11,7 @@ import it.uniba.dib.sms222315.R;
 
 public class Activity_MemberList extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "TAG_Act_MemberList";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
