@@ -26,6 +26,7 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.util.Arrays;
 
@@ -44,6 +45,7 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
     FragmentManager my_frag_manager;
     FragmentTransaction my_frag_trans;
     FrameLayout my_frame_autocomplete;
+    private static int AUTOCOMPLETE_REQUEST_CODE = 1;
 
     private static final String TAG = "TAG_Act_LogOrRegis";
     @Override
@@ -118,9 +120,9 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
     }
 
 
-    //non funzionante
+    //non funzionante autocomplete place
     @Override
-    public void startAutocompleteActivity(View view ) {
+    public void startAutocompleteActivity(View view , Context myContext ) {
         Log.d(TAG , " try luanch intent autocomplet place ");
 
         my_frame_autocomplete = view.findViewById(R.id.autocomplete_fragment);
@@ -129,9 +131,15 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
         Intent intent = new Autocomplete.IntentBuilder(
                 AutocompleteActivityMode.OVERLAY,
                 Arrays.asList(Place.Field.ID , Place.Field.NAME))
-                .build(this);
+               //getAppContext sostituisce this
+                .build(getApplicationContext());
         Log.d(TAG , " ok intent");
-        setContentView(my_frame_autocomplete);
+
+        //setContentView(my_frame_autocomplete);
+        Log.d(TAG , " ok frame change");
+
+        startActivityForResult(intent , AUTOCOMPLETE_REQUEST_CODE);
+
 
 
 
@@ -189,7 +197,30 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
                     }
                 });
 
+    }//END login function
+
+    @Override
+    public void addInformationToProfile(String name) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(name)
+                //.setPhotoUri(Uri.parse("https://example.com/jane-q-user/profile.jpg"))
+                .build();
+
+        user.updateProfile(profileUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "User profile updated.");
+                            reload();
+                        }
+                    }
+                });
     }
+
+
 
     private void updateUI(FirebaseUser user) {
         my_fragment = new Fragment_Regis_Basic_info();
@@ -212,6 +243,6 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
             startActivity(intent_ok_log);
         }Log.d(TAG, "RELOAD ");
 
-    }
+    }//end reload
 
 }

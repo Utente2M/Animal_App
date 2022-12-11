@@ -30,6 +30,8 @@ public class Fragment_Register extends Fragment {
     String  str_email , str_password;
 
 
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

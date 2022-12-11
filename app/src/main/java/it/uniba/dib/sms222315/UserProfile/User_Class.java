@@ -1,5 +1,6 @@
 package it.uniba.dib.sms222315.UserProfile;
 
+import android.net.Uri;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -10,6 +11,7 @@ public class User_Class {
     private String prv_str_nome;
     private String prv_str_email;
     private String prv_str_UID;
+    private Uri prv_Uri_ProfImg;
 
     private FirebaseUser userAuth;
     private FirebaseAuth mAuth;
@@ -31,10 +33,7 @@ public class User_Class {
     }
 
     private void infoProfileBasic() {
-        //qui caricheremo altre info
-        String name = "Pinuccio il bradipo";
-        Log.d(TAG, "CLASS_name : " + name);
-        prv_str_nome = name;
+
     }
 
 
@@ -43,16 +42,22 @@ public class User_Class {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             // Name, email address, and profile photo Url
+            String name = user.getDisplayName();
+            prv_str_nome = name;
+            Log.d(TAG,"CLASS_nome : " + name);
 
             //set email
             String email = user.getEmail();
             prv_str_email =email;
             Log.d(TAG, "CLASS_email : " + email);
-            //Uri photoUrl = user.getPhotoUrl();
+
+            Uri photoUrl = user.getPhotoUrl();
+            prv_Uri_ProfImg = photoUrl;
+            Log.d(TAG, "CLASS_uri : " + photoUrl);
 
             //NON USATO
             // Check if user's email is verified
-            boolean emailVerified = user.isEmailVerified();
+           // boolean emailVerified = user.isEmailVerified();
 
 
             // set UID
@@ -75,6 +80,10 @@ public class User_Class {
 
     public String getPrv_str_UID() {
         return prv_str_UID;
+    }
+
+    public Uri getUri_ProfImg() {
+        return prv_Uri_ProfImg;
     }
 }//END CLASS
 

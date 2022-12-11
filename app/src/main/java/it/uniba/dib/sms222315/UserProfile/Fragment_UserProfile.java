@@ -1,12 +1,15 @@
 package it.uniba.dib.sms222315.UserProfile;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,14 +18,14 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import it.uniba.dib.sms222315.Autentication.CallbackFragment;
+import it.uniba.dib.sms222315.MainActivity;
 import it.uniba.dib.sms222315.R;
-import it.uniba.dib.sms222315.UserProfile.Interf_UserProfile;
 
 public class Fragment_UserProfile extends Fragment {
 
     TextView TV_UID , TV_email , TV_name ;
     Button but_logout , but_menu;
+    ImageView Img_profileUser;
 
     Interf_UserProfile myCallBackFrag;
     User_Class my_User;
@@ -47,6 +50,7 @@ public class Fragment_UserProfile extends Fragment {
         TV_UID = my_view.findViewById(R.id.show_profil_uid);
         but_logout = my_view.findViewById(R.id.logout_profile);
         but_menu = my_view.findViewById(R.id.button_menu);
+        Img_profileUser = my_view.findViewById(R.id.frag_userbasic_imageView_UserProfile);
 
         my_User = new User_Class();
         Log.d(TAG , "onCreateView , OK create class");
@@ -54,12 +58,27 @@ public class Fragment_UserProfile extends Fragment {
         TV_email.setText(my_User.getPrv_str_email());
         TV_UID.setText(my_User.getPrv_str_UID());
 
+        Uri UriImgProfile = null;
+        UriImgProfile = my_User.getUri_ProfImg();
+        Log.d(TAG , "OK SET URI ON PROFILE");
+        if (UriImgProfile==(null) ){
+            Log.d(TAG, " no profile image");
+        }
+        else{
+            Img_profileUser.setImageURI(my_User.getUri_ProfImg());
+        }
+
+
         but_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                FirebaseAuth.getInstance().signOut();
                 Log.d(TAG, "BUTTON LOGOUT OK ");
+                FirebaseAuth.getInstance().signOut();
+                //Richiama la main activity
+                Intent okLogut = new Intent (getActivity(), MainActivity.class);
+                startActivity(okLogut);
+
             }
         });
 

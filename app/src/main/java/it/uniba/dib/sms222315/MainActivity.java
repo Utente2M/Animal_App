@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             case R.id.action_find:
-                Intent intent_search = new Intent(this, SearchActivity.class);
+                Intent intent_search = new Intent(this, Activity_MemberList.class);
                 startActivity(intent_search);
                 Log.d(TAG, "search activity");
                 return true;

@@ -17,7 +17,8 @@ import it.uniba.dib.sms222315.R;
 
 public class Fragment_Regis_Basic_info extends Fragment {
 
-    EditText ET_AutocompletAddress;
+    EditText ET_AutocompletAddress , ET_Name;
+    Button BT_Create;
     CallbackFragment myListnerCall;
 
     public Fragment_Regis_Basic_info() {
@@ -37,12 +38,22 @@ public class Fragment_Regis_Basic_info extends Fragment {
                              Bundle savedInstanceState) {
         View my_view = inflater.inflate(R.layout.fragment__regis__basic_info, container, false);
 
+        ET_Name = my_view.findViewById(R.id.FragRegi_basiInfo_ET_name);
         ET_AutocompletAddress = my_view.findViewById(R.id.ET_autocomp_address);
 
         ET_AutocompletAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startAutocompleteActivity (my_view);
+            }
+        });
+
+        BT_Create = my_view.findViewById(R.id.FragRegi_basiInfo_BT_Create);
+        BT_Create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String sendName = ET_Name.getText().toString();
+                addInformationToProfile (sendName);
             }
         });
 
@@ -59,8 +70,12 @@ public class Fragment_Regis_Basic_info extends Fragment {
         myListnerCall = (CallbackFragment) context;
     }
 
+    private void addInformationToProfile (String name){
+        myListnerCall.addInformationToProfile(name);
+    }
+
     private void startAutocompleteActivity(View my_view ) {
 
-        myListnerCall.startAutocompleteActivity(my_view);
+        myListnerCall.startAutocompleteActivity(my_view, getContext());
     }
 }
