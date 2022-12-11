@@ -13,10 +13,10 @@ public class Pets {
     public Pets(String namePets,String specie,  String sex, String razza,
                 String mantello, String dataNascita, String segniParticolari) {
 
-        prv_str_namePets = namePets;
-        prv_specie = specie;
-        prv_sex = sex;
-        prv_Razza = razza;
+        prv_str_namePets = namePets; //required
+        prv_specie = specie; //required
+        prv_sex = sex; //required
+        prv_Razza = razza; //required
         prv_Mantello = mantello;
         prv_DataNascita = dataNascita;
         prv_SegniParticolari = segniParticolari;
