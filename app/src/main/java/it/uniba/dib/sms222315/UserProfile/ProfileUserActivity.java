@@ -96,7 +96,7 @@ public class ProfileUserActivity extends AppCompatActivity implements Interf_Use
         my_frag_trans.commit();
 
     }//END addFrag
-
+//segno blu
     @Override
     public void changeFragment() {
         replaceFragment();

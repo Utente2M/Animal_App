@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import it.uniba.dib.sms222315.Autentication.Fragment_Register;
 import it.uniba.dib.sms222315.R;
 import it.uniba.dib.sms222315.TestListView.Person;
 import it.uniba.dib.sms222315.TestListView.PersonListAdapter;
@@ -44,7 +45,7 @@ public class Activity_MyPets extends AppCompatActivity implements Interf_UserPet
 
 
 
-    FloatingActionButton BT_new_pet;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,83 +57,57 @@ public class Activity_MyPets extends AppCompatActivity implements Interf_UserPet
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-
-
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
         Log.d(TAG, "DB started.");
 
-
-
-
-        ListView mListView = (ListView) findViewById(R.id.listView_MyPets);
-
-        BT_new_pet = findViewById(R.id.BT_Act_myPets_addAnimal);
-        Log.d(TAG, "ok button find.");
-        BT_new_pet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                //primo fragment profile classico
-                //con new scegliamo il fragment da istanziare
-
-                my_fragment = new Fragment_AddNewPet();
-                my_frag_manager = getSupportFragmentManager();
-                my_frag_trans = my_frag_manager.beginTransaction();
-                //si aggiunge il richiamo allo stack
-                my_frag_trans.addToBackStack(null);
-                //add diventa replace
-                my_frag_trans.replace(R.id.FRa , my_fragment);
-                my_frag_trans.commit();
-
-
-            }
-        });
-
-        if (currentUser != null) {
-            // User is signed in
-            //load animal from db
-        } else {
-            // No user is signed in
-            //altrimenti dovremmo uscire
-        }
-
-        //Create Pets example
-        //TODO con il db funzionante questa diventerà una query che rimepie l'array
-        Pets dog_1 = new Pets("Pluto" , "Cane", "Maschio",
-                "Coocker", "", "","");
-
-        Pets cat_1 = new Pets("Gomma" , "Gatto", "Femmina",
-                "Killer", "", "","");
-
-        Pets dog_2 = new Pets("Charlie Hope" , "Cane", "Femmina",
-                "Lupo", "", "","");
-
-        Pets rabbit_1 = new Pets("Melissa Mellessa" , "Coniglio", "Femmina",
-                "Saccc", "", "","");
-
-
-
-
-        //Add the Person objects to an ArrayList
-        ArrayList<Pets> petList = new ArrayList<>();
-        petList.add(dog_1);
-        petList.add(cat_1);
-        petList.add(dog_2);
-        petList.add(rabbit_1);
-
-
-        // FINE MODIFICHE TODO
-
-
-        MyPetsListAdapter adapter = new MyPetsListAdapter(this, R.layout.adapter_my_pets_list, petList);
-        mListView.setAdapter(adapter);
-
-
+        addFragment();
 
     }//END ON CREATE
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Log.d(TAG, "on Start activity MyPets ");
+
+    }
+
+    private void addFragment() {
+
+        //primo fragment profile classico
+        //con new scegliamo il fragment da istanziare
+
+        Fragment_MyPets_Home my_fragment = new Fragment_MyPets_Home();
+
+        //Fragment_UserProfile my_fragment = new Fragment_UserProfile();
+        my_fragment.setMy_callbackFragment(this);
+        //my_fragment.myCallBackFrag(this);
+        my_frag_manager = getSupportFragmentManager();
+        my_frag_trans = my_frag_manager.beginTransaction();
+
+        my_frag_trans.add(R.id.Frame_Act_MyPets , my_fragment);
+        my_frag_trans.commit();
+    }
+
+
+    public void replaceFragment(){
+        //qui cambia il new rispetto a prima
+        my_fragment = new Fragment_AddNewPet();
+        my_frag_manager = getSupportFragmentManager();
+        my_frag_trans = my_frag_manager.beginTransaction();
+        //si aggiunge il richiamo allo stack
+        my_frag_trans.addToBackStack(null);
+        //add diventa replace
+        my_frag_trans.replace(R.id.Frame_Act_MyPets , my_fragment);
+        my_frag_trans.commit();
+
+    }//END addFrag
+
+
+    @Override
+    public void changeFragment() {
+        replaceFragment();
+    }
 
     @Override
     public void createAnimalInDB(String Name, String Specie, String Sex, String Razza) {
