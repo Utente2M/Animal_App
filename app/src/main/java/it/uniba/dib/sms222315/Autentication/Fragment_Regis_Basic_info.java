@@ -54,6 +54,7 @@ LoginOrRegisterActivity myActivity = (LoginOrRegisterActivity) getActivity();
         ET_AutocompletAddress.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
+
                 startAutocompleteActivity ();
             }
         });

@@ -170,18 +170,7 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
                 EditText sendAddress = findViewById(R.id.ET_autocomp_address);
                 Log.i(TAG, "OKKKKKKKKK");
 
-                /*
-
-                //non funziona chimata
-                my_fragment = new Fragment_Regis_Basic_info();
-                my_frag_manager = getSupportFragmentManager();
-                my_frag_trans = my_frag_manager.beginTransaction();
-                //si aggiunge il richiamo allo stack
-                my_frag_trans.addToBackStack(null);
-                //add diventa replace
-                my_frag_trans.replace(R.id.FragAutentic , my_fragment);
-                my_frag_trans.commit();
-                 */
+                updateUI();
 
 
 
@@ -215,7 +204,7 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            updateUI();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -279,7 +268,7 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
 
 
 
-    private void updateUI(FirebaseUser user) {
+    private void updateUI() {
 
 
         my_fragment = new Fragment_Regis_Basic_info();
