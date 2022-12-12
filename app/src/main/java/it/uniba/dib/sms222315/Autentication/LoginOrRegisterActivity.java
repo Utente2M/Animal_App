@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222315.Autentication;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.RectangularBounds;
 import com.google.android.libraries.places.api.model.TypeFilter;
@@ -29,6 +31,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 import it.uniba.dib.sms222315.UserProfile.ProfileUserActivity;
 import it.uniba.dib.sms222315.R;
@@ -57,6 +60,9 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), getString(R.string.api_key), Locale.ITALIAN);
+        }
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
@@ -126,14 +132,14 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
     public void startAutocompleteActivity(View view , Context myContext ) {
         Log.d(TAG , " try luanch intent autocomplet place ");
 
-        my_frame_autocomplete = view.findViewById(R.id.autocomplete_fragment);
+        my_frame_autocomplete = view.findViewById(R.id.FragAutentic);
 
 
         Intent intent = new Autocomplete.IntentBuilder(
                 AutocompleteActivityMode.OVERLAY,
                 Arrays.asList(Place.Field.ID , Place.Field.NAME))
-               //getAppContext sostituisce this
-                .build(getApplicationContext());
+               //getAppContext sostituisce this getApplicationContext()
+                .build(myContext);
         Log.d(TAG , " ok intent");
 
         //setContentView(my_frame_autocomplete);
@@ -141,9 +147,11 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
 
         startActivityForResult(intent , AUTOCOMPLETE_REQUEST_CODE);
 
+    }
 
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

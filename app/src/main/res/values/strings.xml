@@ -33,5 +33,6 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="api_key">AIzaSyBwQOqHuw4FUl_9Xw7oEZ1o7YCa5DM9thI</string>
 
 </resources>
