@@ -45,18 +45,20 @@ public class Fragment_Regis_Basic_info extends Fragment {
 
         ET_Name = my_view.findViewById(R.id.FragRegi_basiInfo_ET_name);
         ET_AutocompletAddress = my_view.findViewById(R.id.ET_autocomp_address);
-
-        LoginOrRegisterActivity myActivity = (LoginOrRegisterActivity) getActivity();
+/*
+LoginOrRegisterActivity myActivity = (LoginOrRegisterActivity) getActivity();
         String myDataFromActivity = myActivity.myString_address();
 
         ET_AutocompletAddress.setText(myDataFromActivity);
-
-        ET_AutocompletAddress.setOnClickListener(new View.OnClickListener() {
+ */
+        ET_AutocompletAddress.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View view) {
-                startAutocompleteActivity (my_view);
+            public void onFocusChange(View view, boolean b) {
+                startAutocompleteActivity ();
             }
         });
+
+
 
         BT_Create = my_view.findViewById(R.id.FragRegi_basiInfo_BT_Create);
         BT_Create.setOnClickListener(new View.OnClickListener() {
@@ -84,8 +86,8 @@ public class Fragment_Regis_Basic_info extends Fragment {
         myListnerCall.addInformationToProfile(name);
     }
 
-    private void startAutocompleteActivity(View my_view ) {
+    private void startAutocompleteActivity( ) {
 
-        myListnerCall.startAutocompleteActivity(my_view, getContext());
+        myListnerCall.startAutocompleteActivity();
     }
 }

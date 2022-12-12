@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -132,10 +133,10 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
 
     //non funzionante autocomplete place
     @Override
-    public void startAutocompleteActivity(View view , Context myContext ) {
+    public void startAutocompleteActivity( ) {
         Log.d(TAG , " try luanch intent autocomplet place ");
 
-        my_frame_autocomplete = view.findViewById(R.id.FragAutentic);
+
 
 
         // Set the fields to specify which types of place data to
@@ -154,19 +155,34 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Place place = Autocomplete.getPlaceFromIntent(data);
-                Log.d(TAG, "stampa risultati maps");
-                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
-                Log.i(TAG, "Address: " + place.getAddress() + ", " + place.getId());
-
-                //da rimandare il fragment e completare i dati
 
                 myString_address = place.getAddress();
 
-                Fragment_Regis_Basic_info  my_fragment = new Fragment_Regis_Basic_info();
+                Log.d(TAG, "stampa risultati maps");
+                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
+                Log.i(TAG, "Address: " + myString_address);
+
+                //da rimandare il fragment e completare i dati
+
+
+
+                Log.i(TAG, "TRY HARDDDDDDD");
+                EditText sendAddress = findViewById(R.id.ET_autocomp_address);
+                Log.i(TAG, "OKKKKKKKKK");
+
+                /*
+
+                //non funziona chimata
+                my_fragment = new Fragment_Regis_Basic_info();
                 my_frag_manager = getSupportFragmentManager();
                 my_frag_trans = my_frag_manager.beginTransaction();
-                my_frag_trans.add(R.id.FragAutentic , my_fragment);
+                //si aggiunge il richiamo allo stack
+                my_frag_trans.addToBackStack(null);
+                //add diventa replace
+                my_frag_trans.replace(R.id.FragAutentic , my_fragment);
                 my_frag_trans.commit();
+                 */
+
 
 
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
@@ -264,6 +280,8 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
 
 
     private void updateUI(FirebaseUser user) {
+
+
         my_fragment = new Fragment_Regis_Basic_info();
         my_frag_manager = getSupportFragmentManager();
         my_frag_trans = my_frag_manager.beginTransaction();
