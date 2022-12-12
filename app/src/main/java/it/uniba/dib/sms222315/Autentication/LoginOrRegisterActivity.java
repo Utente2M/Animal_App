@@ -15,15 +15,13 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.RectangularBounds;
-import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import it.uniba.dib.sms222315.UserProfile.ProfileUserActivity;
@@ -44,9 +43,13 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
 
     //inizialiamo i fragment
 
+    private String myString_address;
+
     Fragment my_fragment;
     FragmentManager my_frag_manager;
     FragmentTransaction my_frag_trans;
+
+    //GMaps Place Autocomplete
     FrameLayout my_frame_autocomplete;
     private static int AUTOCOMPLETE_REQUEST_CODE = 1;
 
@@ -135,24 +138,53 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
         my_frame_autocomplete = view.findViewById(R.id.FragAutentic);
 
 
-        Intent intent = new Autocomplete.IntentBuilder(
-                AutocompleteActivityMode.OVERLAY,
-                Arrays.asList(Place.Field.ID , Place.Field.NAME))
-               //getAppContext sostituisce this getApplicationContext()
-                .build(myContext);
-        Log.d(TAG , " ok intent");
+        // Set the fields to specify which types of place data to
+        // return after the user has made a selection.
+        List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME , Place.Field.ADDRESS);
 
-        //setContentView(my_frame_autocomplete);
-        Log.d(TAG , " ok frame change");
-
-        startActivityForResult(intent , AUTOCOMPLETE_REQUEST_CODE);
+        // Start the autocomplete intent.
+        Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+                .build(this);
+        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = Autocomplete.getPlaceFromIntent(data);
+                Log.d(TAG, "stampa risultati maps");
+                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
+                Log.i(TAG, "Address: " + place.getAddress() + ", " + place.getId());
+
+                //da rimandare il fragment e completare i dati
+
+                myString_address = place.getAddress();
+
+                Fragment_Regis_Basic_info  my_fragment = new Fragment_Regis_Basic_info();
+                my_frag_manager = getSupportFragmentManager();
+                my_frag_trans = my_frag_manager.beginTransaction();
+                my_frag_trans.add(R.id.FragAutentic , my_fragment);
+                my_frag_trans.commit();
+
+
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                // TODO: Handle the error.
+                Status status = Autocomplete.getStatusFromIntent(data);
+                Log.i(TAG, status.getStatusMessage());
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+            return;
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    public String myString_address() {
+        return myString_address;
+    }
+
 
     @Override
     public void createUSerWithMailPassword(String email, String password) {

@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.protobuf.Empty;
+
 import it.uniba.dib.sms222315.R;
 
 
@@ -37,10 +39,17 @@ public class Fragment_Regis_Basic_info extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
+
         View my_view = inflater.inflate(R.layout.fragment__regis__basic_info, container, false);
 
         ET_Name = my_view.findViewById(R.id.FragRegi_basiInfo_ET_name);
         ET_AutocompletAddress = my_view.findViewById(R.id.ET_autocomp_address);
+
+        LoginOrRegisterActivity myActivity = (LoginOrRegisterActivity) getActivity();
+        String myDataFromActivity = myActivity.myString_address();
+
+        ET_AutocompletAddress.setText(myDataFromActivity);
 
         ET_AutocompletAddress.setOnClickListener(new View.OnClickListener() {
             @Override
