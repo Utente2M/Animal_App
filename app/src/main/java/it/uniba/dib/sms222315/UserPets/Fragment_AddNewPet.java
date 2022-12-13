@@ -11,17 +11,23 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import it.uniba.dib.sms222315.R;
 import it.uniba.dib.sms222315.UserProfile.Interf_UserProfile;
 
 
-public class Fragment_AddNewPet extends Fragment {
+public class Fragment_AddNewPet extends Fragment implements AdapterView.OnItemSelectedListener {
 
     EditText ET_Name , ET_Specie ,ET_Sex, ET_Razza ;
+
+    Spinner SP_Specie;
+    String sendSpecie;
     Button BT_Create;
     Interf_UserPets MyInterf_Pets;
 
@@ -59,9 +65,15 @@ public class Fragment_AddNewPet extends Fragment {
          */
 
         ET_Name = my_view.findViewById(R.id.et_Frag_NewPetDB_name);
-        ET_Specie = my_view.findViewById(R.id.et_Frag_NewPetDB_specie);
+        //ET_Specie = my_view.findViewById(R.id.et_Frag_NewPetDB_specie);
         ET_Sex = my_view.findViewById(R.id.et_Frag_NewPetDB_sex);
         ET_Razza = my_view.findViewById(R.id.et_Frag_NewPetDB_razza) ;
+
+        SP_Specie = my_view.findViewById(R.id.spinner_specie);
+        ArrayAdapter <CharSequence> adapter_spin = ArrayAdapter.createFromResource(getContext(), R.array.Specie_supportate, android.R.layout.simple_spinner_item);
+        adapter_spin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        SP_Specie.setAdapter(adapter_spin);
+        SP_Specie.setOnItemSelectedListener(this);
 
 
 
@@ -70,7 +82,7 @@ public class Fragment_AddNewPet extends Fragment {
             @Override
             public void onClick(View view) {
                 String sendName = ET_Name.getText().toString();
-                String sendSpecie = ET_Specie.getText().toString();
+                //String sendSpecie = ET_Specie.getText().toString();
                 String sendSex = ET_Sex.getText().toString();
                 String sendRazza = ET_Razza.getText().toString();
 
@@ -78,9 +90,12 @@ public class Fragment_AddNewPet extends Fragment {
                 if( sendName.isEmpty()){
                     ET_Name.setError("NAME is required");
                 }
+                /*
                 else if(sendSpecie.isEmpty()){
                     ET_Specie.setError("SPECIE is required");
                 }
+                 */
+
                 else if(sendSex.isEmpty()){
                     ET_Sex.setError("SEX is required");
                 }
@@ -118,7 +133,13 @@ public class Fragment_AddNewPet extends Fragment {
     }
 
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        sendSpecie = adapterView.getItemAtPosition(i).toString();
+    }
 
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
 
-
+    }
 }//END CLASS

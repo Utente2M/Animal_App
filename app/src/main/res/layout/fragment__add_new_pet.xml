@@ -22,16 +22,25 @@
         android:translationX="60dp"
         android:translationY="60dp" />
 
+    <Spinner
+        android:id="@+id/spinner_specie"
+        android:layout_width="210dp"
+        android:layout_height="36dp"
+        android:translationX="60dp"
+        android:translationY="120dp" />
+
     <EditText
         android:id="@+id/et_Frag_NewPetDB_specie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Inserct pet specie ( Es : Cane ) "
         android:inputType="textPersonName"
         android:text=""
-        android:hint="Inserct pet specie "
         android:translationX="60dp"
-        android:translationY="120dp" />
+        android:translationY="120dp"
+        android:visibility="gone"
+        tools:visibility="gone" />
 
     <EditText
         android:id="@+id/et_Frag_NewPetDB_sex"
@@ -51,7 +60,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text=""
-        android:hint="Specie"
+        android:hint="Razza"
         android:translationX="60dp"
         android:translationY="240dp" />
 
@@ -62,5 +71,7 @@
         android:text="Create"
         android:translationX="120dp"
         android:translationY="320dp" />
+
+
 
 </FrameLayout>

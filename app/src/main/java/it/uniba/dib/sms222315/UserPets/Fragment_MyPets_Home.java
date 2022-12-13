@@ -43,6 +43,8 @@ public class Fragment_MyPets_Home extends Fragment {
     FloatingActionButton BT_new_pet;
     Interf_UserPets myCallBackFrag;
 
+
+
     private static final String TAG = "TAG_Frag_MyPets_Home";
 
     @Override
@@ -61,7 +63,12 @@ public class Fragment_MyPets_Home extends Fragment {
         //tutti i find e gli onclick
         mListView = (ListView) my_view.findViewById(R.id.listView_MyPets);
 
+
+
         popolateList();
+
+
+
 
 
 
@@ -89,9 +96,8 @@ public class Fragment_MyPets_Home extends Fragment {
         //Create Pets example
         //TODO con il db funzionante questa diventerà una query che rimepie l'array
 
-
-
         petList.clear();
+
 
 
         //user id sarà sostituito dal codice padrone
@@ -105,6 +111,7 @@ public class Fragment_MyPets_Home extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        Boolean check;
                         if (task.isSuccessful()) {
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
@@ -117,8 +124,13 @@ public class Fragment_MyPets_Home extends Fragment {
 
                                 mListView.setAdapter(adapter);
                             }
+                            //qui messaggio forza visibilità off
+
+
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
+                            //qui messaggio visibilità si
+
                         }
                     }
                 });
@@ -135,6 +147,8 @@ public class Fragment_MyPets_Home extends Fragment {
 
 
         // TODO sono arrivato qua
+
+
 
 
     }

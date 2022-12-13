@@ -73,10 +73,8 @@ public class ProfileUserActivity extends AppCompatActivity implements Interf_Use
         //con new scegliamo il fragment da istanziare
 
         Fragment_UserProfile my_fragment = new Fragment_UserProfile();
-
-        //Fragment_UserProfile my_fragment = new Fragment_UserProfile();
         my_fragment.setMyCallBackFrag(this);
-        //my_fragment.myCallBackFrag(this);
+        //
         my_frag_manager = getSupportFragmentManager();
         my_frag_trans = my_frag_manager.beginTransaction();
 
@@ -90,6 +88,7 @@ public class ProfileUserActivity extends AppCompatActivity implements Interf_Use
         my_frag_manager = getSupportFragmentManager();
         my_frag_trans = my_frag_manager.beginTransaction();
         //si aggiunge il richiamo allo stack
+        //QUESTO COMANDO
         my_frag_trans.addToBackStack(null);
         //add diventa replace
         my_frag_trans.replace(R.id.FragProfileUser , my_fragment);

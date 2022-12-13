@@ -49,6 +49,7 @@ public class Fragment_menu_profile extends Fragment {
                 Log.d(TAG , "Try start Activity my pets");
                 Intent myPets = new Intent(getActivity(),Activity_MyPets.class);
                 startActivity(myPets);
+
             }//end onClick myPets
         });
 
