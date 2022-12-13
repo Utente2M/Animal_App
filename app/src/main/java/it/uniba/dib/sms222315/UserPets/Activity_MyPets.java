@@ -96,7 +96,7 @@ public class Activity_MyPets extends AppCompatActivity implements Interf_UserPet
         my_frag_manager = getSupportFragmentManager();
         my_frag_trans = my_frag_manager.beginTransaction();
         //si aggiunge il richiamo allo stack
-        my_frag_trans.addToBackStack(null);
+        my_frag_trans.addToBackStack("Pippo");
         //add diventa replace
         my_frag_trans.replace(R.id.Frame_Act_MyPets , my_fragment );
         my_frag_trans.commit();
@@ -121,6 +121,8 @@ public class Activity_MyPets extends AppCompatActivity implements Interf_UserPet
         pets_map.put("Sex", Sex);
         pets_map.put("Razza", Razza);
 
+        Pets MimmoPetes = new Pets(Name , Specie , Sex , Razza , "" , "" , "");
+
         // Add a new document with a document = ID
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userID = user.getUid();
@@ -131,7 +133,7 @@ public class Activity_MyPets extends AppCompatActivity implements Interf_UserPet
 
         db.collection("Animal From User").document(userID).
                 collection("List Pets").document()
-                .set(pets_map)
+                .set(MimmoPetes)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -146,6 +148,19 @@ public class Activity_MyPets extends AppCompatActivity implements Interf_UserPet
                 });
 
 
+
+
     }//END create Animal DB
+
+    @Override
+    public void turnTohome() {
+
+        // questo metodo non funzione
+        my_fragment = new Fragment_AddNewPet();
+        my_frag_manager = getSupportFragmentManager();
+        my_frag_manager.popBackStack();
+
+
+    }
 
 }//END ACTIVITY

@@ -72,8 +72,6 @@ public class Fragment_Regis_Basic_info extends Fragment {
 
                 addInformationToProfile (sendName);
                 createUserBasicInfo (sendPhone , sendAddress , sendDateBorn);
-                //prova distruzione per backstack
-                //
             }
         });
 

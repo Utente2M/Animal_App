@@ -2,6 +2,7 @@ package it.uniba.dib.sms222315.UserPets;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -10,9 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -21,11 +29,21 @@ import it.uniba.dib.sms222315.R;
 
 
 
+
 public class Fragment_MyPets_Home extends Fragment {
 
-    private static final String TAG = "TAG_Frag_MyPets_Home";
+    //try db load in fragment
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+    ArrayList<Pets> petList = new ArrayList<>();
+    ListView mListView;
+
+
     FloatingActionButton BT_new_pet;
     Interf_UserPets myCallBackFrag;
+
+    private static final String TAG = "TAG_Frag_MyPets_Home";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,19 +59,9 @@ public class Fragment_MyPets_Home extends Fragment {
         View my_view = inflater.inflate(R.layout.fragment__my_pets__home , container , false);
 
         //tutti i find e gli onclick
+        mListView = (ListView) my_view.findViewById(R.id.listView_MyPets);
 
-        ListView mListView = (ListView) my_view.findViewById(R.id.listView_MyPets);
-
-        //this function popolate arrayList for the view
-        ArrayList<Pets> dynamic_petList = popolateList();
-
-
-        MyPetsListAdapter adapter = new MyPetsListAdapter(getContext(),
-                R.layout.adapter_my_pets_list, dynamic_petList);
-
-        mListView.setAdapter(adapter);
-
-
+        popolateList();
 
 
 
@@ -77,30 +85,49 @@ public class Fragment_MyPets_Home extends Fragment {
         return my_view;
     }
 
-    private ArrayList<Pets> popolateList() {
+    private void popolateList() {
         //Create Pets example
         //TODO con il db funzionante questa diventerà una query che rimepie l'array
-        Pets dog_1 = new Pets("Pluto" , "Cane", "Maschio",
-                "Coocker", "", "","");
-
-        Pets cat_1 = new Pets("Gomma" , "Gatto", "Femmina",
-                "Killer", "", "","");
-
-        Pets dog_2 = new Pets("Charlie Hope" , "Cane", "Femmina",
-                "Lupo", "", "","");
-
-        Pets rabbit_1 = new Pets("Melissa Mellessa" , "Coniglio", "Femmina",
-                "Saccc", "", "","");
 
 
 
+        petList.clear();
 
-        //Add the Person objects to an ArrayList
-        ArrayList<Pets> petList = new ArrayList<>();
-        petList.add(dog_1);
-        petList.add(cat_1);
-        petList.add(dog_2);
-        petList.add(rabbit_1);
+
+        //user id sarà sostituito dal codice padrone
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = user.getUid();
+        Log.d(TAG,"This is UID " + userID);
+
+        db.collection("Animal From User").document(userID).
+                collection("List Pets")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+
+                                petList.add(document.toObject(Pets.class));
+
+                                MyPetsListAdapter adapter = new MyPetsListAdapter(getContext(),
+                                        R.layout.adapter_my_pets_list, petList);
+
+                                mListView.setAdapter(adapter);
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+
+
+
+
+
 
 
         //try load from db
@@ -109,7 +136,7 @@ public class Fragment_MyPets_Home extends Fragment {
 
         // TODO sono arrivato qua
 
-        return petList;
+
     }
 
 

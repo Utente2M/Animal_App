@@ -55,13 +55,13 @@ public class Fragment_Login extends Fragment {
                 if( str_mail.isEmpty()){
                     ET_mail.setError("Email is required");
                 }
-                if(str_password.isEmpty()){
+                else if(str_password.isEmpty()){
                     ET_password.setError("Password is required");
                 }
                 else{
                     loginAccount (str_mail , str_password);
                     //todo sostituire con stringa
-                    Toast.makeText(getContext() , "ok field Login " , Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext() , "ok field Login " , Toast.LENGTH_SHORT).show();
                 }
 
             }

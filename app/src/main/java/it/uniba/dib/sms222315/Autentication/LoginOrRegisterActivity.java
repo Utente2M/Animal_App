@@ -48,11 +48,6 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
     private boolean FirebaseUserComplete = false;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
-
-
-    //
-
     //inizialiamo i fragment
     Fragment my_fragment;
     FragmentManager my_frag_manager;
@@ -63,6 +58,8 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
     private static int AUTOCOMPLETE_REQUEST_CODE = 1;
 
     private static final String TAG = "TAG_Act_LogOrRegis";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

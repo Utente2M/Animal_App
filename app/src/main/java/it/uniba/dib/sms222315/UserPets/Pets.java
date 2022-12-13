@@ -23,6 +23,9 @@ public class Pets {
     }
 
 
+    public Pets() {}
+
+
     public String getPrv_str_namePets() {
         return prv_str_namePets;
     }
