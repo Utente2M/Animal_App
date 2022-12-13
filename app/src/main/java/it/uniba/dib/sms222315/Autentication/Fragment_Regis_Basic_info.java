@@ -19,7 +19,7 @@ import it.uniba.dib.sms222315.R;
 
 public class Fragment_Regis_Basic_info extends Fragment {
 
-    EditText ET_AutocompletAddress , ET_Name;
+    EditText ET_AutocompletAddress , ET_Name , ET_Phone , ET_DateBorn;
     Button BT_Create;
     CallbackFragment myListnerCall;
 
@@ -32,6 +32,7 @@ public class Fragment_Regis_Basic_info extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       // setRetainInstance(true);
 
     }
 
@@ -44,13 +45,12 @@ public class Fragment_Regis_Basic_info extends Fragment {
         View my_view = inflater.inflate(R.layout.fragment__regis__basic_info, container, false);
 
         ET_Name = my_view.findViewById(R.id.FragRegi_basiInfo_ET_name);
-        ET_AutocompletAddress = my_view.findViewById(R.id.ET_autocomp_address);
-/*
-LoginOrRegisterActivity myActivity = (LoginOrRegisterActivity) getActivity();
-        String myDataFromActivity = myActivity.myString_address();
+        ET_Phone = my_view.findViewById(R.id.FragRegi_basiInfo_ET_Phone);
+        ET_DateBorn = my_view.findViewById(R.id.FragRegi_basiInfo_ET_Date);
 
-        ET_AutocompletAddress.setText(myDataFromActivity);
- */
+
+
+        ET_AutocompletAddress = my_view.findViewById(R.id.ET_autocomp_address);
         ET_AutocompletAddress.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
@@ -66,7 +66,14 @@ LoginOrRegisterActivity myActivity = (LoginOrRegisterActivity) getActivity();
             @Override
             public void onClick(View view) {
                 String sendName = ET_Name.getText().toString();
+                String sendPhone = ET_Phone.getText().toString();
+                String sendAddress = ET_AutocompletAddress.getText().toString();
+                String sendDateBorn = ET_DateBorn.getText().toString();
+
                 addInformationToProfile (sendName);
+                createUserBasicInfo (sendPhone , sendAddress , sendDateBorn);
+                //prova distruzione per backstack
+                //
             }
         });
 
@@ -77,10 +84,17 @@ LoginOrRegisterActivity myActivity = (LoginOrRegisterActivity) getActivity();
     }//END on Create view
 
 
+
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         myListnerCall = (CallbackFragment) context;
+    }
+    private void createUserBasicInfo(String Phone, String Address,
+                                     String DateBorn) {
+        myListnerCall.addBasicInfoToUser (Phone , Address , DateBorn);
+
     }
 
     private void addInformationToProfile (String name){

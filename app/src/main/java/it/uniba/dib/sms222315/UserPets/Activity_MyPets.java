@@ -98,7 +98,7 @@ public class Activity_MyPets extends AppCompatActivity implements Interf_UserPet
         //si aggiunge il richiamo allo stack
         my_frag_trans.addToBackStack(null);
         //add diventa replace
-        my_frag_trans.replace(R.id.Frame_Act_MyPets , my_fragment);
+        my_frag_trans.replace(R.id.Frame_Act_MyPets , my_fragment );
         my_frag_trans.commit();
 
     }//END addFrag
@@ -117,7 +117,7 @@ public class Activity_MyPets extends AppCompatActivity implements Interf_UserPet
         // Create a new user with a first and last name
         Map<String, Object> pets_map = new HashMap<>();
         pets_map.put("Name", Name);
-        pets_map.put("Specie", "Specie");
+        pets_map.put("Specie", Specie);
         pets_map.put("Sex", Sex);
         pets_map.put("Razza", Razza);
 
@@ -146,5 +146,6 @@ public class Activity_MyPets extends AppCompatActivity implements Interf_UserPet
                 });
 
 
-    }
-}
+    }//END create Animal DB
+
+}//END ACTIVITY

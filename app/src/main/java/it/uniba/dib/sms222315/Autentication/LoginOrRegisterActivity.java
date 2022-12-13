@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
@@ -28,10 +30,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import it.uniba.dib.sms222315.UserProfile.ProfileUserActivity;
 import it.uniba.dib.sms222315.R;
@@ -40,12 +45,15 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
 
     //FIREBASE VAR
     private FirebaseAuth mAuth;
+    private boolean FirebaseUserComplete = false;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+
+
+
+    //
 
     //inizialiamo i fragment
-
-    private String myString_address;
-
     Fragment my_fragment;
     FragmentManager my_frag_manager;
     FragmentTransaction my_frag_trans;
@@ -89,10 +97,10 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
         Log.d(TAG, "on Start activity log or register ");
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        /*if(currentUser != null){
             reload();
         }
-
+*/
 
     }
 
@@ -156,21 +164,24 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
             if (resultCode == RESULT_OK) {
                 Place place = Autocomplete.getPlaceFromIntent(data);
 
-                myString_address = place.getAddress();
+
+               String myString_address = place.getAddress();
 
                 Log.d(TAG, "stampa risultati maps");
                 Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
                 Log.i(TAG, "Address: " + myString_address);
 
                 //da rimandare il fragment e completare i dati
+                //risitna il frag basic info cn i nuovi dati + vecchi
 
 
 
                 Log.i(TAG, "TRY HARDDDDDDD");
                 EditText sendAddress = findViewById(R.id.ET_autocomp_address);
+                sendAddress.setText(myString_address);
                 Log.i(TAG, "OKKKKKKKKK");
-
-                updateUI();
+                System.out.println();
+                //updateUI();
 
 
 
@@ -186,9 +197,7 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public String myString_address() {
-        return myString_address;
-    }
+
 
 
     @Override
@@ -247,6 +256,8 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
 
     @Override
     public void addInformationToProfile(String name) {
+
+        //setta display name in autFirabese
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
@@ -260,12 +271,51 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "User profile updated.");
-                            reload();
+
                         }
                     }
                 });
+
+
     }
 
+    @Override
+    public void addBasicInfoToUser(String phone, String address,
+                                   String dateBorn) {
+        //qui vanno creati gli animali nel DB con le info base
+        //Questa risposta arriva dal Fragment Add new Pet
+
+        // Create a new user with a first and last name
+        Map<String, Object> new_user = new HashMap<>();
+        new_user.put("Phone", phone);
+        new_user.put("address", address);
+        new_user.put("dateBorn", dateBorn);
+
+
+        // Add a new document with a document = ID
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = user.getUid();
+        Log.d(TAG,"This is UID " + userID);
+
+
+        //PROVA DI CREAZIONE SUBCOLLECTION
+
+        db.collection("User Basic Info").document(userID)
+                .set(new_user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                        reload();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+    }
 
 
     private void updateUI() {
@@ -275,7 +325,7 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
         my_frag_manager = getSupportFragmentManager();
         my_frag_trans = my_frag_manager.beginTransaction();
         //si aggiunge il richiamo allo stack
-        my_frag_trans.addToBackStack(null);
+        //my_frag_trans.addToBackStack(null);
         //add diventa replace
         my_frag_trans.replace(R.id.FragAutentic , my_fragment);
         my_frag_trans.commit();

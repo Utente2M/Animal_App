@@ -13,4 +13,5 @@ public interface CallbackFragment {
     void logAccountWithMailePass (String email , String password);
     void addInformationToProfile (String name);
 
+    void addBasicInfoToUser(String phone, String address, String dateBorn);
 }
