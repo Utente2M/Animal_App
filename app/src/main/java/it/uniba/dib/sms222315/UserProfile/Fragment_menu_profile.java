@@ -16,13 +16,14 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import it.uniba.dib.sms222315.Activity_MyExpense;
 import it.uniba.dib.sms222315.UserPets.Activity_MyPets;
 import it.uniba.dib.sms222315.MainActivity;
 import it.uniba.dib.sms222315.R;
 
 public class Fragment_menu_profile extends Fragment {
 
-    ImageView IV_my_pets;
+    ImageView IV_my_pets , IV_my_expense;
     Button but_logout , but_menu;
 
     Interf_UserProfile myCallBackFrag;
@@ -40,6 +41,7 @@ public class Fragment_menu_profile extends Fragment {
 
         but_logout = my_view.findViewById(R.id.button_logout_menu_profile);
         IV_my_pets = my_view.findViewById(R.id.FragMenu_IV_my_pet);
+        IV_my_expense = my_view.findViewById(R.id.FragMenu_IV_my_expense);
 
 
         //myPet start Activity
@@ -52,6 +54,21 @@ public class Fragment_menu_profile extends Fragment {
 
             }//end onClick myPets
         });
+
+
+        //button my expense
+
+        IV_my_expense.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.d(TAG , "Try start Activity my expense");
+                Intent myPets = new Intent(getActivity(), Activity_MyExpense.class);
+                startActivity(myPets);
+
+            }//end onClick my expense
+        });
+
 
         //bottone logout
         but_logout.setOnClickListener(new View.OnClickListener() {
