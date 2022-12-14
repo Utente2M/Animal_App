@@ -17,10 +17,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import it.uniba.dib.sms222315.Autentication.Fragment_Register;
@@ -114,36 +117,47 @@ public class Activity_MyPets extends AppCompatActivity implements Interf_UserPet
         //qui vanno creati gli animali nel DB con le info base
         //Questa risposta arriva dal Fragment Add new Pet
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = user.getUid();
+        Log.d(TAG,"This is UID " + userID);
+
+
+
+
+
+        /*
+
+
         // Create a new user with a first and last name
         Map<String, Object> pets_map = new HashMap<>();
         pets_map.put("Name", Name);
         pets_map.put("Specie", Specie);
         pets_map.put("Sex", Sex);
         pets_map.put("Razza", Razza);
+         */
 
-        Pets MimmoPetes = new Pets(Name , Specie , Sex , Razza , "" , "" , "");
+
+        Pets MimmoPetes = new Pets(Name , Specie , Sex , Razza , "" , "" , "",
+                Arrays.asList(userID));
 
         // Add a new document with a document = ID
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userID = user.getUid();
-        Log.d(TAG,"This is UID " + userID);
+
 
 
         //PROVA DI CREAZIONE SUBCOLLECTION
 
-        db.collection("Animal From User").document(userID).
-                collection("List Pets").document()
-                .set(MimmoPetes)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("Animal DB")
+                .add(MimmoPetes)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
+                        Log.w(TAG, "Error adding document", e);
                     }
                 });
 

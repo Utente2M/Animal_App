@@ -1,5 +1,7 @@
 package it.uniba.dib.sms222315.UserPets;
 
+import java.util.List;
+
 public interface Interf_UserPets {
 
 

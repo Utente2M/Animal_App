@@ -12,10 +12,12 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -57,7 +59,7 @@ public class Fragment_MyPets_Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Log.d(TAG , "onCreateView , try create class");
+        Log.d(TAG , "onCreateView ");
         View my_view = inflater.inflate(R.layout.fragment__my_pets__home , container , false);
 
         //tutti i find e gli onclick
@@ -105,53 +107,40 @@ public class Fragment_MyPets_Home extends Fragment {
         String userID = user.getUid();
         Log.d(TAG,"This is UID " + userID);
 
-        db.collection("Animal From User").document(userID).
-                collection("List Pets")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        Boolean check;
-                        if (task.isSuccessful()) {
 
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
+        CollectionReference animalRef = db.collection("Animal DB");
+        Query MyPets = animalRef.whereArrayContains("prv_Str_responsabili" , userID);
 
-                                petList.add(document.toObject(Pets.class));
+        MyPets.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
 
-                                MyPetsListAdapter adapter = new MyPetsListAdapter(getContext(),
-                                        R.layout.adapter_my_pets_list, petList);
-
-                                mListView.setAdapter(adapter);
-                            }
-                            //qui messaggio forza visibilità off
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, document.getId() + " => " + document.getData());
 
 
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                            //qui messaggio visibilità si
+                        petList.add(document.toObject(Pets.class));
 
-                        }
-                    }
-                });
+                    }//end for
 
+                        MyPetsListAdapter adapter = new MyPetsListAdapter(getContext(),
+                                R.layout.adapter_my_pets_list, petList);
 
-
+                        mListView.setAdapter(adapter);
 
 
+                }//end if
+                else {
+                    //nessun animale da mostrare
+                }//fine else
+
+            }//end on complete
+
+        }); //end Listners
 
 
-
-        //try load from db
-        //Query capitalCities = db.collection("cities").whereEqualTo("capital", true);
-
-
-        // TODO sono arrivato qua
-
-
-
-
-    }
+    }//END popolateList
 
 
     //potenziale errore

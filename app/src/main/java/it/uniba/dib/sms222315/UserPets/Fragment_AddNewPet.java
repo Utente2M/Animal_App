@@ -18,6 +18,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.List;
+
 import it.uniba.dib.sms222315.R;
 import it.uniba.dib.sms222315.UserProfile.Interf_UserProfile;
 
@@ -127,7 +129,8 @@ public class Fragment_AddNewPet extends Fragment implements AdapterView.OnItemSe
 
     }
 
-    private void createPetInDB(String Name, String Specie, String Sex, String Razza) {
+    private void createPetInDB(String Name, String Specie, String Sex, String Razza ) {
+
         MyInterf_Pets.createAnimalInDB(Name,Specie,Sex,Razza);
 
     }

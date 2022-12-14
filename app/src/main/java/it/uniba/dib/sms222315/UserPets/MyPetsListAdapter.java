@@ -67,7 +67,7 @@ public class MyPetsListAdapter extends ArrayAdapter<Pets> {
         // TODO QUA VA CARICATO DALLA CLASSE L'URI
 
         //Create the pets object with the information
-        Pets pets = new Pets(name,specie, sex , razza , "", "", "" );
+        Pets pets = new Pets(name,specie, sex , razza );
 
 
         //create the view result for showing the animation
