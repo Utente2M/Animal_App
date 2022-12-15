@@ -108,6 +108,15 @@ public class Activity_MyPets extends AppCompatActivity implements Interf_UserPet
 
 
     @Override
+    public void turnTohome() {
+
+        // questo metodo non funzione
+        my_fragment = new Fragment_AddNewPet();
+        my_frag_manager = getSupportFragmentManager();
+        my_frag_manager.popBackStack();
+    }
+
+    @Override
     public void changeFragment() {
         replaceFragment();
     }
@@ -166,15 +175,6 @@ public class Activity_MyPets extends AppCompatActivity implements Interf_UserPet
 
     }//END create Animal DB
 
-    @Override
-    public void turnTohome() {
 
-        // questo metodo non funzione
-        my_fragment = new Fragment_AddNewPet();
-        my_frag_manager = getSupportFragmentManager();
-        my_frag_manager.popBackStack();
-
-
-    }
 
 }//END ACTIVITY

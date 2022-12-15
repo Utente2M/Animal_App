@@ -13,7 +13,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".Activity_MyExpense"
+            android:name=".UserExpense.Activity_MyExpense"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
