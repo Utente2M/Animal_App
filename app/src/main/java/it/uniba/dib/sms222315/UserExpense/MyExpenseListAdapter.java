@@ -55,15 +55,12 @@ public class MyExpenseListAdapter extends ArrayAdapter<MyExpense> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        // todo sono arrivato qua, vanno inserite le parti modificate
-//get the pets information
-
 
         String CatText = getItem(position).getPrv_Category_MyExpense();
         String DataExp = getItem(position).getPrv_Data_MyExpense();
         String DescrExp = getItem(position).getPrv_Description_MyExpense();
         Float SingExp = getItem(position).getPrv_valFloat_MyExpense();
-        // TODO QUA VA CARICATO DALLA CLASSE L'URI
+
 
         //Create the expense object with the information
         MyExpense ExpenseView = new MyExpense(DataExp, CatText,

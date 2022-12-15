@@ -41,5 +41,13 @@
         <item>Gatto</item>
         <item>Coniglio</item>
     </string-array>
+    <string-array name="CategorieExpanse">
+        <item>Generale</item>
+        <item>Cure</item>
+        <item>Cibo</item>
+        <item>Veterinario</item>
+        <item>Toilettatura</item>
+    </string-array>
+
 
 </resources>

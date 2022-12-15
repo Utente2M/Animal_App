@@ -130,22 +130,6 @@ public class Activity_MyPets extends AppCompatActivity implements Interf_UserPet
         String userID = user.getUid();
         Log.d(TAG,"This is UID " + userID);
 
-
-
-
-
-        /*
-
-
-        // Create a new user with a first and last name
-        Map<String, Object> pets_map = new HashMap<>();
-        pets_map.put("Name", Name);
-        pets_map.put("Specie", Specie);
-        pets_map.put("Sex", Sex);
-        pets_map.put("Razza", Razza);
-         */
-
-
         Pets MimmoPetes = new Pets(Name , Specie , Sex , Razza , "" , "" , "",
                 Arrays.asList(userID));
 

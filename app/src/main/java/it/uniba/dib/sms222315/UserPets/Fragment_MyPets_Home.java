@@ -66,13 +66,7 @@ public class Fragment_MyPets_Home extends Fragment {
         mListView = (ListView) my_view.findViewById(R.id.listView_MyPets);
 
 
-
         popolateList();
-
-
-
-
-
 
 
         BT_new_pet = my_view.findViewById(R.id.BT_Act_myPets_addAnimal);

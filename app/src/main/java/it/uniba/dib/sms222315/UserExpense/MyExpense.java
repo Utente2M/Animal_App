@@ -2,20 +2,24 @@ package it.uniba.dib.sms222315.UserExpense;
 
 public class MyExpense {
 
+    //data type
     private String prv_Data_MyExpense;
+
     private String prv_Category_MyExpense;
-    private Float prv_valFloat_MyExpense;
+    private float prv_valFloat_MyExpense;
     private String prv_Description_MyExpense;
 
 
 
     public MyExpense(String prv_data_myExpense, String prv_category_myExpense,
-                     Float prv_valFloat_myExpense, String prv_description_myExpense) {
+                     float prv_valFloat_myExpense, String prv_description_myExpense) {
         prv_Data_MyExpense = prv_data_myExpense;
         prv_Category_MyExpense = prv_category_myExpense;
         prv_valFloat_MyExpense = prv_valFloat_myExpense;
         prv_Description_MyExpense = prv_description_myExpense;
     }
+
+
 
     public MyExpense (){}
 

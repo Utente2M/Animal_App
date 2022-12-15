@@ -6,8 +6,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import it.uniba.dib.sms222315.R;
+import it.uniba.dib.sms222315.UserProfile.Fragment_UserProfile;
 
 public class Activity_MyExpense extends AppCompatActivity implements Interf_MyExpense {
 
@@ -24,6 +26,7 @@ public class Activity_MyExpense extends AppCompatActivity implements Interf_MyEx
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_expense);
+        Log.d(TAG , " ON CREATE ACT MYEXPENSE");
 
 
         addFragment();
@@ -31,18 +34,17 @@ public class Activity_MyExpense extends AppCompatActivity implements Interf_MyEx
     }//end on create
 
     private void addFragment() {
+
         //primo fragment profile classico
         //con new scegliamo il fragment da istanziare
 
         Fragment_MyExpense_Home my_fragment = new Fragment_MyExpense_Home();
-
-        //Fragment_UserProfile my_fragment = new Fragment_UserProfile();
         my_fragment.setMy_callbackFragment(this);
-        //my_fragment.myCallBackFrag(this);
+        //
         my_frag_manager = getSupportFragmentManager();
         my_frag_trans = my_frag_manager.beginTransaction();
 
-        my_frag_trans.add(R.id.Frame_Act_MyPets , my_fragment);
+        my_frag_trans.add(R.id.Frame_Act_MyExpense , my_fragment);
         my_frag_trans.commit();
 
     }//END ADD FRAGM

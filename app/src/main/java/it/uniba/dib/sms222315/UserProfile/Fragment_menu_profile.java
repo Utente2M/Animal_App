@@ -29,7 +29,7 @@ public class Fragment_menu_profile extends Fragment {
     Interf_UserProfile myCallBackFrag;
 
 
-    private static final String TAG = "TAG_Frag_UserProfile";
+    private static final String TAG = "TAG_Frag_MENUProfile";
 
 
 
@@ -63,8 +63,8 @@ public class Fragment_menu_profile extends Fragment {
             public void onClick(View view) {
 
                 Log.d(TAG , "Try start Activity my expense");
-                Intent myPets = new Intent(getActivity(), Activity_MyExpense.class);
-                startActivity(myPets);
+                Intent myExpense = new Intent(getActivity(), Activity_MyExpense.class);
+                startActivity(myExpense);
 
             }//end onClick my expense
         });

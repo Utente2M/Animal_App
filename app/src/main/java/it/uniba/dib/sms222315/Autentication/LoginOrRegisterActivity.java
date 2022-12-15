@@ -282,6 +282,9 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
         //qui vanno creati gli animali nel DB con le info base
         //Questa risposta arriva dal Fragment Add new Pet
 
+        /*
+
+         */
         // Create a new user with a first and last name
         Map<String, Object> new_user = new HashMap<>();
         new_user.put("Phone", phone);
