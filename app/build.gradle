@@ -57,4 +57,11 @@ dependencies {
 
     //autotext place
     implementation "com.google.android.libraries.places:places:2.7.0"
+
+
+    //layoutlogigin
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+    implementation "androidx.cardview:cardview:1.0.0"
+    implementation 'com.google.android.material:material:1.2.1'
+
 }
