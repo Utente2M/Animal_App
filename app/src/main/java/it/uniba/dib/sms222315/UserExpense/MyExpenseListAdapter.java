@@ -21,7 +21,7 @@ import it.uniba.dib.sms222315.R;
 public class MyExpenseListAdapter extends ArrayAdapter<MyExpense> {
 
 
-    private static final String TAG = "TAG_MyPetsAdapter";
+    private static final String TAG = "TAG_MyExpenseAdapter";
     private Context mContext;
     private int mResource;
     private int lastPosition = -1;
@@ -32,8 +32,8 @@ public class MyExpenseListAdapter extends ArrayAdapter<MyExpense> {
     private static class ViewHolder {
         TextView single_expanse;
         TextView CategoriaText;
+        TextView descrizione;
         TextView Data;
-        TextView Descrizione;
         ImageView image; //forse rimane
 
     }
@@ -55,16 +55,24 @@ public class MyExpenseListAdapter extends ArrayAdapter<MyExpense> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        Log.d(TAG , " in getView adapter");
+
 
         String CatText = getItem(position).getPrv_Category_MyExpense();
         String DataExp = getItem(position).getPrv_Data_MyExpense();
         String DescrExp = getItem(position).getPrv_Description_MyExpense();
-        Float SingExp = getItem(position).getPrv_valFloat_MyExpense();
+        String SingExp = getItem(position).getPrv_valFloat_MyExpense();
+
+        Log.d(TAG , "ok string");
+
+
 
 
         //Create the expense object with the information
-        MyExpense ExpenseView = new MyExpense(DataExp, CatText,
+        MyExpense ExpenseObj = new MyExpense(DataExp, CatText,
                 SingExp, DescrExp );
+
+        Log.d(TAG , " ok constructor");
 
 
         //create the view result for showing the animation
@@ -75,23 +83,26 @@ public class MyExpenseListAdapter extends ArrayAdapter<MyExpense> {
 
 
         if(convertView == null){
+            Log.d(TAG , " converView is NULL");
             LayoutInflater inflater = LayoutInflater.from(mContext);
             convertView = inflater.inflate(mResource, parent, false);
             holder= new MyExpenseListAdapter.ViewHolder();
-
+            Log.d(TAG , " inside null 1");
 
             holder.single_expanse = (TextView) convertView.findViewById(R.id.tV_ListV_myExpense_value);
             holder.CategoriaText = (TextView) convertView.findViewById(R.id.tV_ListV_myExpense_CategText);
             holder.Data = (TextView) convertView.findViewById(R.id.tV_ListV_myExpense_Data);
-            holder.Descrizione =(TextView) convertView.findViewById(R.id.tV_ListV_myExpense_Descri);
-            holder.image =(ImageView) convertView.findViewById(R.id.image_Category_myExpense);
+            holder.descrizione = (TextView) convertView.findViewById(R.id.tV_ListV_myExpense_Descri);
+            holder.image = (ImageView) convertView.findViewById(R.id.image_Category_myExpense);
 
+            Log.d(TAG , " inside null 2");
 
             result = convertView;
 
             convertView.setTag(holder);
         }
         else{
+            Log.d(TAG , " Convert view not null");
             holder = (MyExpenseListAdapter.ViewHolder) convertView.getTag();
             result = convertView;
         }
@@ -102,28 +113,34 @@ public class MyExpenseListAdapter extends ArrayAdapter<MyExpense> {
         result.startAnimation(animation);
         lastPosition = position;
 
-        holder.single_expanse.setText(ExpenseView.getPrv_valFloat_MyExpense().toString());
-        holder.CategoriaText.setText(ExpenseView.getPrv_Category_MyExpense());
-        holder.Data.setText(ExpenseView.getPrv_Data_MyExpense());
-        holder.Descrizione.setText(ExpenseView.getPrv_Description_MyExpense());
+        Log.d(TAG, "ok animation");
 
+
+        holder.single_expanse.setText(ExpenseObj.getPrv_valFloat_MyExpense());
+        holder.CategoriaText.setText(ExpenseObj.getPrv_Category_MyExpense());
+        holder.Data.setText(ExpenseObj.getPrv_Data_MyExpense());
+        holder.descrizione.setText("ExpenseObj.getPrv_Description_MyExpense()");
+
+        Log.d(TAG , " ok holder set");
 
        //TODO QUA VANNO PASSATE LE STRINGHE DELLO SPINNER
-        if (DescrExp.equals("Generale")){
-            holder.image.setImageResource(R.drawable.icon_dog);
+        if (CatText.equals("Generale")){
+            holder.image.setImageResource(R.drawable.icon_rabbit);
 
-        }else if (DescrExp.equals("Cure")){
+        }else if (CatText.equals("Cure")){
             holder.image.setImageResource(R.drawable.icon_petcare);
 
-        }else if (DescrExp.equals("Cibo")){
+        }else if (CatText.equals("Cibo")){
             holder.image.setImageResource(R.drawable.icon_petfood);
-        }else if (DescrExp.equals("Veterinario")) {
+        }else if (CatText.equals("Veterinario")) {
             holder.image.setImageResource(R.drawable.icon_veterinaria);
-        }else if (DescrExp.equals("Toilettatura")){
+        }else if (CatText.equals("Toilettatura")){
             holder.image.setImageResource(R.drawable.icon_toilettatura);
         }else{
             Log.d(TAG , "Error Category");
         }
+
+        Log.d(TAG , "ok if");
 
 
         return convertView;

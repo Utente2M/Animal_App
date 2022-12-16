@@ -42,7 +42,7 @@ import it.uniba.dib.sms222315.UserPets.Pets;
 
 public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnItemSelectedListener  {
 
-    private Interf_MyExpense myCallBackFrag;
+    Interf_MyExpense myCallBackFrag;
     ListView mListView;
     ArrayList<MyExpense> expensesList = new ArrayList<>();
 
@@ -68,6 +68,10 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
     private static final String TAG = "TAG_Frag_MyExpense_Home";
 
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Nullable
     @Override
@@ -129,12 +133,12 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
         Log.d(TAG,"This is UID " + userID);
 
 
-        float sendValueinFloat = Float.parseFloat(sendValue);
+
 
         Log.d(TAG, "ok change in float");
 
         MyExpense NewExpense = new MyExpense(currentDate ,
-                sendNewCategory , sendValueinFloat , sendnewDescr);
+                sendNewCategory , sendValue , sendnewDescr);
 
 
         //PROVA DI CREAZIONE SUBCOLLECTION
@@ -145,6 +149,7 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        popolateList();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -199,15 +204,16 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId() + " => " + document.getData());
 
 
                         expensesList.add(document.toObject(MyExpense.class));
 
+
                     }//end for
 
+                    Log.d(TAG , "end for");
                     MyExpenseListAdapter adapter = new MyExpenseListAdapter(getContext(),
                             R.layout.adapter_my_expense, expensesList);
 

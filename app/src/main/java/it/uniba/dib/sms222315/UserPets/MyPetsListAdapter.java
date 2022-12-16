@@ -58,7 +58,7 @@ public class MyPetsListAdapter extends ArrayAdapter<Pets> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        // todo sono arrivato qua, vanno inserite le parti modificate
+
 //get the pets information
         String name = getItem(position).getPrv_str_namePets();
         String razza = getItem(position).getPrv_Razza();
