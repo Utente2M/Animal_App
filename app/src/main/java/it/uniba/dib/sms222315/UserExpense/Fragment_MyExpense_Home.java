@@ -33,6 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.core.OrderBy;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -214,10 +215,9 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
 
         // caricare da DB
 
-        CollectionReference expenseRef = db.collection("User Basic Info").document(userID)
-               .collection("My Expense");
-
-        expenseRef.orderBy("prv_CreatAt_Time");
+        Query expenseRef = db.collection("User Basic Info").document(userID)
+               .collection("My Expense")
+                .orderBy("prv_CreatAt_Time", Query.Direction.DESCENDING);
 
         expenseRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
