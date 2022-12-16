@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222315.UserExpense;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -130,9 +131,18 @@ public class MyExpenseListAdapter extends ArrayAdapter<MyExpense> {
             Log.d(TAG , "Error Category");
         }
 
+        //Controllo colore stringa valore
+        if (SingExp.contains("-")){
+            holder.single_expanse.setTextColor(Color.parseColor("#FF0000"));
+        }else {
+            String addPlus = "+"+SingExp;
+            holder.single_expanse.setTextColor(Color.parseColor("#32CD32"));
+            holder.single_expanse.setText(addPlus);
+        }
+
         Log.d(TAG , "ok if");
 
-        holder.single_expanse.setText(ExpenseObj.getPrv_valFloat_MyExpense());
+        //holder.single_expanse.setText(ExpenseObj.getPrv_valFloat_MyExpense());
         holder.CategoriaText.setText(ExpenseObj.getPrv_Category_MyExpense());
         holder.Data.setText(ExpenseObj.getPrv_Data_MyExpense());
 
