@@ -43,8 +43,8 @@ import it.uniba.dib.sms222315.UserPets.Pets;
 public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnItemSelectedListener  {
 
     Interf_MyExpense myCallBackFrag;
-    ListView mListView;
     ArrayList<MyExpense> expensesList = new ArrayList<>();
+    ListView mListView;
 
 
     //INIZIALIZZIAMO I CONTROLLI PER AGGIUNGERE SPESE
@@ -77,6 +77,8 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+
+
         // Inflate the layout for this fragment
         Log.d(TAG , "onCreateView ");
         View my_view = inflater.inflate(R.layout.fragment__my_expense__home , container , false);
@@ -84,9 +86,8 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
         //tutti i find e gli onclick
         mListView = (ListView) my_view.findViewById(R.id.listView_MyExpense);
 
-        Log.d(TAG , "Try popolateList ");
-        popolateList();
-        Log.d(TAG , "ok popolateList ");
+
+
 
 
         ET_newValue = my_view.findViewById(R.id.ET_decimal_MyExpense);
@@ -116,6 +117,11 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
                 sendNewExpenseToActivity ( sendNewCategory, sendValue, sendnewDescr);
             }
         });
+
+
+        Log.d(TAG , "Try popolateList ");
+        popolateList();
+        Log.d(TAG , "ok popolateList ");
 
         return my_view;
     }
@@ -207,8 +213,10 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId() + " => " + document.getData());
 
+                        MyExpense oneExpense = document.toObject(MyExpense.class);
+                        Log.d(TAG,"descrizione"+ oneExpense.getPrv_Description_MyExpense());
 
-                        expensesList.add(document.toObject(MyExpense.class));
+                        expensesList.add(oneExpense);
 
 
                     }//end for

@@ -110,7 +110,7 @@ public class MyPetsListAdapter extends ArrayAdapter<Pets> {
 
         //controllo immagine da caricare se immagine personale non presente
         //il caricamento da db va creato ancora
-
+        //todo QUI SAREBBE Da provare questo invece che la stringa...holder.specie.toString()
         holder.specie.setText(pets.getPrv_specie());
         if (specie.equals("Cane")){
             holder.image.setImageResource(R.drawable.icon_dog);

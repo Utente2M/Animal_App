@@ -50,21 +50,22 @@
                 android:text="Text Categoria" />
 
             <TextView
+                android:id="@+id/tV_ListV_myExpense_Data"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="14/12/2022"
-                android:id="@+id/tV_ListV_myExpense_Data"/>
+                />
 
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tV_ListV_myExpense_Descri"
             android:gravity="center"
             android:text="Taglio del pelo"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:id="@+id/tV_ListV_my_pets_sex"
-            android:layout_below="@+id/tV_ListV_myExpense_Descri"/>
+             />
 
 
         </LinearLayout>

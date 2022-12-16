@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 
 import it.uniba.dib.sms222315.R;
+import it.uniba.dib.sms222315.UserPets.MyPetsListAdapter;
 
 
 public class MyExpenseListAdapter extends ArrayAdapter<MyExpense> {
@@ -32,7 +33,8 @@ public class MyExpenseListAdapter extends ArrayAdapter<MyExpense> {
     private static class ViewHolder {
         TextView single_expanse;
         TextView CategoriaText;
-        TextView descrizione;
+
+        TextView descr;
         TextView Data;
         ImageView image; //forse rimane
 
@@ -55,25 +57,19 @@ public class MyExpenseListAdapter extends ArrayAdapter<MyExpense> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        Log.d(TAG , " in getView adapter");
-
+        Log.d(TAG , " in getView adapter expanse");
 
         String CatText = getItem(position).getPrv_Category_MyExpense();
         String DataExp = getItem(position).getPrv_Data_MyExpense();
         String DescrExp = getItem(position).getPrv_Description_MyExpense();
         String SingExp = getItem(position).getPrv_valFloat_MyExpense();
 
-        Log.d(TAG , "ok string");
-
-
-
+        Log.d(TAG , "DescrExp : " + DescrExp);
 
         //Create the expense object with the information
-        MyExpense ExpenseObj = new MyExpense(DataExp, CatText,
-                SingExp, DescrExp );
+        MyExpense ExpenseObj = new MyExpense(DataExp, CatText, SingExp, DescrExp );
 
         Log.d(TAG , " ok constructor");
-
 
         //create the view result for showing the animation
         final View result;
@@ -86,16 +82,17 @@ public class MyExpenseListAdapter extends ArrayAdapter<MyExpense> {
             Log.d(TAG , " converView is NULL");
             LayoutInflater inflater = LayoutInflater.from(mContext);
             convertView = inflater.inflate(mResource, parent, false);
-            holder= new MyExpenseListAdapter.ViewHolder();
-            Log.d(TAG , " inside null 1");
+            holder = new MyExpenseListAdapter.ViewHolder();
+            Log.d(TAG , " try find");
 
             holder.single_expanse = (TextView) convertView.findViewById(R.id.tV_ListV_myExpense_value);
             holder.CategoriaText = (TextView) convertView.findViewById(R.id.tV_ListV_myExpense_CategText);
             holder.Data = (TextView) convertView.findViewById(R.id.tV_ListV_myExpense_Data);
-            holder.descrizione = (TextView) convertView.findViewById(R.id.tV_ListV_myExpense_Descri);
+            //holder.descrizione = (TextView) convertView.findViewById(R.id.tV_ListV_myExpense_Descri);
+            holder.descr = (TextView) convertView.findViewById(R.id.tV_ListV_myExpense_Descri);
             holder.image = (ImageView) convertView.findViewById(R.id.image_Category_myExpense);
 
-            Log.d(TAG , " inside null 2");
+            Log.d(TAG , " ok find");
 
             result = convertView;
 
@@ -103,7 +100,7 @@ public class MyExpenseListAdapter extends ArrayAdapter<MyExpense> {
         }
         else{
             Log.d(TAG , " Convert view not null");
-            holder = (MyExpenseListAdapter.ViewHolder) convertView.getTag();
+            holder = (ViewHolder) convertView.getTag();
             result = convertView;
         }
 
@@ -115,13 +112,6 @@ public class MyExpenseListAdapter extends ArrayAdapter<MyExpense> {
 
         Log.d(TAG, "ok animation");
 
-
-        holder.single_expanse.setText(ExpenseObj.getPrv_valFloat_MyExpense());
-        holder.CategoriaText.setText(ExpenseObj.getPrv_Category_MyExpense());
-        holder.Data.setText(ExpenseObj.getPrv_Data_MyExpense());
-        holder.descrizione.setText("ExpenseObj.getPrv_Description_MyExpense()");
-
-        Log.d(TAG , " ok holder set");
 
        //TODO QUA VANNO PASSATE LE STRINGHE DELLO SPINNER
         if (CatText.equals("Generale")){
@@ -141,6 +131,16 @@ public class MyExpenseListAdapter extends ArrayAdapter<MyExpense> {
         }
 
         Log.d(TAG , "ok if");
+
+        holder.single_expanse.setText(ExpenseObj.getPrv_valFloat_MyExpense());
+        holder.CategoriaText.setText(ExpenseObj.getPrv_Category_MyExpense());
+        holder.Data.setText(ExpenseObj.getPrv_Data_MyExpense());
+
+        Log.d(TAG ,"SONO IO"+ ExpenseObj.getPrv_Description_MyExpense());
+
+
+        holder.descr.setText(ExpenseObj.getPrv_Description_MyExpense());
+        //holder.descrizione.setText(ExpenseObj.getPrv_Description_MyExpense());
 
 
         return convertView;

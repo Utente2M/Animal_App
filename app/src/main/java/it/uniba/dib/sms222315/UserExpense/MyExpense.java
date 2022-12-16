@@ -10,12 +10,12 @@ public class MyExpense {
 
 
 
-    public MyExpense(String prv_data_myExpense, String prv_category_myExpense,
-                     String prv_valFloat_myExpense, String prv_description_myExpense) {
-        prv_Data_MyExpense = prv_data_myExpense;
-        prv_Category_MyExpense = prv_category_myExpense;
-        prv_valFloat_MyExpense = prv_valFloat_myExpense;
-        prv_Description_MyExpense = prv_description_myExpense;
+    public MyExpense(String data_myExpense, String category_myExpense,
+                     String valFloat_myExpense, String description_myExpense) {
+        prv_Data_MyExpense = data_myExpense;
+        prv_Category_MyExpense = category_myExpense;
+        prv_valFloat_MyExpense = valFloat_myExpense;
+        prv_Description_MyExpense = description_myExpense;
     }
 
 
