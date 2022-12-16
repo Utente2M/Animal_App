@@ -15,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -60,6 +61,10 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
     EditText ET_newDescr; //ET_descr_MyExpense
     Button BT_createExp; //BT_create_MyExpense
 
+    //Controlli per totale
+    float fl_TotalExpense;
+    TextView TV_totalExpense;
+
     /*
     //DA spostare nella registrazione per la data
     int new_day,new_month,new_year;
@@ -92,10 +97,7 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
         //tutti i find e gli onclick
         mListView = (ListView) my_view.findViewById(R.id.listView_MyExpense);
 
-
-
-
-
+        //FIND FOR FUNCTION CREATE
         ET_newValue = my_view.findViewById(R.id.ET_decimal_MyExpense);
         ET_newDescr= my_view.findViewById(R.id.ET_descr_MyExpense);
 
@@ -106,6 +108,11 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
         adapter_spin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         SpinCategory.setAdapter(adapter_spin);
         SpinCategory.setOnItemSelectedListener(this);
+
+        //fUNCTION FOR TOTAL VIEV
+        TV_totalExpense = my_view.findViewById(R.id.tV_myExp_total);
+
+
 
         BT_createExp = my_view.findViewById(R.id.BT_create_MyExpense);
         BT_createExp.setOnClickListener(new View.OnClickListener() {
@@ -208,6 +215,7 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
     private void popolateList() {
 
         expensesList.clear();
+        fl_TotalExpense = 0;
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userID = user.getUid();
@@ -228,11 +236,18 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
 
                         MyExpense oneExpense = document.toObject(MyExpense.class);
 
-
+                        String newValue = oneExpense.getPrv_valFloat_MyExpense();
+                        float fl_newValue = Float.parseFloat(newValue);
                         expensesList.add(oneExpense);
 
+                        Log.d(TAG , "float : " + Float.toString(fl_newValue));
+                        fl_TotalExpense = fl_TotalExpense + fl_newValue;
 
                     }//end for
+
+                    Log.d(TAG , "total float : " + Float.toString(fl_TotalExpense));
+
+                    TV_totalExpense.setText( Float.toString(fl_TotalExpense) );
 
                     Log.d(TAG , "end for");
                     MyExpenseListAdapter adapter = new MyExpenseListAdapter(getContext(),
@@ -248,6 +263,8 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
 
             }
         });//END Listner
+
+
 
     }
 
