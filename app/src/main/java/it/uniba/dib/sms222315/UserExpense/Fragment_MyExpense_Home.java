@@ -1,5 +1,7 @@
 package it.uniba.dib.sms222315.UserExpense;
 
+import static java.text.DateFormat.getDateTimeInstance;
+
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,15 +28,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 
 import it.uniba.dib.sms222315.R;
 import it.uniba.dib.sms222315.UserPets.MyPetsListAdapter;
@@ -91,20 +96,15 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
 
 
         ET_newValue = my_view.findViewById(R.id.ET_decimal_MyExpense);
-        Log.d(TAG , "1 ");
         ET_newDescr= my_view.findViewById(R.id.ET_descr_MyExpense);
-        Log.d(TAG , "2 ");
 
         //Spinner choose new category
         SpinCategory = my_view.findViewById(R.id.spin_Category_MyExpense);
-        Log.d(TAG , "3");
 
         ArrayAdapter<CharSequence> adapter_spin = ArrayAdapter.createFromResource(getContext(), R.array.CategorieExpanse, android.R.layout.simple_spinner_item);
         adapter_spin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         SpinCategory.setAdapter(adapter_spin);
         SpinCategory.setOnItemSelectedListener(this);
-
-        Log.d(TAG , "4 ");
 
         BT_createExp = my_view.findViewById(R.id.BT_create_MyExpense);
         BT_createExp.setOnClickListener(new View.OnClickListener() {
@@ -114,47 +114,58 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
                 String sendValue = ET_newValue.getText().toString();
                 String sendnewDescr = ET_newDescr.getText().toString();
 
-                sendNewExpenseToActivity ( sendNewCategory, sendValue, sendnewDescr);
+                if( sendValue.isEmpty()){
+                    ET_newValue.setError("Value is required");
+                }else {
+
+                    sendNewExpenseToDB ( sendNewCategory, sendValue, sendnewDescr);
+                }
             }
         });
 
 
-        Log.d(TAG , "Try popolateList ");
+
         popolateList();
         Log.d(TAG , "ok popolateList ");
 
         return my_view;
     }
 
-    private void sendNewExpenseToActivity(String sendNewCategory, String sendValue, String sendnewDescr) {
+
+
+
+
+    private void sendNewExpenseToDB(String sendNewCategory, String sendValue, String sendnewDescr) {
+
+
 
         Log.d(TAG, "Try create expense into DB");
         //get currunt date
         Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("d,MM,yyyy,HH:mm:ss");
         String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+
+        String formatData = format.format(calendar.getTime());
+        Log.d(TAG , "Format Data : " +formatData);
+        //formatData is the new ID document for single expanse
 
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userID = user.getUid();
         Log.d(TAG,"This is UID " + userID);
 
-
-
-
-        Log.d(TAG, "ok change in float");
-
         MyExpense NewExpense = new MyExpense(currentDate ,
-                sendNewCategory , sendValue , sendnewDescr);
+                sendNewCategory , sendValue , sendnewDescr, formatData);
 
 
         //PROVA DI CREAZIONE SUBCOLLECTION
 
-        db.collection("User Basic Info").document(userID).collection("My Expense")
-                .add(NewExpense)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        db.collection("User Basic Info").document(userID).
+                collection("My Expense").document()
+                .set(NewExpense)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    public void onComplete(@NonNull Task<Void> task) {
                         popolateList();
                     }
                 })
@@ -203,8 +214,10 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
 
         // caricare da DB
 
-        CollectionReference expenseRef = db.collection("User Basic Info").document(userID).
-                collection("My Expense");
+        CollectionReference expenseRef = db.collection("User Basic Info").document(userID)
+               .collection("My Expense");
+
+        expenseRef.orderBy("prv_CreatAt_Time");
 
         expenseRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -214,7 +227,7 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
                         Log.d(TAG, document.getId() + " => " + document.getData());
 
                         MyExpense oneExpense = document.toObject(MyExpense.class);
-                        Log.d(TAG,"descrizione"+ oneExpense.getPrv_Description_MyExpense());
+
 
                         expensesList.add(oneExpense);
 
