@@ -20,6 +20,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -44,11 +46,19 @@ import java.util.Calendar;
 import java.util.Date;
 
 import it.uniba.dib.sms222315.R;
+import it.uniba.dib.sms222315.UserPets.Fragment_AddNewPet;
 import it.uniba.dib.sms222315.UserPets.MyPetsListAdapter;
 import it.uniba.dib.sms222315.UserPets.Pets;
 
 public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnItemSelectedListener  {
 
+
+    //FRAGMENT VAR
+    Fragment my_fragment;
+    FragmentManager my_frag_manager;
+    FragmentTransaction my_frag_trans;
+
+    //Controlli ListView
     Interf_MyExpense myCallBackFrag;
     ArrayList<MyExpense> expensesList = new ArrayList<>();
     ListView mListView;
@@ -136,12 +146,15 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
         Log.d(TAG , "ok popolateList ");
 
 
+        //MODIFY ELEMENT FROM LIST
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
                 MyExpense clickExpense = expensesList.get(position);
-                Log.d(TAG , clickExpense.getPrv_Category_MyExpense().toString());
+                Log.d(TAG , clickExpense.getPrv_Category_MyExpense());
+
+                miaprova(clickExpense);
             }
         });
 
@@ -150,8 +163,24 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
         return my_view;
     }
 
+    private void miaprova(MyExpense obj_modifyExpense) {
 
 
+        my_fragment = new Fragment_MyExpense_Modify();
+        my_frag_manager = getActivity().getSupportFragmentManager();
+        my_frag_trans = my_frag_manager.beginTransaction();
+        Bundle bundle = new Bundle();
+        //this is pass
+        bundle.putParcelable("modExpens", obj_modifyExpense);
+        my_fragment.setArguments(bundle);
+        //si aggiunge il richiamo allo stack
+        my_frag_trans.addToBackStack(null);
+        //add diventa replace
+        my_frag_trans.replace(R.id.Frame_Act_MyExpense , my_fragment );
+        my_frag_trans.commit();
+
+
+    }
 
 
     private void sendNewExpenseToDB(String sendNewCategory, String sendValue, String sendnewDescr) {
