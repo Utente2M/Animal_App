@@ -134,13 +134,14 @@ public class MyExpenseListAdapter extends ArrayAdapter<MyExpense> {
         //Controllo colore stringa valore
         if (SingExp.contains("-")){
             holder.single_expanse.setTextColor(Color.parseColor("#FF0000"));
+            holder.single_expanse.setText(SingExp);
         }else {
             String addPlus = "+"+SingExp;
             holder.single_expanse.setTextColor(Color.parseColor("#32CD32"));
             holder.single_expanse.setText(addPlus);
         }
 
-        Log.d(TAG , "ok if");
+
 
         //holder.single_expanse.setText(ExpenseObj.getPrv_valFloat_MyExpense());
         holder.CategoriaText.setText(ExpenseObj.getPrv_Category_MyExpense());

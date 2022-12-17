@@ -7,7 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
 
-
+    <!-- COLOR TEXT -->
+    <color name="red">#FF0000</color>
+    <color name="green">#32CD32</color>
 
     <!-- COLORI PROFILO -->
     <color name="colorPrimary">#008577</color>
