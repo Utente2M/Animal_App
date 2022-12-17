@@ -113,7 +113,6 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
         TV_totalExpense = my_view.findViewById(R.id.tV_myExp_total);
 
 
-
         BT_createExp = my_view.findViewById(R.id.BT_create_MyExpense);
         BT_createExp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +134,18 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
 
         popolateList();
         Log.d(TAG , "ok popolateList ");
+
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                MyExpense clickExpense = expensesList.get(position);
+                Log.d(TAG , clickExpense.getPrv_Category_MyExpense().toString());
+            }
+        });
+
+
 
         return my_view;
     }

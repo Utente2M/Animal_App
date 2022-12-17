@@ -146,12 +146,9 @@ public class MyExpenseListAdapter extends ArrayAdapter<MyExpense> {
         holder.CategoriaText.setText(ExpenseObj.getPrv_Category_MyExpense());
         holder.Data.setText(ExpenseObj.getPrv_Data_MyExpense());
 
-        Log.d(TAG ,"SONO IO"+ ExpenseObj.getPrv_Description_MyExpense());
-
 
         holder.descr.setText(ExpenseObj.getPrv_Description_MyExpense());
         //holder.descrizione.setText(ExpenseObj.getPrv_Description_MyExpense());
-
 
         return convertView;
     }
