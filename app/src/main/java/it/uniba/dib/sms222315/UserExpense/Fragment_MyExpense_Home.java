@@ -2,8 +2,9 @@ package it.uniba.dib.sms222315.UserExpense;
 
 import static java.text.DateFormat.getDateTimeInstance;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -25,30 +25,20 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.core.OrderBy;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 
 import it.uniba.dib.sms222315.R;
-import it.uniba.dib.sms222315.UserPets.Fragment_AddNewPet;
-import it.uniba.dib.sms222315.UserPets.MyPetsListAdapter;
-import it.uniba.dib.sms222315.UserPets.Pets;
 
 public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnItemSelectedListener  {
 
@@ -62,6 +52,7 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
     Interf_MyExpense myCallBackFrag;
     ArrayList<MyExpense> expensesList = new ArrayList<>();
     ListView mListView;
+    MyExpenseListAdapter adapter;
 
 
     //INIZIALIZZIAMO I CONTROLLI PER AGGIUNGERE SPESE
@@ -74,6 +65,10 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
     //Controlli per totale
     float fl_TotalExpense;
     TextView TV_totalExpense;
+
+    //CONTROL FOR FILTER
+    EditText textFilter; //ET_FILTER_MyExpense
+    private ArrayAdapter adapterFilter;
 
     /*
     //DA spostare nella registrazione per la data
@@ -154,16 +149,37 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
                 MyExpense clickExpense = expensesList.get(position);
                 Log.d(TAG , clickExpense.getPrv_Category_MyExpense());
 
-                miaprova(clickExpense);
+                openDetailExpanse(clickExpense);
             }
         });
+
+
+
+        //CONTROL FOR FILTER
+        textFilter = my_view.findViewById(R.id.ET_FILTER_MyExpense);
+       textFilter.addTextChangedListener(new TextWatcher() {
+           @Override
+           public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+           }
+
+           @Override
+           public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+               adapter.getFilter().filter(charSequence);
+           }
+
+           @Override
+           public void afterTextChanged(Editable editable) {
+
+           }
+       });
 
 
 
         return my_view;
     }
 
-    private void miaprova(MyExpense obj_modifyExpense) {
+    private void openDetailExpanse(MyExpense obj_modifyExpense) {
 
 
         my_fragment = new Fragment_MyExpense_Modify();
@@ -290,7 +306,7 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
                     TV_totalExpense.setText( Float.toString(fl_TotalExpense) );
 
                     Log.d(TAG , "end for");
-                    MyExpenseListAdapter adapter = new MyExpenseListAdapter(getContext(),
+                    adapter = new MyExpenseListAdapter(getContext(),
                             R.layout.adapter_my_expense, expensesList);
 
                     mListView.setAdapter(adapter);

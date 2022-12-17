@@ -48,8 +48,10 @@ public class Fragment_MyExpense_Modify extends Fragment implements AdapterView.O
     Button BT_modExp;
     Button BT_delExp;
 
+
     private static final String TAG = "TAG_Frag_MyExpense_MODIFY";
     MyExpense receivedExpense;
+
 
 
 
@@ -81,27 +83,17 @@ public class Fragment_MyExpense_Modify extends Fragment implements AdapterView.O
         Log.d(TAG , "onCreateView ");
         View my_view = inflater.inflate(R.layout.fragment__my_expense__modify , container , false);
 
-
-
-        Spinner SpinCategory; //spin_Category_MyExpense
-
-
         //Spinner choose new category
         SpinCategory = my_view.findViewById(R.id.spin_MOD_MyExpense);
-
-
         ArrayAdapter<CharSequence> adapter_spin = ArrayAdapter.createFromResource(getContext(), R.array.CategorieExpanse, android.R.layout.simple_spinner_item);
         adapter_spin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         SpinCategory.setAdapter(adapter_spin);
         SpinCategory.setOnItemSelectedListener(this);
 
-
-
-
         ET_modValue = my_view.findViewById(R.id.ET_MOD_decimal_MyExpense);
         ET_modValue.setText(receivedExpense.getPrv_valFloat_MyExpense());
 
-        ET_modDescr = my_view.findViewById(R.id.ET_MOD_descrMyExpense); //ET_MOD_descrMyExpense
+        ET_modDescr = my_view.findViewById(R.id.ET_MOD_descrMyExpense);
         ET_modDescr.setText(receivedExpense.getPrv_Description_MyExpense());
 
 
@@ -131,6 +123,8 @@ public class Fragment_MyExpense_Modify extends Fragment implements AdapterView.O
                 deleteIntoDB();
             }
         });//end LISTENER
+
+
 
 
 
