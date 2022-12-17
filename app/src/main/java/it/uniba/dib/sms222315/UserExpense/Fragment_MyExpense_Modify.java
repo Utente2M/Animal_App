@@ -22,10 +22,15 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import it.uniba.dib.sms222315.R;
 
@@ -83,6 +88,7 @@ public class Fragment_MyExpense_Modify extends Fragment implements AdapterView.O
 
         //Spinner choose new category
         SpinCategory = my_view.findViewById(R.id.spin_MOD_MyExpense);
+
 
         ArrayAdapter<CharSequence> adapter_spin = ArrayAdapter.createFromResource(getContext(), R.array.CategorieExpanse, android.R.layout.simple_spinner_item);
         adapter_spin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -179,8 +185,49 @@ public class Fragment_MyExpense_Modify extends Fragment implements AdapterView.O
     }
 
     private void modifyExpenseIntoDB(String sendModCategory, String newValue, String newDescr) {
-        //a vedere sulla documentazione todo
-    }
+        Log.d(TAG, "Try create expense into DB");
+        //get currunt date
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("d,MM,yyyy,HH:mm:ss");
+        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+
+        String formatData = format.format(calendar.getTime());
+        Log.d(TAG , "Format Data : " +formatData);
+        //formatData is the new ID document for single expanse
+
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = user.getUid();
+        Log.d(TAG,"This is UID " + userID);
+
+        //search correct document id
+
+        Query expenseRef = db.collection("User Basic Info").document(userID)
+                .collection("My Expense")
+                .whereEqualTo("prv_CreatAt_Time" , receivedExpense.getPrv_CreatAt_Time() );
+
+        expenseRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Log.d(TAG, document.getId() + " => " + document.getData());
+
+                    db.collection("User Basic Info").document(userID).
+                            collection("My Expense").document(document.getId())
+                            .update(
+                                    "prv_Category_MyExpense" , sendModCategory,
+                                    "prv_Data_MyExpense" , currentDate ,
+                                    "prv_Description_MyExpense" , newDescr ,
+                                    "prv_valFloat_MyExpense" , newValue );
+
+                }//end for
+                getActivity().onBackPressed();
+
+            }
+        });//END LISTENER
+
+
+    }//END FUNCTION
 
 
     @Override
