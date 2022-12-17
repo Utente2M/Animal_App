@@ -27,7 +27,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="24dp"
         android:layout_centerHorizontal="true"
-        app:srcCompat="@drawable/my_animal_logo" />
+        app:srcCompat="@drawable/icon_mypet" />
 
     <ImageView
         android:id="@+id/FragMenu_IV_my_expense"
