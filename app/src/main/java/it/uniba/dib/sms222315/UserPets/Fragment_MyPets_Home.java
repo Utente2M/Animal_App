@@ -4,11 +4,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,11 +31,17 @@ import java.util.ArrayList;
 
 import it.uniba.dib.sms222315.Autentication.CallbackFragment;
 import it.uniba.dib.sms222315.R;
-
+import it.uniba.dib.sms222315.UserExpense.Fragment_MyExpense_Modify;
+import it.uniba.dib.sms222315.UserExpense.MyExpense;
 
 
 
 public class Fragment_MyPets_Home extends Fragment {
+
+    //FRAGMENT VAR
+    Fragment my_fragment;
+    FragmentManager my_frag_manager;
+    FragmentTransaction my_frag_trans;
 
     //try db load in fragment
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -85,7 +94,36 @@ public class Fragment_MyPets_Home extends Fragment {
         });
 
 
+        //MODIFY ELEMENT FROM LIST
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                Pets clickPet = petList.get(position);
+                openDetailPets(clickPet);
+
+            }
+        });
+
+
+
         return my_view;
+    }
+
+    private void openDetailPets(Pets clickPet) {
+        my_fragment = new Fragment_MyPets_Modify();
+        my_frag_manager = getActivity().getSupportFragmentManager();
+        my_frag_trans = my_frag_manager.beginTransaction();
+        Bundle bundle = new Bundle();
+        //this is pass
+        bundle.putParcelable("modPets", clickPet);
+        my_fragment.setArguments(bundle);
+        //si aggiunge il richiamo allo stack
+        my_frag_trans.addToBackStack(null);
+        //add diventa replace
+        my_frag_trans.replace(R.id.Frame_Act_MyPets , my_fragment );
+        my_frag_trans.commit();
+
     }
 
     private void popolateList() {

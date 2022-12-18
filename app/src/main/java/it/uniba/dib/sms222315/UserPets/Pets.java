@@ -1,8 +1,11 @@
 package it.uniba.dib.sms222315.UserPets;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
-public class Pets {
+public class Pets implements Parcelable {
 
     private String prv_str_namePets;
     private String prv_sex;
@@ -43,6 +46,29 @@ public class Pets {
    }
 
 
+    protected Pets(Parcel in) {
+        prv_str_namePets = in.readString();
+        prv_sex = in.readString();
+        prv_Razza = in.readString();
+        prv_Mantello = in.readString();
+        prv_DataNascita = in.readString();
+        prv_SegniParticolari = in.readString();
+        prv_specie = in.readString();
+        prv_Str_responsabili = in.createStringArrayList();
+    }
+
+    public static final Creator<Pets> CREATOR = new Creator<Pets>() {
+        @Override
+        public Pets createFromParcel(Parcel in) {
+            return new Pets(in);
+        }
+
+        @Override
+        public Pets[] newArray(int size) {
+            return new Pets[size];
+        }
+    };
+
     public String getPrv_str_namePets() {
         return prv_str_namePets;
     }
@@ -74,5 +100,22 @@ public class Pets {
 
     public List<String> getPrv_Str_responsabili() {
         return prv_Str_responsabili;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(prv_str_namePets);
+        parcel.writeString(prv_sex);
+        parcel.writeString(prv_Razza);
+        parcel.writeString(prv_Mantello);
+        parcel.writeString(prv_DataNascita);
+        parcel.writeString(prv_SegniParticolari);
+        parcel.writeString(prv_specie);
+        parcel.writeStringList(prv_Str_responsabili);
     }
 }//END CLASS

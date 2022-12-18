@@ -149,7 +149,6 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
                 MyExpense clickExpense = expensesList.get(position);
-                expensesList.clear();
                 openDetailExpanse(clickExpense);
 
             }
