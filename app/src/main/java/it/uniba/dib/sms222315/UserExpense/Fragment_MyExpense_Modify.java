@@ -102,7 +102,7 @@ public class Fragment_MyExpense_Modify extends Fragment implements AdapterView.O
         BT_modExp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "button conferm modify");
+
                 String newValue = ET_modValue.getText().toString();
                 String newDescr = ET_modDescr.getText().toString();
 
@@ -119,7 +119,7 @@ public class Fragment_MyExpense_Modify extends Fragment implements AdapterView.O
         BT_delExp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "button delete ");
+
                 deleteIntoDB();
             }
         });//end LISTENER
@@ -136,7 +136,6 @@ public class Fragment_MyExpense_Modify extends Fragment implements AdapterView.O
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userID = user.getUid();
-        Log.d(TAG,"This is UID " + userID);
 
         Query expenseRef = db.collection("User Basic Info").document(userID)
                 .collection("My Expense")

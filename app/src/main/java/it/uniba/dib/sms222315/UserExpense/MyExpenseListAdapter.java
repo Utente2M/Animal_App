@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,7 +21,7 @@ import it.uniba.dib.sms222315.R;
 import it.uniba.dib.sms222315.UserPets.MyPetsListAdapter;
 
 
-public class MyExpenseListAdapter extends ArrayAdapter<MyExpense> {
+public class MyExpenseListAdapter extends ArrayAdapter<MyExpense>  {
 
 
     private static final String TAG = "TAG_MyExpenseAdapter";
@@ -114,7 +115,7 @@ public class MyExpenseListAdapter extends ArrayAdapter<MyExpense> {
         Log.d(TAG, "ok animation");
 
 
-       //TODO QUA VANNO PASSATE LE STRINGHE DELLO SPINNER
+       //TODO QUA VANNO PASSATE LE STRINGHE DELLO SPINNER e cambiato generale
         if (CatText.equals("Generale")){
             holder.image.setImageResource(R.drawable.icon_rabbit);
 

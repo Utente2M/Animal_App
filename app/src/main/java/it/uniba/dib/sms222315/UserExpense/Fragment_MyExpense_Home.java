@@ -68,7 +68,7 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
 
     //CONTROL FOR FILTER
     EditText textFilter; //ET_FILTER_MyExpense
-    private ArrayAdapter adapterFilter;
+    ArrayList<MyExpense> filterdList = new ArrayList<>();
 
     /*
     //DA spostare nella registrazione per la data
@@ -98,6 +98,7 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
         // Inflate the layout for this fragment
         Log.d(TAG , "onCreateView ");
         View my_view = inflater.inflate(R.layout.fragment__my_expense__home , container , false);
+
 
         //tutti i find e gli onclick
         mListView = (ListView) my_view.findViewById(R.id.listView_MyExpense);
@@ -137,6 +138,7 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
 
 
 
+
         popolateList();
         Log.d(TAG , "ok popolateList ");
 
@@ -147,9 +149,9 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
                 MyExpense clickExpense = expensesList.get(position);
-                Log.d(TAG , clickExpense.getPrv_Category_MyExpense());
-
+                expensesList.clear();
                 openDetailExpanse(clickExpense);
+
             }
         });
 
@@ -165,7 +167,7 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
 
            @Override
            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-               adapter.getFilter().filter(charSequence);
+               filterList(charSequence);
            }
 
            @Override
@@ -173,14 +175,50 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
 
            }
        });
-
-
-
         return my_view;
     }
 
-    private void openDetailExpanse(MyExpense obj_modifyExpense) {
+    private void filterList(CharSequence charSequence) {
 
+        //expensesList.clear();
+        Log.d(TAG , "inside Filter ");
+        if (charSequence == null || charSequence.toString().isEmpty() ){
+            Log.d(TAG , "Filter null  -> popolateList()");
+            filterdList.clear();
+            expensesList.clear();
+            popolateList();
+        }else {
+
+
+           // String filterText = charSequence.toString();
+
+            for (int k = 0; k < expensesList.size() ; k++ ){
+
+                MyExpense expense = expensesList.get(k);
+
+
+                if (expense.getPrv_valFloat_MyExpense().contains(charSequence) ||
+                        expense.getPrv_Category_MyExpense().contains(charSequence) ||
+                        expense.getPrv_Data_MyExpense().contains(charSequence) ||
+                        expense.getPrv_Description_MyExpense().contains(charSequence)
+                        ) {
+                    if (!filterdList.contains(expense)) {
+                        filterdList.add(expense);
+                        Log.d(TAG, "TRY Filter : " + expense);
+                    }
+                }
+            } //end for
+
+            adapter = new MyExpenseListAdapter(getContext(),
+                    R.layout.adapter_my_expense, filterdList);
+
+            mListView.setAdapter(adapter);
+
+        } //end else
+
+    }//end function
+
+    private void openDetailExpanse(MyExpense obj_modifyExpense) {
 
         my_fragment = new Fragment_MyExpense_Modify();
         my_frag_manager = getActivity().getSupportFragmentManager();
@@ -194,15 +232,10 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
         //add diventa replace
         my_frag_trans.replace(R.id.Frame_Act_MyExpense , my_fragment );
         my_frag_trans.commit();
-
-
     }
 
 
     private void sendNewExpenseToDB(String sendNewCategory, String sendValue, String sendnewDescr) {
-
-
-
         Log.d(TAG, "Try create expense into DB");
         //get currunt date
         Calendar calendar = Calendar.getInstance();
@@ -212,7 +245,6 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
         String formatData = format.format(calendar.getTime());
         Log.d(TAG , "Format Data : " +formatData);
         //formatData is the new ID document for single expanse
-
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userID = user.getUid();
@@ -265,17 +297,16 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
 
      */
 
-
-
-
     private void popolateList() {
+
+        Log.d(TAG , "inside popolate ");
 
         expensesList.clear();
         fl_TotalExpense = 0;
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userID = user.getUid();
-        Log.d(TAG,"This is UID " + userID);
+
 
         // caricare da DB
 
@@ -295,8 +326,6 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
                         String newValue = oneExpense.getPrv_valFloat_MyExpense();
                         float fl_newValue = Float.parseFloat(newValue);
                         expensesList.add(oneExpense);
-
-                        Log.d(TAG , "float : " + Float.toString(fl_newValue));
                         fl_TotalExpense = fl_TotalExpense + fl_newValue;
 
                     }//end for
@@ -305,7 +334,7 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
 
                     TV_totalExpense.setText( Float.toString(fl_TotalExpense) );
 
-                    Log.d(TAG , "end for");
+
                     adapter = new MyExpenseListAdapter(getContext(),
                             R.layout.adapter_my_expense, expensesList);
 
@@ -319,9 +348,6 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
 
             }
         });//END Listner
-
-
-
     }
 
     //potenziale errore
