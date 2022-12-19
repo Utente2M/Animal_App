@@ -109,7 +109,7 @@ public class Fragment_AddNewPet extends Fragment implements AdapterView.OnItemSe
                     createPetInDB (sendName, sendSpecie,sendSex,sendRazza);
                     //tornare al fragment precedente
                     MyInterf_Pets.turnTohome ();
-                    Toast.makeText(getContext() , "Congratulation ! " +
+                    Toast.makeText(getContext() , "Congratulation ! \n" +
                             " You have one new Pet " , Toast.LENGTH_SHORT).show();
                 }
 

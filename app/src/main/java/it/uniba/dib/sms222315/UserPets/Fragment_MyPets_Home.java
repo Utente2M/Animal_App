@@ -15,13 +15,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -29,11 +27,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-import it.uniba.dib.sms222315.Autentication.CallbackFragment;
 import it.uniba.dib.sms222315.R;
-import it.uniba.dib.sms222315.UserExpense.Fragment_MyExpense_Modify;
-import it.uniba.dib.sms222315.UserExpense.MyExpense;
-
 
 
 public class Fragment_MyPets_Home extends Fragment {
@@ -111,7 +105,7 @@ public class Fragment_MyPets_Home extends Fragment {
     }
 
     private void openDetailPets(Pets clickPet) {
-        my_fragment = new Fragment_MyPets_Modify();
+        my_fragment = new Fragment_MyPets_Profile();
         my_frag_manager = getActivity().getSupportFragmentManager();
         my_frag_trans = my_frag_manager.beginTransaction();
         Bundle bundle = new Bundle();
