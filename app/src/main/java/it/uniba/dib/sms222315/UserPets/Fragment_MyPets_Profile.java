@@ -3,6 +3,8 @@ package it.uniba.dib.sms222315.UserPets;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,12 +19,17 @@ import it.uniba.dib.sms222315.R;
 
 public class Fragment_MyPets_Profile extends Fragment {
 
+    //FRAGMENT VAR
+    Fragment my_fragment;
+    FragmentManager my_frag_manager;
+    FragmentTransaction my_frag_trans;
+
     TextView nome,data_nasc, sex , specie, razza, mantello , segniPart ;
     ImageView PetImage;
-    Button BT_deletePet;
+    Button BT_deletePet , BT_modifyPet;
 
 
-    private static final String TAG = "TAG_Frag_MyPet_MODIFY";
+    private static final String TAG = "TAG_Frag_MyPet_PROFILE";
     Pets receivedPet;
 
 
@@ -48,25 +55,43 @@ public class Fragment_MyPets_Profile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.d(TAG , "onCreateView ");
-        View my_view = inflater.inflate(R.layout.fragment__my_pets__modify , container , false);
+        View my_view = inflater.inflate(R.layout.fragment__my_pets__profile, container , false);
 
 
 
 
         setfind(my_view);
         setTextfromPets();
-        setAllonClick();
+        setAllOnClick();
 
 
         // Inflate the layout for this fragment
         return my_view;
     }
 
-    private void setAllonClick() {
+    private void setAllOnClick() {
         BT_deletePet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 deleteIntoDB();
+            }
+        });
+        BT_modifyPet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                my_fragment = new Fragment_MyPets_Modify();
+                my_frag_manager = getActivity().getSupportFragmentManager();
+                my_frag_trans = my_frag_manager.beginTransaction();
+                Bundle bundle = new Bundle();
+                //this is pass
+                bundle.putParcelable("modPets", receivedPet);
+                my_fragment.setArguments(bundle);
+                //si aggiunge il richiamo allo stack
+                my_frag_trans.addToBackStack(null);
+                //add diventa replace
+                my_frag_trans.replace(R.id.Frame_Act_MyPets , my_fragment );
+                my_frag_trans.commit();
             }
         });
     }
@@ -85,7 +110,6 @@ public class Fragment_MyPets_Profile extends Fragment {
         razza.setText(receivedPet.getPrv_Razza());
         mantello.setText(receivedPet.getPrv_Mantello());
         segniPart.setText(receivedPet.getPrv_SegniParticolari());
-
 
 
         if (specie.equals("Cane")){
@@ -114,6 +138,7 @@ public class Fragment_MyPets_Profile extends Fragment {
         segniPart = my_view.findViewById(R.id.TV_MyPetProfile_segPartic);
         PetImage = my_view.findViewById(R.id.IV_MyPetProfile_picture);
         BT_deletePet = my_view.findViewById(R.id.BT_DEL_MyPets);
+        BT_modifyPet = my_view.findViewById(R.id.BT_MOD_MyPets);
 
     }
 }

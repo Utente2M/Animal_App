@@ -124,11 +124,6 @@ public class Fragment_MyExpense_Modify extends Fragment implements AdapterView.O
             }
         });//end LISTENER
 
-
-
-
-
-
         return my_view;
     }//END onCreateView
 
