@@ -95,6 +95,8 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
 
 
 
+
+
         // Inflate the layout for this fragment
         Log.d(TAG , "onCreateView ");
         View my_view = inflater.inflate(R.layout.fragment__my_expense__home , container , false);
@@ -139,8 +141,15 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
 
 
 
-        popolateList();
-        Log.d(TAG , "ok popolateList ");
+
+        if (adapter ==null){
+            expensesList.clear();
+            filterdList.clear();
+            popolateList();
+            Log.d(TAG , "ok popolateList ");
+        }
+
+
 
 
         //MODIFY ELEMENT FROM LIST
@@ -179,21 +188,25 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
 
     private void filterList(CharSequence charSequence) {
 
-        //expensesList.clear();
+
+
+        filterdList.clear();
+
+
         Log.d(TAG , "inside Filter ");
         if (charSequence == null || charSequence.toString().isEmpty() ){
             Log.d(TAG , "Filter null  -> popolateList()");
-            filterdList.clear();
-            expensesList.clear();
             popolateList();
         }else {
 
 
            // String filterText = charSequence.toString();
-
+            Log.d(TAG , "expList size : " +expensesList.size());
             for (int k = 0; k < expensesList.size() ; k++ ){
 
                 MyExpense expense = expensesList.get(k);
+
+                Log.d(TAG , "charseq : " + charSequence);
 
 
                 if (expense.getPrv_valFloat_MyExpense().contains(charSequence) ||
@@ -201,6 +214,7 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
                         expense.getPrv_Data_MyExpense().contains(charSequence) ||
                         expense.getPrv_Description_MyExpense().contains(charSequence)
                         ) {
+
                     if (!filterdList.contains(expense)) {
                         filterdList.add(expense);
                         Log.d(TAG, "TRY Filter : " + expense);
@@ -300,7 +314,10 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
 
         Log.d(TAG , "inside popolate ");
 
+
         expensesList.clear();
+
+
         fl_TotalExpense = 0;
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

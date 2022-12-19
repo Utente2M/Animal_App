@@ -30,19 +30,6 @@
         android:translationY="120dp" />
 
     <EditText
-        android:id="@+id/et_Frag_NewPetDB_specie"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Inserct pet specie ( Es : Cane ) "
-        android:inputType="textPersonName"
-        android:text=""
-        android:translationX="60dp"
-        android:translationY="120dp"
-        android:visibility="gone"
-        tools:visibility="gone" />
-
-    <EditText
         android:id="@+id/et_Frag_NewPetDB_sex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
