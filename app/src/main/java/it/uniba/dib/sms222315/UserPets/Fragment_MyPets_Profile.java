@@ -2,6 +2,7 @@ package it.uniba.dib.sms222315.UserPets;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -13,6 +14,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import it.uniba.dib.sms222315.R;
 
@@ -27,6 +32,9 @@ public class Fragment_MyPets_Profile extends Fragment {
     TextView nome,data_nasc, sex , specie, razza, mantello , segniPart ;
     ImageView PetImage;
     Button BT_deletePet , BT_modifyPet;
+
+    //ISTANCE DB
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     private static final String TAG = "TAG_Frag_MyPet_PROFILE";
@@ -56,6 +64,7 @@ public class Fragment_MyPets_Profile extends Fragment {
                              Bundle savedInstanceState) {
         Log.d(TAG , "onCreateView ");
         View my_view = inflater.inflate(R.layout.fragment__my_pets__profile, container , false);
+
 
 
 
@@ -97,9 +106,21 @@ public class Fragment_MyPets_Profile extends Fragment {
     }
 
     private void deleteIntoDB() {
-        //decidere come deve avvenire il controllo
-        //recupera animale nel DB
-        //controlla se si è ultimo propietario
+        db.collection("Animal DB").document(receivedPet.getPrv_doc_id())
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                        getActivity().onBackPressed();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
     }
 
     private void setTextfromPets() {

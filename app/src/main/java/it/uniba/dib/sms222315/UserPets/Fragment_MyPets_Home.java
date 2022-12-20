@@ -37,7 +37,7 @@ public class Fragment_MyPets_Home extends Fragment {
     FragmentManager my_frag_manager;
     FragmentTransaction my_frag_trans;
 
-    //try db load in fragment
+    //ISTANCE DB
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
@@ -145,8 +145,10 @@ public class Fragment_MyPets_Home extends Fragment {
                         Log.d(TAG, document.getId() + " => " + document.getData());
 
 
-
-                        petList.add(document.toObject(Pets.class));
+                        Pets mypet = document.toObject(Pets.class);
+                        mypet.setPrv_doc_id(document.getId());
+                        petList.add(mypet);
+                        Log.d(TAG , "uid doc : " + mypet.getPrv_doc_id());
 
                     }//end for
 

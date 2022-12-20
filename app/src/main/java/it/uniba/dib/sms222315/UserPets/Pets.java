@@ -15,6 +15,7 @@ public class Pets implements Parcelable {
     private String prv_SegniParticolari;
     private String prv_specie;
     private List<String> prv_Str_responsabili;
+    private String prv_doc_id;
 
 
     public Pets(String namePets,String specie,  String sex, String razza,
@@ -117,5 +118,13 @@ public class Pets implements Parcelable {
         parcel.writeString(prv_SegniParticolari);
         parcel.writeString(prv_specie);
         parcel.writeStringList(prv_Str_responsabili);
+    }
+
+    public String getPrv_doc_id() {
+        return prv_doc_id;
+    }
+
+    public void setPrv_doc_id(String prv_doc_id) {
+        this.prv_doc_id = prv_doc_id;
     }
 }//END CLASS

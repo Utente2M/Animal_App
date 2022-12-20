@@ -52,6 +52,7 @@ public class Fragment_MyPets_Modify extends Fragment {
         View my_view = inflater.inflate(R.layout.fragment__my_pets__modify, container, false);
         Log.d(TAG , "onCreateView ");
 
+
         setfind(my_view);
         setTextfromPets();
         setAllOnClick();
