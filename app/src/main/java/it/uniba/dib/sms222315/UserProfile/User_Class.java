@@ -13,8 +13,7 @@ public class User_Class {
     private String prv_str_UID;
     private Uri prv_Uri_ProfImg;
 
-    private FirebaseUser userAuth;
-    private FirebaseAuth mAuth;
+
     private static final String TAG = "TAG_Class_User";
 
 
