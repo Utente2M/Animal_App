@@ -74,6 +74,7 @@ public class Fragment_MyPets_Modify extends Fragment {
 
             }
         });
+
     }
 
 
@@ -109,8 +110,8 @@ public class Fragment_MyPets_Modify extends Fragment {
         mantello = my_view.findViewById(R.id.ET_MyPetModify_mantello);
         segniPart = my_view.findViewById(R.id.ET_MyPetModify_segPartic);
 
-        BT_backPet = my_view.findViewById(R.id.BT_DEL_MyPets);
-        BT_confermePet = my_view.findViewById(R.id.BT_MOD_MyPets);
+        BT_backPet = my_view.findViewById(R.id.BT_Back_MyPetsModify);
+        BT_confermePet = my_view.findViewById(R.id.BT_Apply_MyPetsModify);
 
     }
 

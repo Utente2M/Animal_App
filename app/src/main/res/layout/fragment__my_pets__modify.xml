@@ -90,14 +90,14 @@
             android:layout_height="wrap_content">
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/BT_Back_MyPetsModify"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/ic_arrow_back_24dp" />
 
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/BT_Apply_MyPetsModify"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

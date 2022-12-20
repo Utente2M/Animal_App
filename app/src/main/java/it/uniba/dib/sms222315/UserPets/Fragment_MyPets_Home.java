@@ -145,6 +145,7 @@ public class Fragment_MyPets_Home extends Fragment {
                         Log.d(TAG, document.getId() + " => " + document.getData());
 
 
+
                         petList.add(document.toObject(Pets.class));
 
                     }//end for
