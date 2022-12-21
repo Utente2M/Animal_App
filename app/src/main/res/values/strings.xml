@@ -36,6 +36,11 @@
 
     <!-- FONDAMENTALI -->
     <string name="api_key">AIzaSyBwQOqHuw4FUl_9Xw7oEZ1o7YCa5DM9thI</string>
+    <string name="others">Others</string>
+    <string name="notification">Notification</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
+    <string name="support">Support</string>
     <string-array name="Specie_supportate">
         <item>Cane</item>
         <item>Gatto</item>

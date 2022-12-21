@@ -3,6 +3,8 @@ package it.uniba.dib.sms222315;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,19 +37,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //toolbar set as app bar
-        Toolbar myToolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(myToolbar);
-        
+    //   Toolbar myToolbar = findViewById(R.id.toolbar);
+      //  setSupportActionBar(myToolbar);
+        DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
+
+        findViewById(R.id.ImageMenu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                drawerLayout.openDrawer(GravityCompat.START);
+
+            }
+        });
+
+
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .setReorderingAllowed(true)
-                    .add(R.id.fragmentContainerView, User_information_Fragment.class, null)
-                    .commit();
-        }
+
 
 
     }//END OnCreate
@@ -69,9 +77,9 @@ public class MainActivity extends AppCompatActivity {
 
     }//END onStart
 
-    @Override
+    /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_home, menu);
+        getMenuInflater().inflate(R.menu.navigation_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -113,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-    }
+    }        */
 
 
     public void hard_logout(View view) {
