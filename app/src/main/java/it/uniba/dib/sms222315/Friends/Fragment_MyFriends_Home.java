@@ -155,19 +155,18 @@ public class Fragment_MyFriends_Home extends Fragment {
 
 
         //change in query for change order
-        CollectionReference friendsRef = db.collection("Public User");
-            //    .orderBy("numberOfLike", Query.Direction.DESCENDING);
-
-        friendsRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
+        db.collection("Public User")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId() + " => " + document.getData());
 
-                        MyFriends oneFriend = document.toObject(MyFriends.class);
-                        Log.d(TAG, "PROVA " + oneFriend.getNameFriend());
-                        friendsList.add(oneFriend);
+                        MyFriends listFriend = document.toObject(MyFriends.class);
+
+                        Log.d(TAG, "PROVA " + listFriend.getNameFriend());
+                        friendsList.add(document.toObject(MyFriends.class));
 
                     }//END FOR
 

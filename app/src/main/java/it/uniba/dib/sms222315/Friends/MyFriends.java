@@ -7,11 +7,19 @@ public class MyFriends {
     private String numberOfLike;
     private String secretId;
 
-    public MyFriends(String nameFriend, String mailFriend, String numberOfLike, String secretId){
-        NameFriend = nameFriend;
-        MailFriend = mailFriend;
-        this.numberOfLike = numberOfLike;
-        this.secretId = secretId;
+    public MyFriends(String name, String mail, String Like, String UId){
+        NameFriend = name;
+        MailFriend = mail;
+        numberOfLike = Like;
+        secretId = UId;
+    }
+
+    //CONSTRUCTOR FOR LISTVIEW
+    public MyFriends(String name, String mail, String Like){
+        NameFriend = name;
+        MailFriend = mail;
+        numberOfLike = Like;
+
     }
 
     public MyFriends(){}
