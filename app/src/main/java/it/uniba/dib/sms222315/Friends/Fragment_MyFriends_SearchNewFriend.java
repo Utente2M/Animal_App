@@ -36,7 +36,7 @@ import it.uniba.dib.sms222315.UserExpense.MyExpenseListAdapter;
 import it.uniba.dib.sms222315.UserPets.Pets;
 
 
-public class Fragment_MyFriends_Home extends Fragment {
+public class Fragment_MyFriends_SearchNewFriend extends Fragment {
 
     //FRAGMENT VAR
     Fragment my_fragment;
@@ -64,7 +64,7 @@ public class Fragment_MyFriends_Home extends Fragment {
 
     private static final String TAG = "TAG_Frag_MyFriends_Home";
 
-    public Fragment_MyFriends_Home() {
+    public Fragment_MyFriends_SearchNewFriend() {
         // Required empty public constructor
     }
 
@@ -78,7 +78,7 @@ public class Fragment_MyFriends_Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View my_view = inflater.inflate(R.layout.fragment__my_friends__home, container, false);
+        View my_view = inflater.inflate(R.layout.fragment__my_friends__search_new_friend, container, false);
 
         //tutti i find e gli onclick
         allFind(my_view);
@@ -96,14 +96,14 @@ public class Fragment_MyFriends_Home extends Fragment {
     }
 
     private void allFind(View my_view) {
-        mListView=my_view.findViewById(R.id.listView_MyFriend);
-        BT_NewFriend = my_view.findViewById(R.id.BT_NewFriend);
+        mListView=my_view.findViewById(R.id.listView_NewFriend);
+
 
     }
 
     private void setupFilter(View my_view) {
         //CONTROL FOR FILTER
-        textFilter = my_view.findViewById(R.id.ET_FILTER_MyFriends);
+        textFilter = my_view.findViewById(R.id.ET_FILTER_NewFriends);
         textFilter.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -123,17 +123,7 @@ public class Fragment_MyFriends_Home extends Fragment {
     }
 
     private void allOnClick() {
-        BT_NewFriend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment_MyFriends_SearchNewFriend my_fragment = new Fragment_MyFriends_SearchNewFriend();
-                //my_fragment.setMy_callbackFragment(this);
-                my_frag_manager = getActivity().getSupportFragmentManager();
-                my_frag_trans = my_frag_manager.beginTransaction();
-                my_frag_trans.replace(R.id.Frame_Act_MyFriends , my_fragment);
-                my_frag_trans.commit();
-            }
-        });
+
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
