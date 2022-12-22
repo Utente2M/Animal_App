@@ -23,15 +23,10 @@ import it.uniba.dib.sms222315.R;
 
 public class Fragment_menu_profile extends Fragment {
 
-    ImageView IV_my_pets , IV_my_expense;
+    ImageView IV_my_pets , IV_my_expense, IV_my_friends;
     Button but_logout , but_menu;
 
-    Interf_UserProfile myCallBackFrag;
-
-
     private static final String TAG = "TAG_Frag_MENUProfile";
-
-
 
     @Nullable
     @Override
@@ -39,11 +34,20 @@ public class Fragment_menu_profile extends Fragment {
 
         View my_view = inflater.inflate(R.layout.fragm_menu_profile , container , false);
 
+        allfind(my_view);
+        allsetClick();
+
+        return my_view;
+    }
+
+    private void allfind(View my_view) {
         but_logout = my_view.findViewById(R.id.button_logout_menu_profile);
         IV_my_pets = my_view.findViewById(R.id.FragMenu_IV_my_pet);
         IV_my_expense = my_view.findViewById(R.id.FragMenu_IV_my_expense);
+        IV_my_friends =my_view.findViewById(R.id.FragMenu_IV_my_friends);
+    }
 
-
+    private void allsetClick() {
         //myPet start Activity
         IV_my_pets.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,14 +59,24 @@ public class Fragment_menu_profile extends Fragment {
             }//end onClick myPets
         });
 
-
         //button my expense
-
         IV_my_expense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Log.d(TAG , "Try start Activity my expense");
+                Intent myExpense = new Intent(getActivity(), Activity_MyExpense.class);
+                startActivity(myExpense);
+
+            }//end onClick my expense
+        });
+
+        //button my fiends
+        IV_my_friends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.d(TAG , "Try start Activity my friends");
                 Intent myExpense = new Intent(getActivity(), Activity_MyExpense.class);
                 startActivity(myExpense);
 
@@ -82,23 +96,19 @@ public class Fragment_menu_profile extends Fragment {
                 startActivity(okLogut);
             }
         });
-
-
-        return my_view;
     }
+
+
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        //listner di Class Interface per scambio dati
-       // myListnerCall = (CallbackFragment) context;
+
 
     }
 
 
-    public void setMyCallBackFrag (Interf_UserProfile varCallback ){
-        this.myCallBackFrag = varCallback;
-    }
+
 
 
 }
