@@ -338,9 +338,6 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
 
         MyFriends newPublicProfile = new MyFriends(NamePublic , MailPublic , "" , userID );
 
-        // Add a new document with a document = ID
-
-
 
         //PROVA DI CREAZIONE SUBCOLLECTION
 

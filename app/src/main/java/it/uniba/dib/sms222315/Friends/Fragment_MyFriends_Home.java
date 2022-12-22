@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import it.uniba.dib.sms222315.R;
 import it.uniba.dib.sms222315.UserExpense.MyExpense;
 import it.uniba.dib.sms222315.UserExpense.MyExpenseListAdapter;
+import it.uniba.dib.sms222315.UserPets.Pets;
 
 
 public class Fragment_MyFriends_Home extends Fragment {
@@ -59,7 +60,7 @@ public class Fragment_MyFriends_Home extends Fragment {
 
     //DB VARIABLE
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private FirebaseAuth mAuth;
+
 
     private static final String TAG = "TAG_Frag_MyFriends_Home";
 
@@ -156,33 +157,33 @@ public class Fragment_MyFriends_Home extends Fragment {
 
         //change in query for change order
         db.collection("Public User")
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, document.getId() + " => " + document.getData());
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
 
-                        MyFriends listFriend = document.toObject(MyFriends.class);
+                                MyFriends oneFriend = document.toObject(MyFriends.class);
+                                Log.d(TAG, "PROVA " + oneFriend.getSecretId());
+                                if (!userID.equals(oneFriend.getSecretId())) {
 
-                        Log.d(TAG, "PROVA " + listFriend.getNameFriend());
-                        friendsList.add(document.toObject(MyFriends.class));
+                                    friendsList.add(oneFriend);
+                                }
 
-                    }//END FOR
-
-                    adapter = new MyFriendsListAdapter(getContext(),
-                            R.layout.adapter_my_friend, friendsList);
-
-
-                    mListView.setAdapter(adapter);
-                }//END IF
-                else {
-                    //nessun amico da mostrare
-                }//fine else
+                            }//END FOR
+                            adapter = new MyFriendsListAdapter(getContext(),
+                                    R.layout.adapter_my_friend, friendsList);
 
 
-            }
-        });//END Listner
+                            mListView.setAdapter(adapter);
+                        }else {
+
+                        }
+                    }
+                });
+
+
 
     }
 

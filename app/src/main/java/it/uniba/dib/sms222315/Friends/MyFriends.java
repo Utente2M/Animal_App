@@ -2,22 +2,22 @@ package it.uniba.dib.sms222315.Friends;
 
 public class MyFriends {
 
-    private String NameFriend;
-    private String MailFriend;
+    private String nameFriend;
+    private String mailFriend;
     private String numberOfLike;
     private String secretId;
 
     public MyFriends(String name, String mail, String Like, String UId){
-        NameFriend = name;
-        MailFriend = mail;
+        nameFriend = name;
+        mailFriend = mail;
         numberOfLike = Like;
         secretId = UId;
     }
 
     //CONSTRUCTOR FOR LISTVIEW
     public MyFriends(String name, String mail, String Like){
-        NameFriend = name;
-        MailFriend = mail;
+        nameFriend = name;
+        mailFriend = mail;
         numberOfLike = Like;
 
     }
@@ -26,11 +26,11 @@ public class MyFriends {
 
 
     public String getNameFriend() {
-        return NameFriend;
+        return nameFriend;
     }
 
     public String getMailFriend() {
-        return MailFriend;
+        return mailFriend;
     }
 
     public String getNumberOfLike() {
