@@ -5,14 +5,17 @@ public class MyFriends {
     private String NameFriend;
     private String MailFriend;
     private String numberOfLike;
+    private String secretId;
 
-    public MyFriends(){}
-
-    public MyFriends(String nameFriend, String mailFriend, String numberOfLike) {
+    public MyFriends(String nameFriend, String mailFriend, String numberOfLike, String secretId){
         NameFriend = nameFriend;
         MailFriend = mailFriend;
         this.numberOfLike = numberOfLike;
+        this.secretId = secretId;
     }
+
+    public MyFriends(){}
+
 
     public String getNameFriend() {
         return NameFriend;
@@ -24,5 +27,9 @@ public class MyFriends {
 
     public String getNumberOfLike() {
         return numberOfLike;
+    }
+
+    public String getSecretId() {
+        return secretId;
     }
 }

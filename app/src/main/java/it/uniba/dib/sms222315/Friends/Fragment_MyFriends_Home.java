@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -45,7 +46,7 @@ public class Fragment_MyFriends_Home extends Fragment {
 
     ArrayList<MyFriends> friendsList = new ArrayList<>();
     ListView mListView;
-    MyExpenseListAdapter adapter;
+    MyFriendsListAdapter adapter;
 
 
 
@@ -152,9 +153,10 @@ public class Fragment_MyFriends_Home extends Fragment {
                 .orderBy("numberOfLike", Query.Direction.DESCENDING);
          */
 
-        Query friendsRef = db.collection("User Basic Info").document(userID)
-                .collection("My Friends")
-                .orderBy("numberOfLike", Query.Direction.DESCENDING);
+
+        //change in query for change order
+        CollectionReference friendsRef = db.collection("Public User");
+            //    .orderBy("numberOfLike", Query.Direction.DESCENDING);
 
         friendsRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
             @Override
@@ -164,15 +166,13 @@ public class Fragment_MyFriends_Home extends Fragment {
                         Log.d(TAG, document.getId() + " => " + document.getData());
 
                         MyFriends oneFriend = document.toObject(MyFriends.class);
+                        Log.d(TAG, "PROVA " + oneFriend.getNameFriend());
                         friendsList.add(oneFriend);
 
                     }//END FOR
 
-
-/*
-adapter = new MyFriendsListAdapter(getContext(),
-                            R.layout.adapter_my_expense, friendsList);
- */
+                    adapter = new MyFriendsListAdapter(getContext(),
+                            R.layout.adapter_my_friend, friendsList);
 
 
                     mListView.setAdapter(adapter);

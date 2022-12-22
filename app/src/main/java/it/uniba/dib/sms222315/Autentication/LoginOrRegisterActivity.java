@@ -30,6 +30,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Arrays;
@@ -38,10 +39,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import it.uniba.dib.sms222315.Friends.MyFriends;
+import it.uniba.dib.sms222315.UserPets.Pets;
 import it.uniba.dib.sms222315.UserProfile.ProfileUserActivity;
 import it.uniba.dib.sms222315.R;
 
 public class LoginOrRegisterActivity extends AppCompatActivity implements CallbackFragment {
+
+    //Variable for public profile
+    String NamePublic , MailPublic;
 
     //FIREBASE VAR
     private FirebaseAuth mAuth;
@@ -94,10 +100,10 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
         Log.d(TAG, "on Start activity log or register ");
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        /*if(currentUser != null){
+        if(currentUser != null){
             reload();
         }
-*/
+
 
     }
 
@@ -202,6 +208,8 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
         Log.d(TAG , "createUSerWithMailPassword mail = " + email);
         Log.d(TAG , "createUSerWithMailPassword pass = " + password);
 
+        MailPublic = email;
+
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -253,6 +261,8 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
 
     @Override
     public void addInformationToProfile(String name) {
+
+        NamePublic = name;
 
         //setta display name in autFirabese
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -306,7 +316,7 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot successfully written!");
-                        reload();
+                        createPublicProfile();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -315,6 +325,42 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
                         Log.w(TAG, "Error writing document", e);
                     }
                 });
+    }
+
+    private void createPublicProfile() {
+
+        //qui vanno creati gli animali nel DB con le info base
+        //Questa risposta arriva dal Fragment Add new Pet
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = user.getUid();
+        Log.d(TAG,"Public Profile " + userID);
+
+        MyFriends newPublicProfile = new MyFriends(NamePublic , MailPublic , "" , userID );
+
+        // Add a new document with a document = ID
+
+
+
+        //PROVA DI CREAZIONE SUBCOLLECTION
+
+        db.collection("Public User")
+                .add(newPublicProfile)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        reload();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+
+        //inserire reload
     }
 
 

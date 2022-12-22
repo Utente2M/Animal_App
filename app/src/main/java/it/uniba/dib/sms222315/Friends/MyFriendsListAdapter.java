@@ -63,7 +63,7 @@ public class MyFriendsListAdapter extends ArrayAdapter<MyFriends> {
 
 
         //Create the expense object with the information
-        MyFriends FriendObj = new MyFriends(nameText, mailExp, likeExchange );
+        MyFriends FriendObj = new MyFriends(nameText, mailExp, likeExchange,"" );
 
         Log.d(TAG , " ok constructor");
 
@@ -117,7 +117,7 @@ public class MyFriendsListAdapter extends ArrayAdapter<MyFriends> {
             holder.NumberOfLike.setText(FriendObj.getNumberOfLike() + "Like");
 
         }else {
-            holder.NumberOfLike.setText("");
+            holder.NumberOfLike.setText("not your friend");
         }
 
 
