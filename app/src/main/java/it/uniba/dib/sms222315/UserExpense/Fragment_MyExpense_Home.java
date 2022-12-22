@@ -93,35 +93,29 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
-
-
-
         // Inflate the layout for this fragment
         Log.d(TAG , "onCreateView ");
         View my_view = inflater.inflate(R.layout.fragment__my_expense__home , container , false);
 
-
         //tutti i find e gli onclick
-        mListView = (ListView) my_view.findViewById(R.id.listView_MyExpense);
-
-        //FIND FOR FUNCTION CREATE
-        ET_newValue = my_view.findViewById(R.id.ET_decimal_MyExpense);
-        ET_newDescr= my_view.findViewById(R.id.ET_descr_MyExpense);
-
-        //Spinner choose new category
-        SpinCategory = my_view.findViewById(R.id.spin_Category_MyExpense);
-
-        ArrayAdapter<CharSequence> adapter_spin = ArrayAdapter.createFromResource(getContext(), R.array.CategorieExpanse, android.R.layout.simple_spinner_item);
-        adapter_spin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        SpinCategory.setAdapter(adapter_spin);
-        SpinCategory.setOnItemSelectedListener(this);
-
-        //fUNCTION FOR TOTAL VIEV
-        TV_totalExpense = my_view.findViewById(R.id.tV_myExp_total);
+        allFind(my_view);
+        setupSpinner(my_view);
+        setupFilter(my_view);
+        allOnClick();
 
 
-        BT_createExp = my_view.findViewById(R.id.BT_create_MyExpense);
+        if (adapter ==null){
+            expensesList.clear();
+            filterdList.clear();
+            popolateList();
+            Log.d(TAG , "ok popolateList ");
+        }
+
+        return my_view;
+    }
+
+    private void allOnClick() {
+        //Create New Expense
         BT_createExp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,21 +132,7 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
             }
         });
 
-
-
-
-
-        if (adapter ==null){
-            expensesList.clear();
-            filterdList.clear();
-            popolateList();
-            Log.d(TAG , "ok popolateList ");
-        }
-
-
-
-
-        //MODIFY ELEMENT FROM LIST
+        //MODIFY CLICKED ELEMENT FROM LIST
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -162,28 +142,51 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
 
             }
         });
+    }
+
+    private void allFind(View my_view) {
+
+        mListView = (ListView) my_view.findViewById(R.id.listView_MyExpense);
+
+        //FIND FOR FUNCTION CREATE
+        ET_newValue = my_view.findViewById(R.id.ET_decimal_MyExpense);
+        ET_newDescr= my_view.findViewById(R.id.ET_descr_MyExpense);
+
+        //fUNCTION FOR TOTAL VIEV
+        TV_totalExpense = my_view.findViewById(R.id.tV_myExp_total);
 
 
+        BT_createExp = my_view.findViewById(R.id.BT_create_MyExpense);
 
+    }
+    private void setupFilter(View my_view) {
         //CONTROL FOR FILTER
         textFilter = my_view.findViewById(R.id.ET_FILTER_MyExpense);
-       textFilter.addTextChangedListener(new TextWatcher() {
-           @Override
-           public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        textFilter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-           }
+            }
 
-           @Override
-           public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-               filterList(charSequence);
-           }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                filterList(charSequence);
+            }
 
-           @Override
-           public void afterTextChanged(Editable editable) {
+            @Override
+            public void afterTextChanged(Editable editable) {
 
-           }
-       });
-        return my_view;
+            }
+        });
+    }
+    private void setupSpinner(View my_view) {
+        //Spinner choose new category
+        SpinCategory = my_view.findViewById(R.id.spin_Category_MyExpense);
+
+        ArrayAdapter<CharSequence> adapter_spin = ArrayAdapter.createFromResource(getContext(), R.array.CategorieExpanse, android.R.layout.simple_spinner_item);
+        adapter_spin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        SpinCategory.setAdapter(adapter_spin);
+        SpinCategory.setOnItemSelectedListener(this);
     }
 
     private void filterList(CharSequence charSequence) {

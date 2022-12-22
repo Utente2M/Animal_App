@@ -1,4 +1,4 @@
-package it.uniba.dib.sms222315;
+package it.uniba.dib.sms222315.Friends;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 
-import it.uniba.dib.sms222315.UserExpense.Fragment_MyExpense_Home;
+import it.uniba.dib.sms222315.R;
 
 public class Activity_MyFriends extends AppCompatActivity {
 

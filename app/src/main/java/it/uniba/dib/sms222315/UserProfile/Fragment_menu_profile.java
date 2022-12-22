@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import it.uniba.dib.sms222315.Activity_MyFriends;
+import it.uniba.dib.sms222315.Friends.Activity_MyFriends;
 import it.uniba.dib.sms222315.UserExpense.Activity_MyExpense;
 import it.uniba.dib.sms222315.UserPets.Activity_MyPets;
 import it.uniba.dib.sms222315.MainActivity;
