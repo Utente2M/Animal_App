@@ -1,6 +1,9 @@
 package it.uniba.dib.sms222315.Friends;
 
-public class MyFriends {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class MyFriends implements Parcelable {
 
     private String nameFriend;
     private String mailFriend;
@@ -25,6 +28,25 @@ public class MyFriends {
     public MyFriends(){}
 
 
+    protected MyFriends(Parcel in) {
+        nameFriend = in.readString();
+        mailFriend = in.readString();
+        numberOfLike = in.readString();
+        secretId = in.readString();
+    }
+
+    public static final Creator<MyFriends> CREATOR = new Creator<MyFriends>() {
+        @Override
+        public MyFriends createFromParcel(Parcel in) {
+            return new MyFriends(in);
+        }
+
+        @Override
+        public MyFriends[] newArray(int size) {
+            return new MyFriends[size];
+        }
+    };
+
     public String getNameFriend() {
         return nameFriend;
     }
@@ -39,5 +61,18 @@ public class MyFriends {
 
     public String getSecretId() {
         return secretId;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(nameFriend);
+        parcel.writeString(mailFriend);
+        parcel.writeString(numberOfLike);
+        parcel.writeString(secretId);
     }
 }

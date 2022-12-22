@@ -78,7 +78,7 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
 
     //DB VARIABLE
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private FirebaseAuth mAuth;
+
 
 
     private static final String TAG = "TAG_Frag_MyExpense_Home";

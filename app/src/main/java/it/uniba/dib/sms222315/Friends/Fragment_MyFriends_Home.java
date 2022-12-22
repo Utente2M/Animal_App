@@ -162,7 +162,8 @@ public class Fragment_MyFriends_Home extends Fragment {
 
 
         //change in query for change order
-        db.collection("Public User")
+        db.collection("User Basic Info").document(userID).
+                collection("My Friends")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {

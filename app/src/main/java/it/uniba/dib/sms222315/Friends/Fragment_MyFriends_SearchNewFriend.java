@@ -31,6 +31,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 import it.uniba.dib.sms222315.R;
+import it.uniba.dib.sms222315.UserExpense.Fragment_MyExpense_Modify;
 import it.uniba.dib.sms222315.UserExpense.MyExpense;
 import it.uniba.dib.sms222315.UserExpense.MyExpenseListAdapter;
 import it.uniba.dib.sms222315.UserPets.Pets;
@@ -130,12 +131,25 @@ public class Fragment_MyFriends_SearchNewFriend extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
                 MyFriends clickFriend = friendsList.get(position);
-                openDetailExpanse(clickFriend); //funzione da riempire, dettagli amico
+                openDetailFriend(clickFriend); //funzione da riempire, dettagli amico
             }
         });
     }
 
-    private void openDetailExpanse(MyFriends clickFriend) {
+    private void openDetailFriend(MyFriends clickFriend) {
+
+        my_fragment = new Fragment_addNewFriend();
+        my_frag_manager = getActivity().getSupportFragmentManager();
+        my_frag_trans = my_frag_manager.beginTransaction();
+        Bundle bundle = new Bundle();
+        //this is pass
+        bundle.putParcelable("newFriend", clickFriend);
+        my_fragment.setArguments(bundle);
+        //si aggiunge il richiamo allo stack
+        //my_frag_trans.addToBackStack(null);
+        //add diventa replace
+        my_frag_trans.replace(R.id.Frame_Act_MyFriends , my_fragment );
+        my_frag_trans.commit();
 
     }
 
