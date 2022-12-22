@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import it.uniba.dib.sms222315.Activity_MyFriends;
 import it.uniba.dib.sms222315.UserExpense.Activity_MyExpense;
 import it.uniba.dib.sms222315.UserPets.Activity_MyPets;
 import it.uniba.dib.sms222315.MainActivity;
@@ -77,8 +78,8 @@ public class Fragment_menu_profile extends Fragment {
             public void onClick(View view) {
 
                 Log.d(TAG , "Try start Activity my friends");
-                Intent myExpense = new Intent(getActivity(), Activity_MyExpense.class);
-                startActivity(myExpense);
+                Intent myFriend = new Intent(getActivity(), Activity_MyFriends.class);
+                startActivity(myFriend);
 
             }//end onClick my expense
         });
