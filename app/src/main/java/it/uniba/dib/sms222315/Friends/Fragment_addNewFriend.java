@@ -97,6 +97,7 @@ public class Fragment_addNewFriend extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userID = user.getUid();
 
+
         db.collection("User Basic Info").document(userID).
                 collection("My Friends").document(receivedFriend.getSecretId())
                 .set(receivedFriend)

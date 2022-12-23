@@ -37,6 +37,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 import it.uniba.dib.sms222315.R;
 
@@ -212,10 +213,10 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
                 Log.d(TAG , "charseq : " + charSequence);
 
 
-                if (expense.getPrv_valFloat_MyExpense().contains(charSequence) ||
-                        expense.getPrv_Category_MyExpense().contains(charSequence) ||
-                        expense.getPrv_Data_MyExpense().contains(charSequence) ||
-                        expense.getPrv_Description_MyExpense().contains(charSequence)
+                if (expense.getPrv_valFloat_MyExpense().toLowerCase(Locale.ROOT).contains(charSequence.toString().toLowerCase(Locale.ROOT)) ||
+                        expense.getPrv_Category_MyExpense().toLowerCase(Locale.ROOT).contains(charSequence.toString().toLowerCase(Locale.ROOT)) ||
+                        expense.getPrv_Data_MyExpense().toLowerCase(Locale.ROOT).contains(charSequence.toString().toLowerCase(Locale.ROOT)) ||
+                        expense.getPrv_Description_MyExpense().toLowerCase(Locale.ROOT).contains(charSequence.toString().toLowerCase(Locale.ROOT))
                         ) {
 
                     if (!filterdList.contains(expense)) {

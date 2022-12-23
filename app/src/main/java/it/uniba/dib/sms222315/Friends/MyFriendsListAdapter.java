@@ -117,7 +117,7 @@ public class MyFriendsListAdapter extends ArrayAdapter<MyFriends> {
             holder.NumberOfLike.setText(FriendObj.getNumberOfLike() + "Like");
 
         }else {
-            holder.NumberOfLike.setText("not your friend");
+            holder.NumberOfLike.setText("");
         }
 
 

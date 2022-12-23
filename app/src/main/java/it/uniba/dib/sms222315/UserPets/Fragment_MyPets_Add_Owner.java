@@ -147,7 +147,8 @@ public class Fragment_MyPets_Add_Owner extends Fragment {
         //this is pass
         bundle.putParcelable("newFriend", clickFriend);
         bundle.putParcelable("modPets" , receivedPet);
-
+        //todo da problemi il tasto back
+        //my_frag_trans.addToBackStack(null);
         my_fragment.setArguments(bundle);
         my_frag_trans.replace(R.id.Frame_Act_MyPets , my_fragment );
         my_frag_trans.commit();

@@ -29,6 +29,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import it.uniba.dib.sms222315.R;
 import it.uniba.dib.sms222315.UserExpense.Fragment_MyExpense_Modify;
@@ -113,7 +114,7 @@ public class Fragment_MyFriends_SearchNewFriend extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                //filterList(charSequence);
+                filterList(charSequence);
             }
 
             @Override
@@ -121,6 +122,41 @@ public class Fragment_MyFriends_SearchNewFriend extends Fragment {
 
             }
         });
+    }
+
+    private void filterList(CharSequence charSequence) {
+
+        filteredList.clear();
+
+        Log.d(TAG , "inside Filter ");
+        if (charSequence == null || charSequence.toString().isEmpty() ){
+            Log.d(TAG , "Filter null  -> popolateList()");
+            popolateList();
+        }else {
+
+
+            for (int k = 0; k < friendsList.size() ; k++ ){
+
+                MyFriends friend = friendsList.get(k);
+
+                Log.d(TAG , "charseq : " + charSequence);
+
+                if (friend.getNameFriend().toLowerCase(Locale.ROOT).contains(charSequence.toString().toLowerCase(Locale.ROOT)) ||
+                        friend.getMailFriend().toLowerCase(Locale.ROOT).contains(charSequence.toString().toLowerCase(Locale.ROOT)) ) {
+
+                    if (!filteredList.contains(friend)) {
+                        filteredList.add(friend);
+                    }
+                }
+            } //end for
+
+            adapter = new MyFriendsListAdapter(getContext(),
+                    R.layout.adapter_my_friend, filteredList);
+
+
+            mListView.setAdapter(adapter);
+
+        } //end else
     }
 
     private void allOnClick() {
@@ -154,6 +190,7 @@ public class Fragment_MyFriends_SearchNewFriend extends Fragment {
     }
 
     private void popolateList() {
+        friendsList.clear();
         Log.d(TAG , "inside popolate ");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userID = user.getUid();

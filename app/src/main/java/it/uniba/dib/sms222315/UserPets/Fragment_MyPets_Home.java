@@ -113,7 +113,7 @@ public class Fragment_MyPets_Home extends Fragment {
         bundle.putParcelable("modPets", clickPet);
         my_fragment.setArguments(bundle);
         //si aggiunge il richiamo allo stack
-        my_frag_trans.addToBackStack(null);
+        //my_frag_trans.addToBackStack(null);
         //add diventa replace
         my_frag_trans.replace(R.id.Frame_Act_MyPets , my_fragment );
         my_frag_trans.commit();
@@ -121,14 +121,9 @@ public class Fragment_MyPets_Home extends Fragment {
     }
 
     private void popolateList() {
-        //Create Pets example
-        //TODO con il db funzionante questa diventerà una query che rimepie l'array
 
         petList.clear();
 
-
-
-        //user id sarà sostituito dal codice padrone
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userID = user.getUid();
         Log.d(TAG,"This is UID " + userID);
