@@ -171,7 +171,8 @@ public class Fragment_MyPets_Add_Owner extends Fragment {
 
                                 MyFriends oneFriend = document.toObject(MyFriends.class);
                                 Log.d(TAG, "PROVA " + oneFriend.getSecretId());
-                                if (!userID.equals(oneFriend.getSecretId())) {
+                                if (!userID.equals(oneFriend.getSecretId()) &&
+                                !receivedPet.getPrv_Str_responsabili().contains(oneFriend.getSecretId())) {
 
                                     friendsList.add(oneFriend);
                                 }
