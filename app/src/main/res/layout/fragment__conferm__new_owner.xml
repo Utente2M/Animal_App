@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserPets.Fragment_Confirm_NewOwner" >
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="205dp"
+        android:layout_height="55dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="201dp"
+        android:text="come responsabile di" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="205dp"
+        android:layout_height="55dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="32dp"
+        android:text="Confermi di voler aggiungere" />
+
+    <TextView
+        android:id="@+id/TV_MyPets_nameNewOner"
+        android:layout_width="245dp"
+        android:layout_height="66dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="39dp"
+        android:layout_marginTop="109dp"
+        android:text="NOME PERSONE "
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/TV_MyPets_namePet"
+        android:layout_width="245dp"
+        android:layout_height="66dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="294dp"
+        android:text="NOME Animale "
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/BT_MyPet_ConOwner_APPLY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="83dp"
+        android:layout_marginBottom="219dp"
+        android:text="APPLY" />
+
+    <Button
+        android:id="@+id/BT_MyPet_ConOwner_BACK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="46dp"
+        android:layout_marginBottom="215dp"
+        android:text="Annulla" />
+</RelativeLayout>

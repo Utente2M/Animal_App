@@ -11,28 +11,47 @@
         android:layout_width="match_parent"
         android:layout_height="62dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical">
+        android:layout_alignParentTop="true">
 
-        <com.google.android.material.tabs.TabLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <Button
+            android:id="@+id/BT_MOD_MyPets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/grey"
+            android:text="Modifica"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.6" />
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Monday" />
+        <Button
+            android:id="@+id/BT_ADD_RESP_MyPets"
+            android:layout_width="122dp"
+            android:layout_height="62dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/grey"
+            android:text="MODIFICA PROPIETARI"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.6" />
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tuesday" />
+        <Button
+            android:id="@+id/BT_DEL_MyPets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/red"
+            android:text="Delete"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.6" />
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Wednesday" />
-        </com.google.android.material.tabs.TabLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -155,33 +174,6 @@
                 android:layout_weight="1"
                 android:hint="Segni particolari" />
         </LinearLayout>
-
-
-        <Button
-            android:id="@+id/BT_MOD_MyPets"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/grey"
-            android:text="Modifica"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0.6" />
-
-        <Button
-            android:id="@+id/BT_DEL_MyPets"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/red"
-            android:text="Delete"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0.6" />
 
 
     </LinearLayout>
