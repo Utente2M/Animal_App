@@ -41,6 +41,7 @@
     <string name="profile">Profile</string>
     <string name="settings">Settings</string>
     <string name="support">Support</string>
+    <string name="dialog_select_photo">SelectPhoto</string>
     <string-array name="Specie_supportate">
         <item>Cane</item>
         <item>Gatto</item>

@@ -4,8 +4,10 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +18,28 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+
+import java.io.ByteArrayOutputStream;
 
 import it.uniba.dib.sms222315.MainActivity;
 import it.uniba.dib.sms222315.R;
+import it.uniba.dib.sms222315.SelectPhotoDialog;
 
-public class Fragment_UserProfile extends Fragment {
+public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.OnPhotoSelectedListener {
+
+    //vars
+    private Bitmap mSelectedBitmap;
+    private Uri mSelectedUri;
+    private byte[] mUploadBytes;
+    private double mProgress = 0;
 
     TextView TV_UID , TV_email , TV_name ;
     Button but_logout , but_menu;
@@ -112,6 +126,10 @@ public class Fragment_UserProfile extends Fragment {
             public void onClick(View view) {
                 if (verifyPermissions()){
                     Log.d(TAG , "Permission ok");
+                    Log.d(TAG, "onClick: opening dialog to choose new photo");
+                    SelectPhotoDialog dialog = new SelectPhotoDialog();
+                    dialog.show(getFragmentManager(), getString(R.string.dialog_select_photo));
+                    dialog.setTargetFragment(Fragment_UserProfile.this, 1);
 
                 }
 
@@ -159,16 +177,64 @@ public class Fragment_UserProfile extends Fragment {
         Img_profileUser = my_view.findViewById(R.id.frag_userbasic_imageView_UserProfile);
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
 
-        //listner di Class Interface per scambio dati
-       // myListnerCall = (CallbackFragment) context;
-    }
 
     public void setMyCallBackFrag (Interf_UserProfile varCallback ){
         this.myCallBackFrag = varCallback;
+    }
+
+
+    @Override
+    public void getImagePath(Uri imagePath) {
+        Log.d(TAG, "getImagePath: setting the image to imageview");
+        //qui ricevo URI
+
+        Img_profileUser.setImageURI(imagePath);
+        //forse non serve
+        //mSelectedBitmap = null;
+        mSelectedUri = imagePath;
+        addInformationToProfile();
+    }
+
+    @Override
+    public void getImageBitmap(Bitmap bitmap) {
+        Log.d(TAG, "getImageBitmap: setting the image to imageview");
+        //qui ricevo bitmap
+        Img_profileUser.setImageBitmap(bitmap);
+        //Convert Into URI
+        mSelectedUri = getImageUri(getContext() , bitmap);
+        //forse non serve
+        //mSelectedBitmap = bitmap;
+        addInformationToProfile();
+    }
+
+    public void addInformationToProfile() {
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                //.setDisplayName(name)
+                .setPhotoUri(mSelectedUri)
+                .build();
+
+        user.updateProfile(profileUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "User profile updated.");
+
+                        }
+                    }
+                });
+
+
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "ImageProfile", null);
+        return Uri.parse(path);
     }
 
 
