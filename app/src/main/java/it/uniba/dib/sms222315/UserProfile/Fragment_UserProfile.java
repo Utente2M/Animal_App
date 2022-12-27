@@ -46,32 +46,49 @@ public class Fragment_UserProfile extends Fragment {
         Log.d(TAG , "onCreateView , try create class");
         View my_view = inflater.inflate(R.layout.fragm_userprofile_basic , container , false);
 
-        TV_name = my_view.findViewById(R.id.show_profil_name);
-        TV_email = my_view.findViewById(R.id.show_profil_mail);
-        TV_UID = my_view.findViewById(R.id.show_profil_uid);
-        but_logout = my_view.findViewById(R.id.logout_profile);
-        but_menu = my_view.findViewById(R.id.button_menu);
-        Img_profileUser = my_view.findViewById(R.id.frag_userbasic_imageView_UserProfile);
+        allfind(my_view);
+
 
         my_User = new User_Class();
 
         Log.d(TAG , "onCreateView , OK create class");
 
+        allSetClick();
+        setTextandImage();
+
+
+        return my_view;
+    }
+
+    private void setTextandImage() {
         TV_name.setText(my_User.getPrv_str_nome());
         TV_email.setText(my_User.getPrv_str_email());
         TV_UID.setText(my_User.getPrv_str_UID());
 
         Uri UriImgProfile = null;
         UriImgProfile = my_User.getUri_ProfImg();
-        Log.d(TAG , "OK SET URI ON PROFILE");
         if (UriImgProfile==(null) ){
             Log.d(TAG, " no profile image");
         }
         else{
             Img_profileUser.setImageURI(my_User.getUri_ProfImg());
+            Log.d(TAG, " ok profile image");
         }
+    }
 
+    private void allSetClick() {
+        //button menu
+        but_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "BUTTON menu OK ");
+                if (myCallBackFrag != null ){
+                    myCallBackFrag.changeFragment();
+                }
 
+            }
+        });
+        //button logout
         but_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,19 +101,16 @@ public class Fragment_UserProfile extends Fragment {
 
             }
         });
+    }
 
-        but_menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "BUTTON menu OK ");
-                if (myCallBackFrag != null ){
-                    myCallBackFrag.changeFragment();
-                }
 
-            }
-        });
-
-        return my_view;
+    private void allfind(View my_view) {
+        TV_name = my_view.findViewById(R.id.show_profil_name);
+        TV_email = my_view.findViewById(R.id.show_profil_mail);
+        TV_UID = my_view.findViewById(R.id.show_profil_uid);
+        but_logout = my_view.findViewById(R.id.logout_profile);
+        but_menu = my_view.findViewById(R.id.button_menu);
+        Img_profileUser = my_view.findViewById(R.id.frag_userbasic_imageView_UserProfile);
     }
 
     @Override

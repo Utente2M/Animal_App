@@ -127,7 +127,6 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
                 if( sendValue.isEmpty()){
                     ET_newValue.setError("Value is required");
                 }else {
-
                     sendNewExpenseToDB ( sendNewCategory, sendValue, sendnewDescr);
                 }
             }
@@ -279,6 +278,7 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        resetExpanseFild();
                         popolateList();
                     }
                 })
@@ -288,6 +288,11 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
+    }
+
+    private void resetExpanseFild() {
+        ET_newValue.setText("");
+        ET_newDescr.setText("");
     }
 
     /*
