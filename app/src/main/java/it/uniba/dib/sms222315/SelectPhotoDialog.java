@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -38,7 +39,7 @@ public class SelectPhotoDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_selectphoto, container, false);
 
-        TextView selectPhoto = (TextView) view.findViewById(R.id.dialogChoosePhoto);
+        ImageButton selectPhoto = (ImageButton) view.findViewById(R.id.dialogChoosePhoto);
         selectPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +50,7 @@ public class SelectPhotoDialog extends DialogFragment {
             }
         });
 
-        TextView takePhoto = (TextView) view.findViewById(R.id.dialogOpenCamera);
+        ImageButton takePhoto = (ImageButton) view.findViewById(R.id.dialogOpenCamera);
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

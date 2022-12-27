@@ -1,29 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:padding="60dp">
 
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="Choose photo from memory"
-        android:textSize="15sp"
-        android:textColor="@color/black"
-        android:id="@+id/dialogChoosePhoto"
-        android:gravity="center_vertical"/>
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="or"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/dialogChoosePhoto"
+        app:layout_constraintHorizontal_bias="0.46"
+        app:layout_constraintStart_toEndOf="@+id/dialogOpenCamera"
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="Take a Photo"
-        android:textSize="15sp"
-        android:textColor="@color/black"
+    <ImageButton
         android:id="@+id/dialogOpenCamera"
-        android:gravity="center_vertical"
-        android:layout_below="@+id/dialogChoosePhoto"/>
+        android:layout_width="76dp"
+        android:layout_height="73dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_camera" />
+
+    <ImageButton
+        android:id="@+id/dialogChoosePhoto"
+        android:layout_width="76dp"
+        android:layout_height="73dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.952"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_gallery" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
