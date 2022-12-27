@@ -1,7 +1,9 @@
 package it.uniba.dib.sms222315.UserProfile;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +16,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +36,7 @@ public class Fragment_UserProfile extends Fragment {
 
 
     private static final String TAG = "TAG_Frag_UserProfile";
+    private static final int REQUEST_CODE = 1;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,6 +106,47 @@ public class Fragment_UserProfile extends Fragment {
 
             }
         });
+        //Change foto profile
+        Img_profileUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (verifyPermissions()){
+                    Log.d(TAG , "Permission ok");
+
+                }
+
+            }
+        });
+    }
+
+    private boolean verifyPermissions() {
+        Log.d(TAG, "verifyPermissions: asking user for permissions");
+        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA};
+
+        if(ContextCompat.checkSelfPermission(this.getActivity().getApplicationContext(),
+                permissions[0]) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this.getActivity().getApplicationContext(),
+                permissions[1]) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this.getActivity().getApplicationContext(),
+                permissions[2]) == PackageManager.PERMISSION_GRANTED){
+            return true;
+            //setupViewPager();
+        }else{
+            /*
+            ActivityCompat.requestPermissions(SearchActivity.this,
+                    permissions,
+                    REQUEST_CODE);
+             */
+            //in fragment :
+            requestPermissions(permissions, REQUEST_CODE);
+        }
+        return false;
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        verifyPermissions();
     }
 
 
