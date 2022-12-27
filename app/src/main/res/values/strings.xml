@@ -47,6 +47,10 @@
         <item>Gatto</item>
         <item>Coniglio</item>
     </string-array>
+    <string-array name="Sex_supportate">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
     <string-array name="CategorieExpanse">
         <item>Generale</item>
         <item>Cure</item>

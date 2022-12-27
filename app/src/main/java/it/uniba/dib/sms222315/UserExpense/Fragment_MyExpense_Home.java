@@ -71,10 +71,7 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
     EditText textFilter; //ET_FILTER_MyExpense
     ArrayList<MyExpense> filterdList = new ArrayList<>();
 
-    /*
-    //DA spostare nella registrazione per la data
-    int new_day,new_month,new_year;
-     */
+
 
 
     //DB VARIABLE
@@ -295,29 +292,7 @@ public class Fragment_MyExpense_Home extends Fragment implements AdapterView.OnI
         ET_newDescr.setText("");
     }
 
-    /*
-    private void showDataPickerDialog (){
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                getActivity().getApplicationContext() ,
-                this,
-                Calendar.getInstance().get(Calendar.YEAR),
-                Calendar.getInstance().get(Calendar.MONTH),
-                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-        );
-        datePickerDialog.show();
-    }
 
-    @Override
-    public void onDateSet(DatePicker datePicker, int year, int month, int day_ofYear) {
-        String Str_Date = "month/day/year"  + day_ofYear + "/" + month + "/" + year ;
-
-        new_day=day_ofYear;
-        new_month = month;
-        new_year = year;
-
-    }
-
-     */
 
     private void popolateList() {
 

@@ -24,12 +24,12 @@ import it.uniba.dib.sms222315.R;
 import it.uniba.dib.sms222315.UserProfile.Interf_UserProfile;
 
 
-public class Fragment_AddNewPet extends Fragment implements AdapterView.OnItemSelectedListener {
+public class Fragment_AddNewPet extends Fragment {
 
     EditText ET_Name , ET_Specie ,ET_Sex, ET_Razza ;
 
-    Spinner SP_Specie;
-    String sendSpecie;
+    Spinner SP_Specie, SP_Sex;
+    String sendSpecie , sendSex;
     Button BT_Create;
     Interf_UserPets MyInterf_Pets;
 
@@ -59,33 +59,29 @@ public class Fragment_AddNewPet extends Fragment implements AdapterView.OnItemSe
 
         View my_view = inflater.inflate(R.layout.fragment__add_new_pet, container, false);
 
-        /*
-        prv_str_namePets = namePets; //required
-        prv_specie = specie; //required
-        prv_sex = sex; //required
-        prv_Razza = razza; //required
-         */
-
-        ET_Name = my_view.findViewById(R.id.et_Frag_NewPetDB_name);
-        //ET_Specie = my_view.findViewById(R.id.et_Frag_NewPetDB_specie);
-        ET_Sex = my_view.findViewById(R.id.et_Frag_NewPetDB_sex);
-        ET_Razza = my_view.findViewById(R.id.et_Frag_NewPetDB_razza) ;
-
-        SP_Specie = my_view.findViewById(R.id.spinner_specie);
-        ArrayAdapter <CharSequence> adapter_spin = ArrayAdapter.createFromResource(getContext(), R.array.Specie_supportate, android.R.layout.simple_spinner_item);
-        adapter_spin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        SP_Specie.setAdapter(adapter_spin);
-        SP_Specie.setOnItemSelectedListener(this);
+        setAllfind(my_view);
+        setAllSpinner(my_view);
+        setAllButton(my_view);
 
 
 
+
+
+
+
+
+        // Inflate the layout for this fragment
+        return my_view;
+    }//END CReatView
+
+    private void setAllButton(View my_view) {
         BT_Create = my_view.findViewById(R.id.bt_Frag_NewPetDB_create);
         BT_Create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String sendName = ET_Name.getText().toString();
                 //String sendSpecie = ET_Specie.getText().toString();
-                String sendSex = ET_Sex.getText().toString();
+                //String sendSex = ET_Sex.getText().toString();
                 String sendRazza = ET_Razza.getText().toString();
 
 
@@ -96,11 +92,13 @@ public class Fragment_AddNewPet extends Fragment implements AdapterView.OnItemSe
                 else if(sendSpecie.isEmpty()){
                     ET_Specie.setError("SPECIE is required");
                 }
-                 */
+
 
                 else if(sendSex.isEmpty()){
                     ET_Sex.setError("SEX is required");
                 }
+                */
+
                 else if(sendRazza.isEmpty()){
                     ET_Razza.setError("Razza is required");
                 }
@@ -115,12 +113,52 @@ public class Fragment_AddNewPet extends Fragment implements AdapterView.OnItemSe
 
             }
         });
+    }
+
+    private void setAllfind(View my_view) {
+
+        ET_Name = my_view.findViewById(R.id.et_Frag_NewPetDB_name);
+        //ET_Specie = my_view.findViewById(R.id.et_Frag_NewPetDB_specie);
+        //ET_Sex = my_view.findViewById(R.id.et_Frag_NewPetDB_sex);
+        ET_Razza = my_view.findViewById(R.id.et_Frag_NewPetDB_razza) ;
+    }
+
+    private void setAllSpinner(View my_view) {
+
+        SP_Specie = my_view.findViewById(R.id.spinner_specie);
+        ArrayAdapter <CharSequence> adapter_spin = ArrayAdapter.createFromResource(getContext(), R.array.Specie_supportate, android.R.layout.simple_spinner_item);
+        adapter_spin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        SP_Specie.setAdapter(adapter_spin);
+        SP_Specie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                sendSpecie = adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        SP_Sex =my_view.findViewById(R.id.spinner_sex);
+        ArrayAdapter <CharSequence> adapter_spin_sex = ArrayAdapter.createFromResource(getContext(), R.array.Sex_supportate, android.R.layout.simple_spinner_item);
+        adapter_spin_sex.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        SP_Sex.setAdapter(adapter_spin_sex);
+        SP_Sex.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                sendSex = adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
 
 
-
-        // Inflate the layout for this fragment
-        return my_view;
-    }//END CReatView
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -136,13 +174,4 @@ public class Fragment_AddNewPet extends Fragment implements AdapterView.OnItemSe
     }
 
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        sendSpecie = adapterView.getItemAtPosition(i).toString();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
 }//END CLASS
