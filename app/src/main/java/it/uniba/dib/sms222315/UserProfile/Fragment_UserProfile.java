@@ -86,6 +86,7 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
 
         Uri UriImgProfile = null;
         UriImgProfile = my_User.getUri_ProfImg();
+        Log.d(TAG, "URI :" + UriImgProfile);
         if (UriImgProfile==(null) ){
             Log.d(TAG, " no profile image");
         }
@@ -187,6 +188,7 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
     @Override
     public void getImagePath(Uri imagePath) {
         Log.d(TAG, "getImagePath: setting the image to imageview");
+        Log.d(TAG, "URI :" + imagePath);
         //qui ricevo URI
 
         Img_profileUser.setImageURI(imagePath);
