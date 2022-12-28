@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -101,12 +102,21 @@ public class Fragment_MyPets_Modify extends Fragment implements DatePickerDialog
             }
         });
 
-        data_nasc.setOnClickListener(new View.OnClickListener() {
+
+        data_nasc.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                showDataPickerDialog();
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(MotionEvent.ACTION_UP == motionEvent.getAction()){
+                    showDataPickerDialog();
+                }
+
+                return false;
             }
         });
+
+
+
+
 
     }
 
@@ -193,6 +203,7 @@ public class Fragment_MyPets_Modify extends Fragment implements DatePickerDialog
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day_ofYear) {
+        month +=1;
         //"day/month/year : "
         String Str_Date = day_ofYear + "/" + month + "/" + year ;
 
