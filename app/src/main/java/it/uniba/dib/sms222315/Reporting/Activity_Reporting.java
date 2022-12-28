@@ -40,9 +40,9 @@ public class Activity_Reporting extends AppCompatActivity {
 
         mViewPager.setAdapter(mPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.getTabAt(0).setText("TAB 1");
-        mTabLayout.getTabAt(1).setText("TAB 2");
-        mTabLayout.getTabAt(2).setText("getString(R.string.fragment_post)");
+        mTabLayout.getTabAt(0).setText("My Post");
+        mTabLayout.getTabAt(1).setText("Create Post");
+        mTabLayout.getTabAt(2).setText("Friend's Post");
         //mTabLayout.getTabAt(3).setText(getString(R.string.fragment_account));
 
     }

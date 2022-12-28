@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -22,10 +23,15 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 
@@ -48,6 +54,8 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
     Interf_UserProfile myCallBackFrag;
     User_Class my_User;
 
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+
 
     private static final String TAG = "TAG_Frag_UserProfile";
     private static final int REQUEST_CODE = 1;
@@ -68,6 +76,7 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
         allfind(my_view);
 
 
+        //this class is an interface for Firebase Authentication
         my_User = new User_Class();
 
         Log.d(TAG , "onCreateView , OK create class");
@@ -91,8 +100,9 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
             Log.d(TAG, " no profile image");
         }
         else{
+            Img_profileUser.setImageURI(null);
             Img_profileUser.setImageURI(my_User.getUri_ProfImg());
-            Log.d(TAG, " ok profile image");
+            Log.d(TAG, " uri : " + my_User.getUri_ProfImg());
         }
     }
 
@@ -212,22 +222,61 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
 
     public void addInformationToProfile() {
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                //.setDisplayName(name)
-                .setPhotoUri(mSelectedUri)
-                .build();
+        User_Class thisuser = new User_Class();
+        // Create a storage reference from our app
+        StorageReference storageRef = storage.getReference();
+        // Create a storage reference from our app
+        StorageReference profileImagesRef = storageRef.child("imagesProfile/"+thisuser.getPrv_str_UID());
 
-        user.updateProfile(profileUpdates)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "User profile updated.");
+        // Get the data from an ImageView as bytes
+        Img_profileUser.setDrawingCacheEnabled(true);
+        Img_profileUser.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) Img_profileUser.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
 
-                        }
-                    }
-                });
+        UploadTask uploadTask = profileImagesRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+
+                mSelectedUri = Uri.parse("gs://animal-app-31090.appspot.com/imagesProfile/" + thisuser.getPrv_str_UID());
+
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                        //.setDisplayName(name)
+                        .setPhotoUri(mSelectedUri)
+                        .build();
+
+                user.updateProfile(profileUpdates)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "User profile updated.");
+
+                                }
+                            }
+                        });
+            }
+        });
+
+
+
+
+
+
+
+
+
 
 
     }

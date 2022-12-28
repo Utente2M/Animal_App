@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,8 +36,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //toolbar set as app bar
-        Toolbar myToolbar = findViewById(R.id.toolbar);
+        Toolbar myToolbar = findViewById(R.id.toolbar_home);
         setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle("Home");
+
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled();
+
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
