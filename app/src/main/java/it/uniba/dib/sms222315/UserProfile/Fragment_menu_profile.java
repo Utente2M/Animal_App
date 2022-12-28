@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 import it.uniba.dib.sms222315.Friends.Activity_MyFriends;
+import it.uniba.dib.sms222315.Reporting.Activity_Reporting;
 import it.uniba.dib.sms222315.UserExpense.Activity_MyExpense;
 import it.uniba.dib.sms222315.UserPets.Activity_MyPets;
 import it.uniba.dib.sms222315.MainActivity;
@@ -24,7 +25,7 @@ import it.uniba.dib.sms222315.R;
 
 public class Fragment_menu_profile extends Fragment {
 
-    ImageView IV_my_pets , IV_my_expense, IV_my_friends;
+    ImageView IV_my_pets , IV_my_expense, IV_my_friends , IV_my_report;
     Button but_logout , but_menu;
 
     private static final String TAG = "TAG_Frag_MENUProfile";
@@ -46,6 +47,7 @@ public class Fragment_menu_profile extends Fragment {
         IV_my_pets = my_view.findViewById(R.id.FragMenu_IV_my_pet);
         IV_my_expense = my_view.findViewById(R.id.FragMenu_IV_my_expense);
         IV_my_friends =my_view.findViewById(R.id.FragMenu_IV_my_friends);
+        IV_my_report = my_view.findViewById(R.id.FragMenu_IV_my_report);
     }
 
     private void allsetClick() {
@@ -80,6 +82,18 @@ public class Fragment_menu_profile extends Fragment {
                 Log.d(TAG , "Try start Activity my friends");
                 Intent myFriend = new Intent(getActivity(), Activity_MyFriends.class);
                 startActivity(myFriend);
+
+            }//end onClick my expense
+        });
+
+        //Button MyReport
+        IV_my_report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.d(TAG , "Try start Activity my friends");
+                Intent myReport = new Intent(getActivity(), Activity_Reporting.class);
+                startActivity(myReport);
 
             }//end onClick my expense
         });
