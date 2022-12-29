@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,7 +40,7 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
         TextView textPost;
         TextView NumberOfLike;
         ImageView image;
-        Button addLike, addComment;
+        ImageButton addLike, addComment;
     }
     /**
      * Default constructor for the PersonListAdapter
@@ -56,6 +57,8 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+
 
         Log.d(TAG , " in getView adapter expanse");
 
@@ -90,7 +93,13 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
             holder.NumberOfLike = (TextView) convertView.findViewById(R.id.Adap_Repo_numberLike);
             holder.image = (ImageView) convertView.findViewById(R.id.Adap_Repo_image);
             //holder.addLike = ..
-           // holder.addComment = ...  Id : Adap_Repo_addComment
+           holder.addComment = (ImageButton) convertView.findViewById(R.id.Adap_Repo_addComment);
+           holder.addComment.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   Log.d(TAG , "add comment to post number : " +getItem(position).getPrv_description());
+               }
+           });
 
             Log.d(TAG , " ok find");
 
@@ -110,14 +119,6 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
         result.startAnimation(animation);
         lastPosition = position;
 
-        Log.d(TAG, "ok animation");
-
-
-
-        //TODO DA AGGIUNGERE CONTROLLO FOTO
-
-
-        //holder.image.set
 
         if (reportObj.getPrv_linkImg()==(null) ){
             Log.d(TAG, " no profile image");
@@ -130,11 +131,11 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
         }
 
 
-        holder.authorName.setText(reportObj.getPrv_authorName());
+        holder.authorName.setText("Author : "+reportObj.getPrv_authorName());
         holder.textPost.setText(reportObj.getPrv_description());
 
         int intLike = reportObj.getPrv_numberLike();
-        String str_Like = Integer.toString(intLike);
+        String str_Like = "Piace a "+Integer.toString(intLike) + " persone";
         holder.NumberOfLike.setText(str_Like);
 
         return convertView;

@@ -1,5 +1,6 @@
 package it.uniba.dib.sms222315.Reporting;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -68,14 +69,20 @@ public class Fragment_Report_MyReport extends Fragment {
         setupFilter(my_view);
         //allOnClick();
 
+
+
+        return my_view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
         if (adapter ==null){
             originalList.clear();
             filteredList.clear();
             popolateList();
             Log.d(TAG , "ok popolateList ");
         }
-
-        return my_view;
     }
 
     private void allFind(View my_view) {
