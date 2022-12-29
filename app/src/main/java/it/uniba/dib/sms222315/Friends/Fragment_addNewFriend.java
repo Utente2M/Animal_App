@@ -129,5 +129,6 @@ public class Fragment_addNewFriend extends Fragment {
         PersonName = my_view.findViewById(R.id.Frag_addNewFriend_name_person);
         BT_apply = my_view.findViewById(R.id.Frag_addNewFriend_BT_Conferme);
         BT_back=my_view.findViewById(R.id.Frag_addNewFriend_BT_Back);
+
     }
 }

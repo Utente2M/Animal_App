@@ -1,7 +1,10 @@
 package it.uniba.dib.sms222315.Friends;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +15,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 import androidx.annotation.NonNull;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import it.uniba.dib.sms222315.R;
+import it.uniba.dib.sms222315.UserProfile.Fragment_UserProfile;
 
 
 public class MyFriendsListAdapter extends ArrayAdapter<MyFriends> {
@@ -60,10 +66,13 @@ public class MyFriendsListAdapter extends ArrayAdapter<MyFriends> {
         String mailExp = getItem(position).getMailFriend();
         String likeExchange = getItem(position).getNumberOfLike();
 
+        //new
+        String linkmyPhoto = getItem(position).getUrlPhotoProfile();
+
 
 
         //Create the expense object with the information
-        MyFriends FriendObj = new MyFriends(nameText, mailExp, likeExchange);
+        MyFriends FriendObj = new MyFriends(nameText, mailExp, likeExchange , linkmyPhoto);
 
         Log.d(TAG , " ok constructor");
 
@@ -107,8 +116,21 @@ public class MyFriendsListAdapter extends ArrayAdapter<MyFriends> {
         Log.d(TAG, "ok animation");
 
 
+
         //TODO DA AGGIUNGERE CONTROLLO FOTO
-        holder.image.setImageResource(R.drawable.icon_my_friends);
+
+
+        //holder.image.set
+
+        if (FriendObj.getUrlPhotoProfile()==(null) ){
+            Log.d(TAG, " no profile image");
+            holder.image.setImageResource(R.drawable.icon_my_friends);
+        }
+        else{
+            new DownloadImageFromInternet((ImageView)
+                    convertView.findViewById(R.id.image_PublicFriend))
+                    .execute(FriendObj.getUrlPhotoProfile());
+        }
 
 
         //se ci sono like scambiati mostrali
@@ -126,4 +148,29 @@ public class MyFriendsListAdapter extends ArrayAdapter<MyFriends> {
 
         return convertView;
     }
+
+    private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
+        ImageView imageView;
+        public DownloadImageFromInternet(ImageView imageView) {
+            this.imageView=imageView;
+
+        }
+        protected Bitmap doInBackground(String... urls) {
+            String imageURL=urls[0];
+            Bitmap bimage=null;
+            try {
+                InputStream in=new java.net.URL(imageURL).openStream();
+                bimage= BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error Message", e.getMessage());
+                e.printStackTrace();
+            }
+            return bimage;
+        }
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+        }
+    }
+
+
 }

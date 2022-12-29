@@ -20,10 +20,11 @@ public class MyFriends implements Parcelable {
     }
 
     //CONSTRUCTOR FOR LISTVIEW
-    public MyFriends(String name, String mail, String Like){
+    public MyFriends(String name, String mail, String Like , String photoLink){
         nameFriend = name;
         mailFriend = mail;
         numberOfLike = Like;
+        urlPhotoProfile = photoLink;
 
     }
 
