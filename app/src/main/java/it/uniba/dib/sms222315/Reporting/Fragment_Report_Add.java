@@ -192,14 +192,18 @@ public class Fragment_Report_Add extends Fragment implements SelectPhotoDialog.O
         String description = descriptionReport.getText().toString();
         User_Class userData = new User_Class();
         String author_id = userData.getPrv_str_UID();
+        String authorName = userData.getPrv_str_nome();
 
         SimpleDateFormat format = new SimpleDateFormat("d,MM,yyyy,HH:mm:ss");
         Calendar calendar = Calendar.getInstance();
         String formatData = format.format(calendar.getTime());
 
 
+
+
+
         Report newPost = new Report("", linkImg, category,description,
-                0 ,author_id ,formatData );
+                0 ,authorName, author_id ,formatData );
 
 
         db.collection("Post")

@@ -45,15 +45,11 @@ public class Fragment_MyFriends_SearchNewFriend extends Fragment {
     FragmentManager my_frag_manager;
     FragmentTransaction my_frag_trans;
 
-    //Controlli ListView
-
+    //Control ListView
     ArrayList<MyFriends> friendsList = new ArrayList<>();
     ListView mListView;
     MyFriendsListAdapter adapter;
 
-
-
-    FloatingActionButton BT_NewFriend;
 
     //CONTROL FOR FILTER
     EditText textFilter; //ET_FILTER_MyExpense
@@ -99,8 +95,6 @@ public class Fragment_MyFriends_SearchNewFriend extends Fragment {
 
     private void allFind(View my_view) {
         mListView=my_view.findViewById(R.id.listView_NewFriend);
-
-
     }
 
     private void setupFilter(View my_view) {

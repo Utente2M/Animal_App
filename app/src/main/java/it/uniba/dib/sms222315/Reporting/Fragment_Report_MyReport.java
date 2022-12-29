@@ -2,65 +2,145 @@ package it.uniba.dib.sms222315.Reporting;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ListView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+
+import it.uniba.dib.sms222315.Friends.MyFriends;
+import it.uniba.dib.sms222315.Friends.MyFriendsListAdapter;
 import it.uniba.dib.sms222315.R;
+import it.uniba.dib.sms222315.UserProfile.User_Class;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_Report_MyReport#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class Fragment_Report_MyReport extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    //Control ListView
+    ArrayList<Report> originalList = new ArrayList<>();
+    ListView mListView;
+    MyPostListAdapter adapter;
+    //CONTROL FOR FILTER
+    EditText textFilter;
+    ArrayList<Report> filteredList = new ArrayList<>();
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+
+    //DB VARIABLE
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    private static final String TAG = "TAG_Fragment_Report_MyReport";
 
     public Fragment_Report_MyReport() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_Report_MyReport.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Fragment_Report_MyReport newInstance(String param1, String param2) {
-        Fragment_Report_MyReport fragment = new Fragment_Report_MyReport();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__report__my_report, container, false);
+        View my_view = inflater.inflate(R.layout.fragment__report__my_report, container, false);
+
+        //tutti i find e gli onclick
+        allFind(my_view);
+        setupFilter(my_view);
+        //allOnClick();
+
+        if (adapter ==null){
+            originalList.clear();
+            filteredList.clear();
+            popolateList();
+            Log.d(TAG , "ok popolateList ");
+        }
+
+        return my_view;
     }
-}
+
+    private void allFind(View my_view) {
+        mListView = my_view.findViewById(R.id.LV_MyRepor_myPost);
+    }
+
+    private void setupFilter(View my_view) {
+        //CONTROL FOR FILTER
+        textFilter = my_view.findViewById(R.id.ET_MyRepor_myPost);
+        textFilter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                //filterList(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private void popolateList() {
+        originalList.clear();
+        Log.d(TAG , "inside popolate ");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = user.getUid();
+
+        User_Class myDataUser = new User_Class();
+
+        Query postRef = db.collection("Post")
+                .whereEqualTo("prv_authorID" , myDataUser.getPrv_str_UID() )
+                .orderBy("createAtTime", Query.Direction.DESCENDING);
+
+        postRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+
+                                Report onePost = document.toObject(Report.class);
+                                originalList.add(onePost);
+
+
+                            }//END FOR
+                            adapter = new MyPostListAdapter(getContext(),
+                                    R.layout.adapter_report, originalList);
+
+
+                            mListView.setAdapter(adapter);
+                        }else {
+
+                        }
+                    }
+                });
+
+
+
+    }
+
+
+}//END FRAGMENT

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="162dp"
+        android:background="@color/green"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/Adap_Repo_image"
+            android:layout_width="match_parent"
+            android:layout_height="124dp"
+            android:layout_weight="4"
+            app:srcCompat="@android:drawable/btn_star_big_on" />
+
+        <TextView
+            android:id="@+id/Adap_Repo_numberLike"
+            android:layout_width="180dp"
+            android:layout_height="8dp"
+            android:layout_weight="3"
+            android:text="Piace a .."
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="97dp"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/Adap_Repo_authorName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:text="My Name : "
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/Adap_Repo_description"
+            android:layout_width="match_parent"
+            android:layout_height="104dp"
+            android:layout_weight="3"
+            android:text="text about the post " />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="29dp"
+        android:background="@color/red"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/Adap_Repo_addLike"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
+        <ImageButton
+            android:id="@+id/Adap_Repo_addComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            app:srcCompat="@drawable/ic_question_answer" />
+
+    </LinearLayout>
+</LinearLayout>

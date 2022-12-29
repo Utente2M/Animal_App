@@ -7,19 +7,30 @@ public class Report {
     private String prv_description;
     private int prv_numberLike;
     //
+    private String prv_authorName;
     private String prv_authorID;
     private String createAtTime;
 
     public Report(String DocID, String linkImg, String category,
-                  String description, int numberLike, String authorID , String dataCreated) {
+                  String description, int numberLike, String authorName ,String authorID ,
+                  String dataCreated) {
         prv_secretDocID = DocID;
         prv_linkImg = linkImg;
         prv_category = category;
         prv_description = description;
         prv_numberLike = numberLike;
         prv_authorID = authorID;
+        prv_authorName = authorName;
         createAtTime = dataCreated;
     }
+
+    public Report (String link , String creatorName, String description , String numberLikeSTR ){
+        prv_linkImg = link ;
+        prv_authorName = creatorName;
+        prv_description = description;
+        prv_numberLike = Integer.parseInt(numberLikeSTR);
+    }
+    public Report (){}
 
     public String getPrv_secretDocID() {
         return prv_secretDocID;
@@ -47,5 +58,9 @@ public class Report {
 
     public String getCreateAtTime() {
         return createAtTime;
+    }
+
+    public String getPrv_authorName() {
+        return prv_authorName;
     }
 }
