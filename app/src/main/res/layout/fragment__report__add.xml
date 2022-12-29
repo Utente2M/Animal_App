@@ -7,7 +7,7 @@
     tools:context=".Reporting.Fragment_Report_Add">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/IV_Add_ReportPhoto"
         android:layout_width="281dp"
         android:layout_height="172dp"
         android:layout_marginTop="16dp"
@@ -18,28 +18,28 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spin_Add_Report"
         android:layout_width="404dp"
         android:layout_height="36dp"
         android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/IV_Add_ReportPhoto" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/ET_Add_descriptionReport"
         android:layout_width="412dp"
         android:layout_height="111dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:hint="Describe your post"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/spin_Add_Report" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/BT_Add_Report"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -50,5 +50,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/ET_Add_descriptionReport" />
 </androidx.constraintlayout.widget.ConstraintLayout>

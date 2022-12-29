@@ -58,6 +58,16 @@
         <item>Veterinario</item>
         <item>Toilettatura</item>
     </string-array>
+    <string-array name="CategoryReport">
+        <item>General</item>
+        <item>Talk</item>
+        <item>For Fun</item>
+        <item>Advisory</item>
+        <item>Danger</item>
+        <item>Abandonment</item>
+        <item>Find</item>
+        <item>Lost</item>
+    </string-array>
 
 
 </resources>
