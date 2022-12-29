@@ -16,11 +16,12 @@ public class Pets implements Parcelable {
     private String prv_specie;
     private List<String> prv_Str_responsabili;
     private String prv_doc_id;
+    private String linkPhotoPets;
 
 
     public Pets(String namePets,String specie,  String sex, String razza,
                 String mantello, String dataNascita, String segniParticolari ,
-                List<String> responsabili ) {
+                List<String> responsabili , String photoLink ) {
 
         prv_str_namePets = namePets; //required
         prv_specie = specie; //required
@@ -31,6 +32,7 @@ public class Pets implements Parcelable {
         prv_SegniParticolari = segniParticolari;
         //is a ListStryng
         prv_Str_responsabili = responsabili;
+        linkPhotoPets = photoLink;
     }
 
 
@@ -126,5 +128,9 @@ public class Pets implements Parcelable {
 
     public void setPrv_doc_id(String prv_doc_id) {
         this.prv_doc_id = prv_doc_id;
+    }
+
+    public String getLinkPhotoPets() {
+        return linkPhotoPets;
     }
 }//END CLASS

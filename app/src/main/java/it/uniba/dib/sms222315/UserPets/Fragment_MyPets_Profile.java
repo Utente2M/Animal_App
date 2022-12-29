@@ -1,5 +1,8 @@
 package it.uniba.dib.sms222315.UserPets;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,12 +17,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.InputStream;
+
 import it.uniba.dib.sms222315.R;
+import it.uniba.dib.sms222315.UserProfile.Fragment_UserProfile;
 
 
 public class Fragment_MyPets_Profile extends Fragment {
@@ -70,7 +77,7 @@ public class Fragment_MyPets_Profile extends Fragment {
 
 
         setfind(my_view);
-        setTextfromPets();
+        setTextfromPets(my_view);
         setAllOnClick();
 
 
@@ -141,7 +148,7 @@ public class Fragment_MyPets_Profile extends Fragment {
                 });
     }
 
-    private void setTextfromPets() {
+    private void setTextfromPets(View my_view) {
         nome.setText(receivedPet.getPrv_str_namePets());
         data_nasc.setText(receivedPet.getPrv_DataNascita());
         sex.setText(receivedPet.getPrv_sex());
@@ -151,17 +158,24 @@ public class Fragment_MyPets_Profile extends Fragment {
         segniPart.setText(receivedPet.getPrv_SegniParticolari());
 
 
-        if (specie.equals("Cane")){
-            PetImage.setImageResource(R.drawable.icon_dog);
+        if (!receivedPet.getLinkPhotoPets().isEmpty()){
+            new DownloadImageFromInternet((ImageView) my_view.findViewById(R.id.IV_MyPetProfile_picture)).
+                    execute(receivedPet.getLinkPhotoPets());
 
-        }else if (specie.equals("Gatto")){
-            PetImage.setImageResource(R.drawable.icon_cat);
+        }else {
+            if (specie.equals("Cane")){
+                PetImage.setImageResource(R.drawable.icon_dog);
 
-        }else if (specie.equals("Coniglio")){
-            PetImage.setImageResource(R.drawable.icon_rabbit);
-        }else{
-            Log.d(TAG , "specie not found");
+            }else if (specie.equals("Gatto")){
+                PetImage.setImageResource(R.drawable.icon_cat);
+
+            }else if (specie.equals("Coniglio")){
+                PetImage.setImageResource(R.drawable.icon_rabbit);
+            }else{
+                Log.d(TAG , "ERROR : specie not found");
+            }
         }
+
 
     }//END SET TEXT
 
@@ -181,4 +195,29 @@ public class Fragment_MyPets_Profile extends Fragment {
         BT_newOwner = my_view.findViewById(R.id.BT_ADD_RESP_MyPets);
 
     }
+
+    //for load image
+    private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
+        ImageView imageView;
+        public DownloadImageFromInternet(ImageView imageView) {
+            this.imageView=imageView;
+            Toast.makeText(getActivity().getApplicationContext(), "Please wait, it may take a few minute...",Toast.LENGTH_SHORT).show();
+        }
+        protected Bitmap doInBackground(String... urls) {
+            String imageURL=urls[0];
+            Bitmap bimage=null;
+            try {
+                InputStream in=new java.net.URL(imageURL).openStream();
+                bimage= BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error Message", e.getMessage());
+                e.printStackTrace();
+            }
+            return bimage;
+        }
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+        }
+    }
+
 }

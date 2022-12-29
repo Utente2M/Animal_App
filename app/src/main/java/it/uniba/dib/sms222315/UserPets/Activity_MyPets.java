@@ -131,7 +131,7 @@ public class Activity_MyPets extends AppCompatActivity implements Interf_UserPet
         Log.d(TAG,"This is UID " + userID);
 
         Pets MimmoPetes = new Pets(Name , Specie , Sex , Razza , "" , "" , "",
-                Arrays.asList(userID));
+                Arrays.asList(userID) , "");
 
         // Add a new document with a document = ID
 
