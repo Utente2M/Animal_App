@@ -236,6 +236,7 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
 
     public void addInformationToProfile() {
 
+
         //this is for UID
         User_Class thisuser = new User_Class();
         // Create a storage reference from our app

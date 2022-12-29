@@ -1,11 +1,16 @@
 package it.uniba.dib.sms222315.UserPets;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -19,17 +24,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 import it.uniba.dib.sms222315.R;
+import it.uniba.dib.sms222315.SelectPhotoDialog;
 import it.uniba.dib.sms222315.UserProfile.Fragment_UserProfile;
+import it.uniba.dib.sms222315.UserProfile.User_Class;
 
 
-public class Fragment_MyPets_Profile extends Fragment {
+public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDialog.OnPhotoSelectedListener {
 
     //FRAGMENT VAR
     Fragment my_fragment;
@@ -42,8 +58,10 @@ public class Fragment_MyPets_Profile extends Fragment {
 
     //ISTANCE DB
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseStorage storage = FirebaseStorage.getInstance();
 
 
+    private static final int REQUEST_CODE = 1;
     private static final String TAG = "TAG_Frag_MyPet_PROFILE";
     Pets receivedPet;
 
@@ -71,10 +89,6 @@ public class Fragment_MyPets_Profile extends Fragment {
                              Bundle savedInstanceState) {
         Log.d(TAG , "onCreateView ");
         View my_view = inflater.inflate(R.layout.fragment__my_pets__profile, container , false);
-
-
-
-
 
         setfind(my_view);
         setTextfromPets(my_view);
@@ -128,7 +142,22 @@ public class Fragment_MyPets_Profile extends Fragment {
                 my_frag_trans.commit();
             }
         });
+
+        PetImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (verifyPermissions()){
+                    Log.d(TAG , "Permission ok");
+                    Log.d(TAG, "onClick: opening dialog to choose new photo");
+                    SelectPhotoDialog dialog = new SelectPhotoDialog();
+                    dialog.show(getFragmentManager(), getString(R.string.dialog_select_photo));
+                    dialog.setTargetFragment(Fragment_MyPets_Profile.this, 1);
+
+                }
+            }
+        });
     }
+
 
     private void deleteIntoDB() {
         db.collection("Animal DB").document(receivedPet.getPrv_doc_id())
@@ -196,6 +225,8 @@ public class Fragment_MyPets_Profile extends Fragment {
 
     }
 
+
+
     //for load image
     private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
         ImageView imageView;
@@ -218,6 +249,140 @@ public class Fragment_MyPets_Profile extends Fragment {
         protected void onPostExecute(Bitmap result) {
             imageView.setImageBitmap(result);
         }
+    }
+
+
+    //check permission
+    private boolean verifyPermissions() {
+        Log.d(TAG, "verifyPermissions: asking user for permissions");
+        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA};
+
+        if(ContextCompat.checkSelfPermission(this.getActivity().getApplicationContext(),
+                permissions[0]) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this.getActivity().getApplicationContext(),
+                permissions[1]) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this.getActivity().getApplicationContext(),
+                permissions[2]) == PackageManager.PERMISSION_GRANTED){
+            return true;
+            //setupViewPager();
+        }else{
+            /*
+            ActivityCompat.requestPermissions(SearchActivity.this,
+                    permissions,
+                    REQUEST_CODE);
+             */
+            //in fragment :
+            requestPermissions(permissions, REQUEST_CODE);
+        }
+        return false;
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        verifyPermissions();
+    }
+
+    //received image
+    @Override
+    public void getImagePath(Uri imagePath) {
+        Log.d(TAG, "getImagePath: setting the image to imageview");
+        Log.d(TAG, "URI :" + imagePath);
+        //qui ricevo URI
+
+        PetImage.setImageURI(imagePath);
+        savePetsPhoto();
+
+    }
+
+    @Override
+    public void getImageBitmap(Bitmap bitmap) {
+        Log.d(TAG, "getImageBitmap: setting the image to imageview");
+        //qui ricevo bitmap
+        PetImage.setImageBitmap(bitmap);
+        savePetsPhoto();
+    }
+
+    private void savePetsPhoto() {
+        //id del documento per la foto
+        receivedPet.getPrv_doc_id();
+
+
+
+        // Create a storage reference from our app
+        StorageReference storageRef = storage.getReference();
+        // Create a storage reference from our app
+        String myStringRef = "imagesPets/"+receivedPet.getPrv_doc_id();;
+        StorageReference profileImagesRef = storageRef.child(myStringRef);
+
+        // Get the data from an ImageView as bytes
+        PetImage.setDrawingCacheEnabled(true);
+        PetImage.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) PetImage.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = profileImagesRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // carica immagine e ricavane uri
+                
+                searchUriImage(myStringRef);
+                
+
+            }
+        });
+
+    }
+
+    private void searchUriImage(String myStringRef) {
+        // Create a storage reference from our app
+        StorageReference storageRef = storage.getReference();
+
+        storageRef.child(myStringRef).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Log.d(TAG , "download URI : " + uri);
+
+                addImageToPetsProfile(uri);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+
+            }
+        });
+    }
+
+    private void addImageToPetsProfile(Uri uri) {
+
+        DocumentReference publicProfileRef = db.collection("Animal DB").
+                document(receivedPet.getPrv_doc_id());
+
+// Set the "isCapital" field of the city 'DC'
+        publicProfileRef
+                .update("linkPhotoPets", uri)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
     }
 
 }
