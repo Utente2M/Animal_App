@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,11 +32,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 import it.uniba.dib.sms222315.MainActivity;
 import it.uniba.dib.sms222315.R;
@@ -55,6 +63,7 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
     User_Class my_User;
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     private static final String TAG = "TAG_Frag_UserProfile";
@@ -82,13 +91,13 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
         Log.d(TAG , "onCreateView , OK create class");
 
         allSetClick();
-        setTextandImage();
+        setTextandImage(my_view);
 
 
         return my_view;
     }
 
-    private void setTextandImage() {
+    private void setTextandImage(View my_view) {
         TV_name.setText(my_User.getPrv_str_nome());
         TV_email.setText(my_User.getPrv_str_email());
         TV_UID.setText(my_User.getPrv_str_UID());
@@ -100,9 +109,14 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
             Log.d(TAG, " no profile image");
         }
         else{
-            Img_profileUser.setImageURI(null);
+            new DownloadImageFromInternet((ImageView) my_view.findViewById(R.id.frag_userbasic_imageView_UserProfile)).
+                    execute(my_User.getUri_ProfImg().toString());
+/*
+ Img_profileUser.setImageURI(null);
             Img_profileUser.setImageURI(my_User.getUri_ProfImg());
             Log.d(TAG, " uri : " + my_User.getUri_ProfImg());
+ */
+
         }
     }
 
@@ -297,11 +311,62 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "User profile updated.");
+                            updateImageInPublicProfile();
 
                         }
                     }
                 });
 
+    }
+
+    private void updateImageInPublicProfile() {
+
+        User_Class myUserData = new User_Class();
+
+        //query for search correct document
+        db.collection("Public User")
+                .whereEqualTo("secretId", myUserData.getPrv_str_UID())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                //aggiorna immagina - aspettiamo sempre un solo risultato
+                                updateLink(document.getId());
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+
+    }
+
+    private void updateLink(String id) {
+
+        User_Class myUserData = new User_Class();
+        //aggiorna il link nel profilo pubblico
+        DocumentReference publicProfileRef = db.collection("Public User").
+                document(id);
+
+// Set the "isCapital" field of the city 'DC'
+        publicProfileRef
+                .update("urlPhotoProfile", myUserData.getUri_ProfImg())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
     }
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
@@ -312,34 +377,30 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
     }
 
 
-
-    public static Bitmap loadBitmap(String url) {
-        Bitmap bitmap = null;
-        InputStream in = null;
-        BufferedOutputStream out = null;
-
-        try {
-            in = new BufferedInputStream(new URL(url).openStream(), IO_BUFFER_SIZE);
-
-            final ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
-            out = new BufferedOutputStream(dataStream, IO_BUFFER_SIZE);
-            copy(in, out);
-            out.flush();
-
-            final byte[] data = dataStream.toByteArray();
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            //options.inSampleSize = 1;
-
-            bitmap = BitmapFactory.decodeByteArray(data, 0, data.length,options);
-        } catch (IOException e) {
-            Log.e(TAG, "Could not load Bitmap from: " + url);
-        } finally {
-            closeStream(in);
-            closeStream(out);
+    private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
+        ImageView imageView;
+        public DownloadImageFromInternet(ImageView imageView) {
+            this.imageView=imageView;
+            Toast.makeText(getActivity().getApplicationContext(), "Please wait, it may take a few minute...",Toast.LENGTH_SHORT).show();
         }
-
-        return bitmap;
+        protected Bitmap doInBackground(String... urls) {
+            String imageURL=urls[0];
+            Bitmap bimage=null;
+            try {
+                InputStream in=new java.net.URL(imageURL).openStream();
+                bimage= BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error Message", e.getMessage());
+                e.printStackTrace();
+            }
+            return bimage;
+        }
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+        }
     }
+
+
 
 
 }//END CLASS

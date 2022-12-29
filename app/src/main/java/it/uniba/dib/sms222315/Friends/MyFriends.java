@@ -9,12 +9,14 @@ public class MyFriends implements Parcelable {
     private String mailFriend;
     private String numberOfLike;
     private String secretId;
+    private String urlPhotoProfile;
 
-    public MyFriends(String name, String mail, String Like, String UId){
+    public MyFriends(String name, String mail, String Like, String UId , String imgProfileLink){
         nameFriend = name;
         mailFriend = mail;
         numberOfLike = Like;
         secretId = UId;
+        urlPhotoProfile = imgProfileLink;
     }
 
     //CONSTRUCTOR FOR LISTVIEW
@@ -74,5 +76,9 @@ public class MyFriends implements Parcelable {
         parcel.writeString(mailFriend);
         parcel.writeString(numberOfLike);
         parcel.writeString(secretId);
+    }
+
+    public String getUrlPhotoProfile() {
+        return urlPhotoProfile;
     }
 }

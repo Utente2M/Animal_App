@@ -336,7 +336,7 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
         String userID = user.getUid();
         Log.d(TAG,"Public Profile " + userID);
 
-        MyFriends newPublicProfile = new MyFriends(NamePublic , MailPublic , "" , userID );
+        MyFriends newPublicProfile = new MyFriends(NamePublic , MailPublic , "" , userID , "");
 
 
         //PROVA DI CREAZIONE SUBCOLLECTION
