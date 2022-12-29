@@ -25,6 +25,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import it.uniba.dib.sms222315.Friends.MyFriends;
 import it.uniba.dib.sms222315.Friends.MyFriendsListAdapter;
@@ -100,7 +101,7 @@ public class Fragment_Report_MyReport extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                //filterList(charSequence);
+                filterList(charSequence);
             }
 
             @Override
@@ -146,10 +147,42 @@ public class Fragment_Report_MyReport extends Fragment {
                         }
                     }
                 });
+    }//END POPOLATE
+
+    private void filterList(CharSequence charSequence) {
+
+        filteredList.clear();
+
+        Log.d(TAG , "inside Filter ");
+        if (charSequence == null || charSequence.toString().isEmpty() ){
+            Log.d(TAG , "Filter null  -> popolateList()");
+            popolateList();
+        }else {
 
 
+            for (int k = 0; k < originalList.size() ; k++ ){
 
+                Report onePost = originalList.get(k);
+
+                Log.d(TAG , "charseq : " + charSequence);
+
+                if (onePost.getPrv_authorName().toLowerCase(Locale.ROOT).contains(charSequence.toString().toLowerCase(Locale.ROOT)) ||
+                        onePost.getPrv_description().toLowerCase(Locale.ROOT).contains(charSequence.toString().toLowerCase(Locale.ROOT)) ||
+                        onePost.getPrv_category().toLowerCase(Locale.ROOT).contains(charSequence.toString().toLowerCase(Locale.ROOT))) {
+
+                    if (!filteredList.contains(onePost)) {
+                        filteredList.add(onePost);
+                    }
+                }
+            } //end for
+
+            adapter = new MyPostListAdapter(getContext(),
+                    R.layout.adapter_report, filteredList);
+
+
+            mListView.setAdapter(adapter);
+
+        } //end else
     }
-
 
 }//END FRAGMENT
