@@ -59,7 +59,7 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
 
         Log.d(TAG , " in getView adapter expanse");
 
-        String author = getItem(position).getPrv_authorID();
+        String author = getItem(position).getPrv_authorName();
         String description = getItem(position).getPrv_description();
         int numberLike = getItem(position).getPrv_numberLike();
         String str_numberLike = Integer.toString(numberLike);

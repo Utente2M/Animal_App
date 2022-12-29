@@ -110,10 +110,12 @@ public class Fragment_Report_MyReport extends Fragment {
         String userID = user.getUid();
 
         User_Class myDataUser = new User_Class();
+        Log.d(TAG , " User id : "+myDataUser.getPrv_str_UID());
 
         Query postRef = db.collection("Post")
-                .whereEqualTo("prv_authorID" , myDataUser.getPrv_str_UID() )
-                .orderBy("createAtTime", Query.Direction.DESCENDING);
+                .whereEqualTo("prv_authorID" , myDataUser.getPrv_str_UID() );
+        postRef.orderBy("createAtTime", Query.Direction.DESCENDING);
+
 
         postRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
