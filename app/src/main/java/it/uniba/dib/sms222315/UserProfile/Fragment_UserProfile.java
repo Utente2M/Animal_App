@@ -222,11 +222,13 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
 
     public void addInformationToProfile() {
 
+        //this is for UID
         User_Class thisuser = new User_Class();
         // Create a storage reference from our app
         StorageReference storageRef = storage.getReference();
         // Create a storage reference from our app
-        StorageReference profileImagesRef = storageRef.child("imagesProfile/"+thisuser.getPrv_str_UID());
+        String myStringRef = "imagesProfile/"+thisuser.getPrv_str_UID();
+        StorageReference profileImagesRef = storageRef.child(myStringRef);
 
         // Get the data from an ImageView as bytes
         Img_profileUser.setDrawingCacheEnabled(true);
@@ -246,38 +248,59 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
+                // carica immagine e ricavane uri
 
-                mSelectedUri = Uri.parse("gs://animal-app-31090.appspot.com/imagesProfile/" + thisuser.getPrv_str_UID());
+                Log.d(TAG, "old URI : " + mSelectedUri);
+                searchUriImage(myStringRef);
+                Log.d(TAG, "new URI : " + mSelectedUri);
 
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                        //.setDisplayName(name)
-                        .setPhotoUri(mSelectedUri)
-                        .build();
-
-                user.updateProfile(profileUpdates)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Log.d(TAG, "User profile updated.");
-
-                                }
-                            }
-                        });
             }
         });
 
 
+    }
 
+    private void searchUriImage(String myStringRef ) {
 
+        // Create a storage reference from our app
+        StorageReference storageRef = storage.getReference();
 
+        storageRef.child(myStringRef).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Log.d(TAG , "download URI : " + uri);
 
+                addImageToAuthProfile(uri);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
 
+            }
+        });
 
+    }
 
+    private void addImageToAuthProfile(Uri uri) {
+        //= Uri.parse("gs://animal-app-31090.appspot.com/imagesProfile/" + thisuser.getPrv_str_UID());
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                //.setDisplayName(name)
+                .setPhotoUri(uri)
+                .build();
+
+        user.updateProfile(profileUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "User profile updated.");
+
+                        }
+                    }
+                });
 
     }
 
@@ -286,6 +309,36 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "ImageProfile", null);
         return Uri.parse(path);
+    }
+
+
+
+    public static Bitmap loadBitmap(String url) {
+        Bitmap bitmap = null;
+        InputStream in = null;
+        BufferedOutputStream out = null;
+
+        try {
+            in = new BufferedInputStream(new URL(url).openStream(), IO_BUFFER_SIZE);
+
+            final ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
+            out = new BufferedOutputStream(dataStream, IO_BUFFER_SIZE);
+            copy(in, out);
+            out.flush();
+
+            final byte[] data = dataStream.toByteArray();
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            //options.inSampleSize = 1;
+
+            bitmap = BitmapFactory.decodeByteArray(data, 0, data.length,options);
+        } catch (IOException e) {
+            Log.e(TAG, "Could not load Bitmap from: " + url);
+        } finally {
+            closeStream(in);
+            closeStream(out);
+        }
+
+        return bitmap;
     }
 
 
