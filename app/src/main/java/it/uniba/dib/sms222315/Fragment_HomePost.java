@@ -1,6 +1,5 @@
-package it.uniba.dib.sms222315.Reporting;
+package it.uniba.dib.sms222315;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,13 +26,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import it.uniba.dib.sms222315.Friends.MyFriends;
-import it.uniba.dib.sms222315.Friends.MyFriendsListAdapter;
-import it.uniba.dib.sms222315.R;
+import it.uniba.dib.sms222315.Reporting.MyPostListAdapter;
+import it.uniba.dib.sms222315.Reporting.Report;
 import it.uniba.dib.sms222315.UserProfile.User_Class;
 
-
-public class Fragment_Report_MyReport extends Fragment {
+public class Fragment_HomePost extends Fragment {
 
     //Control ListView
     ArrayList<Report> originalList = new ArrayList<>();
@@ -47,12 +44,11 @@ public class Fragment_Report_MyReport extends Fragment {
     //DB VARIABLE
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    private static final String TAG = "TAG_Fragment_Report_MyReport";
+    private static final String TAG = "TAG_Fragment_HomePost";
 
-    public Fragment_Report_MyReport() {
+    public Fragment_HomePost() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +59,7 @@ public class Fragment_Report_MyReport extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View my_view = inflater.inflate(R.layout.fragment__report__my_report, container, false);
+        View my_view = inflater.inflate(R.layout.fragment__home_post, container, false);
 
         //tutti i find e gli onclick
         allFind(my_view);
@@ -78,17 +74,16 @@ public class Fragment_Report_MyReport extends Fragment {
         }
 
         return my_view;
-    }
-
+    }//END CREATE VIEW
 
 
     private void allFind(View my_view) {
-        mListView = my_view.findViewById(R.id.LV_MyRepor_myPost);
+        mListView = my_view.findViewById(R.id.LV_Home_Post);
     }
 
     private void setupFilter(View my_view) {
         //CONTROL FOR FILTER
-        textFilter = my_view.findViewById(R.id.ET_MyRepor_myPost);
+        textFilter = my_view.findViewById(R.id.ET_Home_Filter);
         textFilter.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -117,32 +112,31 @@ public class Fragment_Report_MyReport extends Fragment {
         Log.d(TAG , " User id : "+myDataUser.getPrv_str_UID());
 
         Query postRef = db.collection("Post")
-                .whereEqualTo("prv_authorID" , myDataUser.getPrv_str_UID() );
-        postRef.orderBy("createAtTime", Query.Direction.DESCENDING);
+                .orderBy("createAtTime", Query.Direction.DESCENDING);
 
 
         postRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, document.getId() + " => " + document.getData());
 
-                                Report onePost = document.toObject(Report.class);
-                                originalList.add(onePost);
-
-
-                            }//END FOR
-                            adapter = new MyPostListAdapter(getContext(),
-                                    R.layout.adapter_report, originalList);
+                        Report onePost = document.toObject(Report.class);
+                        originalList.add(onePost);
 
 
-                            mListView.setAdapter(adapter);
-                        }else {
+                    }//END FOR
+                    adapter = new MyPostListAdapter(getContext(),
+                            R.layout.adapter_report, originalList);
 
-                        }
-                    }
-                });
+
+                    mListView.setAdapter(adapter);
+                }else {
+
+                }
+            }
+        });
     }//END POPOLATE
 
     private void filterList(CharSequence charSequence) {
@@ -180,5 +174,4 @@ public class Fragment_Report_MyReport extends Fragment {
 
         } //end else
     }
-
 }//END FRAGMENT

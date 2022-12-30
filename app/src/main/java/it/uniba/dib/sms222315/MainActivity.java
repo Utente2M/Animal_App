@@ -3,6 +3,9 @@ package it.uniba.dib.sms222315;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 
 import android.content.Intent;
@@ -16,19 +19,22 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import it.uniba.dib.sms222315.Autentication.LoginOrRegisterActivity;
+import it.uniba.dib.sms222315.Friends.Fragment_MyFriends_Home;
 import it.uniba.dib.sms222315.TestListView.Activity_MemberList;
 import it.uniba.dib.sms222315.UserProfile.ProfileUserActivity;
 import it.uniba.dib.sms222315.oldFile.User_information_Fragment;
 
 public class MainActivity extends AppCompatActivity {
 
+    //FRAGMENT VAR
+    Fragment my_fragment;
+    FragmentManager my_frag_manager;
+    FragmentTransaction my_frag_trans;
+
     private static final String TAG = "TAG_MainActivity";
     // [START declare_auth]
     private FirebaseAuth mAuth;
     // [END declare_auth]
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,21 +45,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.toolbar_home);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Home");
-
-
+        //tasto back
         //getSupportActionBar().setDisplayHomeAsUpEnabled();
-
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .setReorderingAllowed(true)
-                    .add(R.id.fragmentContainerView, User_information_Fragment.class, null)
-                    .commit();
-        }
+        firstFragment();
+
 
 
     }//END OnCreate
@@ -127,4 +127,14 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "BUTTON LOGOUT OK ");
         FirebaseAuth.getInstance().signOut();
     }
+
+    private void firstFragment() {
+        Fragment_HomePost my_fragment = new Fragment_HomePost();
+        //my_fragment.setMy_callbackFragment(this);
+        my_frag_manager = getSupportFragmentManager();
+        my_frag_trans = my_frag_manager.beginTransaction();
+        my_frag_trans.add(R.id.Frame_Act_Main , my_fragment);
+        my_frag_trans.commit();
+    }
+
 }//END MainActivity
