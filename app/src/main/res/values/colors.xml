@@ -7,6 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
 
+    <!-- COLORI DI BASE -->
+    <color name="orange_pastel">#FF964D</color>
+    <color name="green_pastel">#A1DB87</color>
+    <color name="blue_pastel">#52A6FF</color>
+    <color name="purple_pastel">#A980FF</color>
+
     <!-- COLOR TEXT -->
     <color name="red">#FF0000</color>
     <color name="green">#32CD32</color>
