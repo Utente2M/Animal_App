@@ -105,11 +105,13 @@ public class Fragment_HomePost extends Fragment {
     private void popolateList() {
         originalList.clear();
         Log.d(TAG , "inside popolate ");
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userID = user.getUid();
 
-        User_Class myDataUser = new User_Class();
-        Log.d(TAG , " User id : "+myDataUser.getPrv_str_UID());
+
+
+        //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        //String userID = user.getUid();
+        //User_Class myDataUser = new User_Class();
+        //Log.d(TAG , " User id : "+myDataUser.getPrv_str_UID());
 
         Query postRef = db.collection("Post")
                 .orderBy("createAtTime", Query.Direction.DESCENDING);
