@@ -55,8 +55,9 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
     private byte[] mUploadBytes;
     private double mProgress = 0;
 
-    TextView TV_UID , TV_email , TV_name ;
-    Button but_logout , but_menu;
+    //TV_UID , but_logout ,
+    TextView TV_email , TV_name ;
+    Button  but_menu;
     ImageView Img_profileUser;
 
     Interf_UserProfile myCallBackFrag;
@@ -100,7 +101,7 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
     private void setTextandImage(View my_view) {
         TV_name.setText(my_User.getPrv_str_nome());
         TV_email.setText(my_User.getPrv_str_email());
-        TV_UID.setText(my_User.getPrv_str_UID());
+        //TV_UID.setText(my_User.getPrv_str_UID());
 
         Uri UriImgProfile = null;
         UriImgProfile = my_User.getUri_ProfImg();
@@ -133,6 +134,7 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
             }
         });
         //button logout
+        /*
         but_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -144,7 +146,8 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
                 startActivity(okLogut);
 
             }
-        });
+        }); */
+
         //Change foto profile
         Img_profileUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,8 +199,8 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
     private void allfind(View my_view) {
         TV_name = my_view.findViewById(R.id.show_profil_name);
         TV_email = my_view.findViewById(R.id.show_profil_mail);
-        TV_UID = my_view.findViewById(R.id.show_profil_uid);
-        but_logout = my_view.findViewById(R.id.logout_profile);
+        //TV_UID = my_view.findViewById(R.id.show_profil_uid);
+        //but_logout = my_view.findViewById(R.id.logout_profile);
         but_menu = my_view.findViewById(R.id.button_menu);
         Img_profileUser = my_view.findViewById(R.id.frag_userbasic_imageView_UserProfile);
     }
