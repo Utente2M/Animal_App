@@ -114,7 +114,7 @@ public class Fragment_HomePost extends Fragment {
         //Log.d(TAG , " User id : "+myDataUser.getPrv_str_UID());
 
         Query postRef = db.collection("Post")
-                .orderBy("createAtTime", Query.Direction.DESCENDING);
+                .orderBy("createAtTime", Query.Direction.ASCENDING);
 
 
         postRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

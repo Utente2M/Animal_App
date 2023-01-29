@@ -32,8 +32,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -42,6 +45,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.Map;
 
 import it.uniba.dib.sms222315.MainActivity;
 import it.uniba.dib.sms222315.R;
@@ -56,7 +60,7 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
     private double mProgress = 0;
 
     //TV_UID , but_logout ,
-    TextView TV_email , TV_name ;
+    TextView TV_email , TV_name , TV_phone , TV_street;
     Button  but_menu;
     ImageView Img_profileUser;
 
@@ -99,8 +103,32 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
     }
 
     private void setTextandImage(View my_view) {
+
+        DocumentReference userRef = db.collection("User Basic Info").
+                document(my_User.getPrv_str_UID());
+        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        Map<String, Object> data = document.getData();
+                        if(data.containsKey("Phone")){
+                            TV_phone.setText(data.get("Phone").toString());
+                        }
+                        if(data.containsKey("address")){
+                            TV_street.setText(data.get("address").toString());
+                        }
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                }
+            }});
+
         TV_name.setText(my_User.getPrv_str_nome());
         TV_email.setText(my_User.getPrv_str_email());
+
         //TV_UID.setText(my_User.getPrv_str_UID());
 
         Uri UriImgProfile = null;
@@ -112,11 +140,7 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
         else{
             new DownloadImageFromInternet((ImageView) my_view.findViewById(R.id.frag_userbasic_imageView_UserProfile)).
                     execute(my_User.getUri_ProfImg().toString());
-/*
- Img_profileUser.setImageURI(null);
-            Img_profileUser.setImageURI(my_User.getUri_ProfImg());
-            Log.d(TAG, " uri : " + my_User.getUri_ProfImg());
- */
+
 
         }
     }
@@ -199,6 +223,8 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
     private void allfind(View my_view) {
         TV_name = my_view.findViewById(R.id.show_profil_name);
         TV_email = my_view.findViewById(R.id.show_profil_mail);
+        TV_phone = my_view.findViewById(R.id.idem_info_phone);
+        TV_street = my_view.findViewById(R.id.idem_add_street);
         //TV_UID = my_view.findViewById(R.id.show_profil_uid);
         //but_logout = my_view.findViewById(R.id.logout_profile);
         but_menu = my_view.findViewById(R.id.button_menu);

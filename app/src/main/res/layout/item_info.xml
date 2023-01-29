@@ -40,8 +40,9 @@
 
         </LinearLayout>
 
-        <!-- TODO: ID numero telefono -->
+
         <TextView
+            android:id="@+id/idem_info_phone"
             android:text="+39 3482934801"
             android:textStyle="bold"
             android:textColor="@color/black"

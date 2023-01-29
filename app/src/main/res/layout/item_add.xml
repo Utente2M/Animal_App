@@ -91,6 +91,7 @@
 
                 <!-- TO DO: ID indirizzo -->
                 <TextView
+                    android:id="@+id/idem_add_street"
                     android:text="Via Toledo 34"
                     android:textSize="17sp"
                     android:textColor="@color/black"
