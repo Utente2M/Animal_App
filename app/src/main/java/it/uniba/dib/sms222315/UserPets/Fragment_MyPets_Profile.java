@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222315.UserPets;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +11,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AlertDialogLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -103,7 +106,27 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
         BT_deletePet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteIntoDB();
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Attenzione!");
+                builder.setMessage("Sei sicuro di eliminare questo animale?");
+                builder.setCancelable(true);
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        deleteIntoDB();
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.show();
+
+                //qui
+                //deleteIntoDB();
             }
         });
         BT_modifyPet.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +183,7 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
 
 
     private void deleteIntoDB() {
+        //caricamentodbcollection
         db.collection("Animal DB").document(receivedPet.getPrv_doc_id())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
