@@ -5,29 +5,41 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AutocompletePrediction;
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+import com.google.android.libraries.places.api.model.RectangularBounds;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -36,8 +48,11 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
+import it.uniba.dib.sms222315.Autentication.Fragment_Regis_Basic_info;
 import it.uniba.dib.sms222315.R;
 import it.uniba.dib.sms222315.SelectPhotoDialog;
 import it.uniba.dib.sms222315.UserProfile.User_Class;
@@ -50,6 +65,10 @@ public class Fragment_Report_Add extends Fragment implements SelectPhotoDialog.O
     String sendCategory;
     EditText descriptionReport;
     Button createReport;
+
+    //maps
+    AutoCompleteTextView ET_mapsAddress;
+
 
     //DB connection
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -110,6 +129,7 @@ public class Fragment_Report_Add extends Fragment implements SelectPhotoDialog.O
         categoryReportSpin = my_view.findViewById(R.id.spin_Add_Report);
         descriptionReport = my_view.findViewById(R.id.ET_Add_descriptionReport);
         createReport = my_view.findViewById(R.id.BT_Add_Report);
+        ET_mapsAddress = my_view.findViewById(R.id.ET_autocomp_report);
     }
 
     private void setAllClick(View my_view) {
@@ -133,7 +153,27 @@ public class Fragment_Report_Add extends Fragment implements SelectPhotoDialog.O
                 createNewReport();
             }
         });
-    }
+
+        ET_mapsAddress.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!Places.isInitialized()) {
+                    Places.initialize(getContext(), getString(R.string.api_key), Locale.ITALIAN);
+                }
+                new MapsPredictionTask().execute(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        } );
+    }//end set all click
 
 
     //check permission for camera or local storage
@@ -190,6 +230,8 @@ public class Fragment_Report_Add extends Fragment implements SelectPhotoDialog.O
         String linkImg = "uri.toString()" ;
         String category = sendCategory;
         String description = descriptionReport.getText().toString();
+        String address = ET_mapsAddress.getText().toString();
+
         User_Class userData = new User_Class();
         String author_id = userData.getPrv_str_UID();
         String authorName = userData.getPrv_str_nome();
@@ -203,7 +245,7 @@ public class Fragment_Report_Add extends Fragment implements SelectPhotoDialog.O
 
 
         Report newPost = new Report("", linkImg, category,description,
-                0 ,authorName, author_id ,formatData );
+                0 ,authorName, author_id ,formatData, address );
 
 
         db.collection("Post")
@@ -303,6 +345,71 @@ public class Fragment_Report_Add extends Fragment implements SelectPhotoDialog.O
     private void resetFrontEnd() {
         photoReportImg.setImageDrawable(getResources().getDrawable(R.drawable.icon_conferme));
         descriptionReport.setText("");
+        ET_mapsAddress.setText("");
+    }
+
+
+
+
+    private class MapsPredictionTask extends AsyncTask<CharSequence, Void, ArrayList<String>> {
+
+        @Override
+        protected ArrayList<String> doInBackground(CharSequence... charSequences) {
+
+            ArrayList<String> predictionList = new ArrayList<>();
+            // Crea un nuovo token per la sessione di autocompletamento
+            AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
+            // Crea un oggetto RectangularBounds
+            RectangularBounds bounds = RectangularBounds.newInstance(
+                    new LatLng(41.894802, 12.485332),
+                    new LatLng(45.465422, 9.185924));
+            // Crea una richiesta di previsioni di autocompletamento
+            String query = String.valueOf(charSequences[0]);
+            FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
+                    // Chiama setLocationBias() o setLocationRestriction()
+                    .setLocationBias(bounds)
+                    //.setLocationRestriction(bounds)
+                    .setOrigin(new LatLng(41.894802, 12.4853379))
+                    .setCountries("IT")
+                    //.setTypesFilter(Arrays.asList(TypeFilter.ADDRESS.toString()))
+                    .setSessionToken(token)
+                    .setQuery(query)
+                    .build();
+            Log.d(TAG, "query : " + query);
+
+            PlacesClient placesClient = Places.createClient(getContext());
+
+            placesClient.findAutocompletePredictions(request).addOnSuccessListener((response) -> {
+                for (AutocompletePrediction prediction : response.getAutocompletePredictions()) {
+                    Log.i(TAG, prediction.getPlaceId());
+                    Log.i(TAG, prediction.getPrimaryText(null).toString());
+
+                    predictionList.add(prediction.getFullText(null).toString());
+
+                }//end for
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+                        android.R.layout.simple_dropdown_item_1line, predictionList);
+                ET_mapsAddress.setAdapter(adapter);
+                ET_mapsAddress.showDropDown();
+                Log.d(TAG, "maps risult arrayList : " + predictionList);
+
+            }).addOnFailureListener((exception) -> {
+                if (exception instanceof ApiException) {
+                    ApiException apiException = (ApiException) exception;
+                    Log.e(TAG, "Place not found: " + apiException.getStatusCode());
+                }
+            });
+            return predictionList;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> predictionList) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+                    android.R.layout.simple_dropdown_item_1line, predictionList);
+            ET_mapsAddress.setAdapter(adapter);
+            ET_mapsAddress.showDropDown();
+            Log.d(TAG, "maps result arrayList : " + predictionList);
+        }
     }
 
 }//end fragment

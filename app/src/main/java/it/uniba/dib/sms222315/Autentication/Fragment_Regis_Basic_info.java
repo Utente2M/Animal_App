@@ -72,8 +72,7 @@ public class Fragment_Regis_Basic_info extends Fragment implements DatePickerDia
         // Required empty public constructor
     }
 
-    //maps api
-    private static int AUTOCOMPLETE_REQUEST_CODE = 1;
+
 
     private static final String TAG = "TAG_Frag_Regis_Basic_Info";
 
@@ -107,6 +106,7 @@ public class Fragment_Regis_Basic_info extends Fragment implements DatePickerDia
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
                 new MapsPredictionTask().execute(charSequence);
             }
 
@@ -163,60 +163,7 @@ public class Fragment_Regis_Basic_info extends Fragment implements DatePickerDia
         return my_view;
     }//END on Create view
 
-    /*
-    private void mapsPrediction(CharSequence charSequence) {
 
-        // Create a new token for the autocomplete session. Pass this to FindAutocompletePredictionsRequest,
-        // and once again when the user makes a selection (for example when calling fetchPlace()).
-        AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
-
-        // Create a RectangularBounds object.
-        RectangularBounds bounds = RectangularBounds.newInstance(
-                new LatLng(41.894802, 12.485332),
-                new LatLng(45.465422, 9.185924));
-
-        // Use the builder to create a FindAutocompletePredictionsRequest.
-        String query = String.valueOf(charSequence);
-        FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
-                // Call either setLocationBias() OR setLocationRestriction().
-                .setLocationBias(bounds)
-                //.setLocationRestriction(bounds)
-                .setOrigin(new LatLng(41.894802, 12.4853379))
-                .setCountries("IT")
-                //.setTypesFilter(Arrays.asList(TypeFilter.ADDRESS.toString()))
-                .setSessionToken(token)
-                .setQuery(query)
-                .build();
-        Log.d(TAG, "query : " + query);
-
-        PlacesClient placesClient = Places.createClient(getContext());
-
-        ArrayList <String> predictionList = new ArrayList<>();
-        placesClient.findAutocompletePredictions(request).addOnSuccessListener((response) -> {
-            for (AutocompletePrediction prediction : response.getAutocompletePredictions()) {
-                Log.i(TAG, prediction.getPlaceId());
-                Log.i(TAG, prediction.getPrimaryText(null).toString());
-
-                predictionList.add(prediction.getFullText(null).toString());
-
-            }//end for
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-                    android.R.layout.simple_dropdown_item_1line, predictionList);
-            ET_mapsAddress.setAdapter(adapter);
-            ET_mapsAddress.showDropDown();
-            Log.d(TAG, "maps risult arrayList : " + predictionList);
-
-        }).addOnFailureListener((exception) -> {
-            if (exception instanceof ApiException) {
-                ApiException apiException = (ApiException) exception;
-                Log.e(TAG, "Place not found: " + apiException.getStatusCode());
-            }
-        });
-
-
-
-    }
-*/
 
     private class MapsPredictionTask extends AsyncTask<CharSequence, Void, ArrayList<String>> {
 

@@ -28,27 +28,42 @@
 
     <EditText
         android:id="@+id/ET_Add_descriptionReport"
-        android:layout_width="412dp"
-        android:layout_height="111dp"
+        android:layout_width="382dp"
+        android:layout_height="98dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Describe your post"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spin_Add_Report" />
 
+    <AutoCompleteTextView
+        android:id="@+id/ET_autocomp_report"
+        android:layout_width="379dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="48dp"
+        android:ems="10"
+        android:hint="Insert address"
+
+        android:inputType="none|text"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ET_Add_descriptionReport" />
+
     <Button
         android:id="@+id/BT_Add_Report"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="48dp"
+        android:backgroundTint="@color/green"
         android:text="Create"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:backgroundTint="@color/green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ET_Add_descriptionReport" />
+        app:layout_constraintTop_toBottomOf="@+id/ET_autocomp_report" />
 </androidx.constraintlayout.widget.ConstraintLayout>

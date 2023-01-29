@@ -1,8 +1,13 @@
 package it.uniba.dib.sms222315.Reporting;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Paint;
+import android.location.Address;
+import android.location.Geocoder;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,8 +23,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import it.uniba.dib.sms222315.Friends.MyFriends;
 import it.uniba.dib.sms222315.Friends.MyFriendsListAdapter;
@@ -39,6 +46,7 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
         TextView authorName;
         TextView textPost;
         TextView NumberOfLike;
+        TextView street;
         ImageView image;
         ImageButton addLike, addComment;
     }
@@ -67,9 +75,10 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
         int numberLike = getItem(position).getPrv_numberLike();
         String str_numberLike = Integer.toString(numberLike);
         String linkmyPhoto = getItem(position).getPrv_linkImg();
+        String address = getItem(position).getAddressReport();
 
 
-        Report reportObj = new Report(linkmyPhoto, author, description , str_numberLike);
+        Report reportObj = new Report(linkmyPhoto, author, description , str_numberLike, address);
 
         Log.d(TAG , " ok constructor");
 
@@ -93,6 +102,9 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
             holder.NumberOfLike = (TextView) convertView.findViewById(R.id.Adap_Repo_numberLike);
             holder.image = (ImageView) convertView.findViewById(R.id.Adap_Repo_image);
             //holder.addLike = ..
+            holder.street =(TextView) convertView.findViewById(R.id.Adap_Repo_street);
+            holder.street.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
            holder.addComment = (ImageButton) convertView.findViewById(R.id.Adap_Repo_addComment);
            holder.addComment.setOnClickListener(new View.OnClickListener() {
                @Override
@@ -137,6 +149,50 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
         int intLike = reportObj.getPrv_numberLike();
         String str_Like = "Piace a "+Integer.toString(intLike) + " persone";
         holder.NumberOfLike.setText(str_Like);
+
+        holder.street.setText(reportObj.getAddressReport());
+        holder.street.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //intent per maps
+
+                Geocoder geocoder = new Geocoder(getContext());
+                List<Address> addresses = null;
+                try {
+                    addresses = geocoder.getFromLocationName("Via Edoardo Orabona, Bari, BA, Italia", 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (addresses.size() > 0) {
+                    double latitude = addresses.get(0).getLatitude();
+                    double longitude = addresses.get(0).getLongitude();
+                    Uri gmmIntentUri = Uri.parse("google.navigation:q=" + latitude + "," + longitude);
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+
+                    if (mapIntent.resolveActivity(getContext().getPackageManager()) != null) {
+                        getContext().startActivity(mapIntent);
+                    }
+                }
+
+
+
+
+
+                Uri gmmIntentUri = Uri.parse("google.navigation:q=" + holder.street.toString());
+
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+
+                if(mapIntent.resolveActivity(getContext().getPackageManager())!=null){
+                    getContext().startActivity(mapIntent);
+                }
+
+
+            }
+        });
+
+
 
         return convertView;
     }

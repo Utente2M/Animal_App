@@ -6,14 +6,14 @@ public class Report {
     private String prv_category;
     private String prv_description;
     private int prv_numberLike;
-    //
     private String prv_authorName;
     private String prv_authorID;
     private String createAtTime;
+    private String addressReport;
 
     public Report(String DocID, String linkImg, String category,
                   String description, int numberLike, String authorName ,String authorID ,
-                  String dataCreated) {
+                  String dataCreated, String address) {
         prv_secretDocID = DocID;
         prv_linkImg = linkImg;
         prv_category = category;
@@ -22,13 +22,15 @@ public class Report {
         prv_authorID = authorID;
         prv_authorName = authorName;
         createAtTime = dataCreated;
+        addressReport = address;
     }
 
-    public Report (String link , String creatorName, String description , String numberLikeSTR ){
+    public Report (String link , String creatorName, String description , String numberLikeSTR, String address ){
         prv_linkImg = link ;
         prv_authorName = creatorName;
         prv_description = description;
         prv_numberLike = Integer.parseInt(numberLikeSTR);
+        addressReport = address;
     }
     public Report (){}
 
@@ -62,5 +64,9 @@ public class Report {
 
     public String getPrv_authorName() {
         return prv_authorName;
+    }
+
+    public String getAddressReport() {
+        return addressReport;
     }
 }
