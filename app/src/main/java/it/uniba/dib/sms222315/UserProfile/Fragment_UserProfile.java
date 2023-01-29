@@ -61,8 +61,8 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
 
     //TV_UID , but_logout ,
     TextView TV_email , TV_name , TV_phone , TV_street;
-    Button  but_menu;
-    ImageView Img_profileUser;
+    Button  but_menu ;
+    ImageView Img_profileUser , but_back ;
 
     Interf_UserProfile myCallBackFrag;
     User_Class my_User;
@@ -146,6 +146,16 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
     }
 
     private void allSetClick() {
+
+        //back home
+        but_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent back_home=new Intent(getActivity(),MainActivity.class);
+                startActivity(back_home);
+            }
+        });
+
         //button menu
         but_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -228,6 +238,7 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
         //TV_UID = my_view.findViewById(R.id.show_profil_uid);
         //but_logout = my_view.findViewById(R.id.logout_profile);
         but_menu = my_view.findViewById(R.id.button_menu);
+        but_back = my_view.findViewById(R.id.back_button);
         Img_profileUser = my_view.findViewById(R.id.frag_userbasic_imageView_UserProfile);
     }
 
