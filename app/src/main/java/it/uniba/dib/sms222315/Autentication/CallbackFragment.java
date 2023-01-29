@@ -8,7 +8,7 @@ public interface CallbackFragment {
 
 
     void changeFragment();
-    void startAutocompleteActivity ();
+    //void startAutocompleteActivity ();
     void createUSerWithMailPassword(String email , String password);
     void logAccountWithMailePass (String email , String password);
     void addInformationToProfile (String name);

@@ -51,7 +51,7 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
 
     //FIREBASE VAR
     private FirebaseAuth mAuth;
-    private boolean FirebaseUserComplete = false;
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     //inizialiamo i fragment
@@ -59,9 +59,7 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
     FragmentManager my_frag_manager;
     FragmentTransaction my_frag_trans;
 
-    //GMaps Place Autocomplete
-    FrameLayout my_frame_autocomplete;
-    private static int AUTOCOMPLETE_REQUEST_CODE = 1;
+
 
     private static final String TAG = "TAG_Act_LogOrRegis";
 
@@ -87,9 +85,6 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
             //carichiamo i due frgment
             addFragment();
         }
-
-
-
 
     }//END onCreate
 
@@ -140,67 +135,6 @@ public class LoginOrRegisterActivity extends AppCompatActivity implements Callba
     public void changeFragment() {
         replaceFragment();
     }
-
-
-    //non funzionante autocomplete place
-    @Override
-    public void startAutocompleteActivity( ) {
-        Log.d(TAG , " try luanch intent autocomplet place ");
-
-
-
-
-        // Set the fields to specify which types of place data to
-        // return after the user has made a selection.
-        List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME , Place.Field.ADDRESS);
-
-        // Start the autocomplete intent.
-        Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
-                .build(this);
-        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                Place place = Autocomplete.getPlaceFromIntent(data);
-
-
-               String myString_address = place.getAddress();
-
-                Log.d(TAG, "stampa risultati maps");
-                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
-                Log.i(TAG, "Address: " + myString_address);
-
-                //da rimandare il fragment e completare i dati
-                //risitna il frag basic info cn i nuovi dati + vecchi
-
-
-
-                Log.i(TAG, "TRY HARDDDDDDD");
-                EditText sendAddress = findViewById(R.id.ET_autocomp_address);
-                sendAddress.setText(myString_address);
-                Log.i(TAG, "OKKKKKKKKK");
-                System.out.println();
-                //updateUI();
-
-
-
-            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-                // TODO: Handle the error.
-                Status status = Autocomplete.getStatusFromIntent(data);
-                Log.i(TAG, status.getStatusMessage());
-            } else if (resultCode == RESULT_CANCELED) {
-                // The user canceled the operation.
-            }
-            return;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-
 
 
     @Override
