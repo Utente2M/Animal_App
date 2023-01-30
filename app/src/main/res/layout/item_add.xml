@@ -92,25 +92,13 @@
                 <!-- TO DO: ID indirizzo -->
                 <TextView
                     android:id="@+id/idem_add_street"
-                    android:text="Via Toledo 34"
+                    android:text="Via Toledo 34, Napoli NA, 80134, Italia"
                     android:textSize="17sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:text="Napoli NA \n80134 \nItalia"
-                    android:textSize="13sp"
-                    android:textColor="#ED5E5E5E"
-                    android:textStyle="normal"
-                    android:textAlignment="textStart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    card_view:ignore="RtlCompat"/>
-
-
 
             </LinearLayout>
 
