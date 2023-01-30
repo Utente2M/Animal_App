@@ -5,92 +5,133 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sfondo_registrazione_user"
     tools:context=".Autentication.Fragment_Regis_Basic_info">
-
-    <!-- TODO: Update blank fragment layout -->
-
-
-    <AutoCompleteTextView
-        android:id="@+id/ET_autocomp_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Insert your address"
-        android:inputType="none|text"
-
-        android:text=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FragRegi_basiInfo_ET_Phone" />
-
-    <EditText
-        android:id="@+id/FragRegi_basiInfo_ET_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="100dp"
-        android:ems="10"
-        android:hint="Your Name"
-        android:inputType="textPersonName"
-        android:text=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="614dp"
-        android:text="FRAGMENT BASIC INFO"
-        android:textSize="34sp"
+        android:text="Create an account"
+        android:layout_marginTop="35dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:orientation="vertical"
+        android:padding="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <EditText
-        android:id="@+id/FragRegi_basiInfo_ET_Phone"
-        android:layout_width="wrap_content"
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="85dp"
+        android:text="Name"
+        android:textColor="#286DC2"
+        android:textSize="19sp"
+        android:textStyle="bold"/>
+
+    <AutoCompleteTextView
+        android:id="@+id/FragRegi_basiInfo_ET_name"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:textColor="#8e8e8e"
+        android:textSize="18sp"
         android:ems="10"
-        android:hint="phone"
-        android:inputType="phone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FragRegi_basiInfo_ET_name" />
+        android:background="@drawable/edittext_background"
+        android:hint="Name Surname"
+        android:inputType="textPersonName"/>
 
-    <EditText
-        android:id="@+id/FragRegi_basiInfo_ET_Date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:ems="10"
-        android:hint="mm/gg/aaaa"
-        android:inputType="date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ET_autocomp_address" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Address"
+            android:layout_marginTop="15dp"
+            android:textColor="#286DC2"
+            android:textSize="19sp"
+            android:textStyle="bold"/>
 
-    <Button
-        android:id="@+id/FragRegi_basiInfo_BT_Create"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="123dp"
-        android:text="Create"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FragRegi_basiInfo_ET_Date"
-        app:layout_constraintVertical_bias="1.0" />
+        <EditText
+            android:id="@+id/ET_autocomp_address"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:textColor="#8e8e8e"
+            android:textSize="18sp"
+            android:ems="10"
+            android:background="@drawable/edittext_background"
+            android:hint="Saint John Street 56"
+            android:inputType="none|text"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Phone number"
+            android:layout_marginTop="15dp"
+            android:textColor="#286DC2"
+            android:textSize="19sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/FragRegi_basiInfo_ET_Phone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:textColor="#8e8e8e"
+            android:textSize="18sp"
+            android:ems="10"
+            android:background="@drawable/edittext_background"
+            android:hint="3568235698"
+            android:inputType="phone"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Phone number"
+            android:layout_marginTop="15dp"
+            android:textColor="#286DC2"
+            android:textSize="19sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/FragRegi_basiInfo_ET_Date"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:textColor="#8e8e8e"
+            android:textSize="18sp"
+            android:ems="10"
+            android:background="@drawable/edittext_background"
+            android:hint="mm/gg/aaaa"
+            android:inputType="date"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/FragRegi_basiInfo_BT_Create"
+            android:layout_width="180dp"
+            android:layout_height="45dp"
+            android:textColor="@color/white"
+            android:background="@drawable/button_background"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:text="Create" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
