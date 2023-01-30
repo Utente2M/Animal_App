@@ -18,10 +18,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.util.List;
-
 import it.uniba.dib.sms222315.R;
-import it.uniba.dib.sms222315.UserProfile.Interf_UserProfile;
 
 
 public class Fragment_AddNewPet extends Fragment {
@@ -57,7 +54,7 @@ public class Fragment_AddNewPet extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View my_view = inflater.inflate(R.layout.fragment__add_new_pet, container, false);
+        View my_view = inflater.inflate(R.layout.fragment__my_pets_add_new_pet, container, false);
 
         setAllfind(my_view);
         setAllSpinner(my_view);

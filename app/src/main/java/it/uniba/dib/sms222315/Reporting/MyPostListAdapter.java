@@ -156,43 +156,9 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
             public void onClick(View view) {
                 //intent per maps
 
-                Geocoder geocoder = new Geocoder(getContext());
-                List<Address> addresses = null;
-                try {
-                    addresses = geocoder.getFromLocationName("Via Edoardo Orabona, Bari, BA, Italia", 1);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (addresses.size() > 0) {
-                    double latitude = addresses.get(0).getLatitude();
-                    double longitude = addresses.get(0).getLongitude();
-                    Uri gmmIntentUri = Uri.parse("google.navigation:q=" + latitude + "," + longitude);
-                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                    mapIntent.setPackage("com.google.android.apps.maps");
-
-                    if (mapIntent.resolveActivity(getContext().getPackageManager()) != null) {
-                        getContext().startActivity(mapIntent);
-                    }
-                }
-
-
-
-
-
-                Uri gmmIntentUri = Uri.parse("google.navigation:q=" + holder.street.toString());
-
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                mapIntent.setPackage("com.google.android.apps.maps");
-
-                if(mapIntent.resolveActivity(getContext().getPackageManager())!=null){
-                    getContext().startActivity(mapIntent);
-                }
-
-
+                launchNavigationStep2Step(reportObj.getAddressReport());
             }
         });
-
-
 
         return convertView;
     }
@@ -221,6 +187,28 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
     }
 
 
+    public void launchNavigationStep2Step (String newAddress){
+        Geocoder geocoder = new Geocoder(getContext());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocationName(newAddress, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (addresses.size() > 0) {
+            double latitude = addresses.get(0).getLatitude();
+            Log.d(TAG, "latitude :" + latitude);
+            double longitude = addresses.get(0).getLongitude();
+            Log.d(TAG, "longitude :" + longitude);
+            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + latitude + "," + longitude+"&mode=d");
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+
+            if (mapIntent.resolveActivity(getContext().getPackageManager()) != null) {
+                getContext().startActivity(mapIntent);
+            }
+        }
+    }//end launchMap
 
 
 
