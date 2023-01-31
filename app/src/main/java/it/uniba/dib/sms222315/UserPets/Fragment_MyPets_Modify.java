@@ -331,7 +331,6 @@ public class Fragment_MyPets_Modify extends Fragment  {
             indirizzoAnimale.showDropDown();
             Log.d(TAG, "maps risult arrayList : " + predictionList);
 
-
         }).addOnFailureListener((exception) -> {
             if (exception instanceof ApiException) {
                 ApiException apiException = (ApiException) exception;
