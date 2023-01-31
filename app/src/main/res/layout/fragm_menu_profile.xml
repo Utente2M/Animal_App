@@ -18,260 +18,263 @@
         android:textSize="30sp"
         android:layout_marginTop="12dp"
         />
-
-    <ScrollView
+   <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+       android:layout_margin="30dp">
+    <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="30dp">
+        android:layout_below="@+id/title_view"
+        android:rowCount="4"
+        android:columnCount="2"
+        android:layout_margin="20dp"
+        >
 
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/title_view"
-            android:layout_margin="25dp"
-            android:columnCount="2"
-            android:rowCount="4">
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_gravity="fill"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            >
 
-            <androidx.cardview.widget.CardView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_row="0"
-                android:layout_rowWeight="1"
-                android:layout_column="0"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center_vertical|center_horizontal">
 
-                <LinearLayout
+                <ImageView
+                    android:id="@+id/FragMenu_IV_my_pet"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    app:srcCompat="@drawable/icon_my_pets" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:text="MY PETS"
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-                    <ImageView
-                        android:id="@+id/FragMenu_IV_my_pet"
-                        android:layout_width="110dp"
-                        android:layout_height="110dp"
-                        app:srcCompat="@drawable/icon_my_pets" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_gravity="fill"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            >
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="MY PETS"
-                        android:textAlignment="center"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_row="0"
-                android:layout_rowWeight="1"
-                android:layout_column="1"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center_vertical|center_horizontal">
 
-                <LinearLayout
+                <ImageView
+                    android:id="@+id/FragMenu_IV_my_expensefffffff"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    app:srcCompat="@drawable/icon_expenses_white"
+                    />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:text="   SOCIAL ENTITIES   "
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-                    <ImageView
-                        android:id="@+id/FragMenu_IV_my_expensefffffff"
-                        android:layout_width="110dp"
-                        android:layout_height="110dp"
-                        app:srcCompat="@drawable/icon_expenses_white" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_gravity="fill"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            >
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="   SOCIAL ENTITIES   "
-                        android:textAlignment="center"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_row="1"
-                android:layout_rowWeight="1"
-                android:layout_column="0"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center_vertical|center_horizontal">
 
-                <LinearLayout
+                <ImageView
+                    android:id="@+id/FragMenu_IV_my_friends"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    app:srcCompat="@drawable/icon_friends" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:text="FRIENDS"
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-                    <ImageView
-                        android:id="@+id/FragMenu_IV_my_friends"
-                        android:layout_width="110dp"
-                        android:layout_height="110dp"
-                        app:srcCompat="@drawable/icon_friends" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:layout_gravity="fill"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            >
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="FRIENDS"
-                        android:textAlignment="center"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_row="1"
-                android:layout_rowWeight="1"
-                android:layout_column="1"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center_vertical|center_horizontal">
 
-                <LinearLayout
+                <ImageView
+                    android:id="@+id/FragMenu_IV_my_report"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+
+                    app:srcCompat="@drawable/icon_report" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:text="  REPORT  "
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-                    <ImageView
-                        android:id="@+id/FragMenu_IV_my_report"
-                        android:layout_width="110dp"
-                        android:layout_height="110dp"
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:layout_gravity="fill"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            >
 
-                        app:srcCompat="@drawable/icon_report" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="  REPORT  "
-                        android:textAlignment="center"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_row="2"
-                android:layout_rowWeight="1"
-                android:layout_column="1"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center_vertical|center_horizontal">
 
-                <LinearLayout
+
+                <ImageView
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    app:srcCompat="@drawable/icon_settings" />
+
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:text="SETTINGS"
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:layout_gravity="fill"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            >
 
-                    <ImageView
-                        android:layout_width="110dp"
-                        android:layout_height="110dp"
-                        app:srcCompat="@drawable/icon_settings" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="SETTINGS"
-                        android:textAlignment="center"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_row="2"
-                android:layout_rowWeight="1"
-                android:layout_column="0"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center_vertical|center_horizontal">
 
-                <LinearLayout
+
+                <ImageView
+                    android:id="@+id/FragMenu_IV_my_expense"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    app:srcCompat="@drawable/icon_expenses_white"
+                    />
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-
-                    <ImageView
-                        android:id="@+id/FragMenu_IV_my_expense"
-                        android:layout_width="110dp"
-                        android:layout_height="110dp"
-                        app:srcCompat="@drawable/icon_expenses_white" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="EXPENSES"
-                        android:textAlignment="center"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
+                    android:text="EXPENSES"
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:layout_gravity="fill"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            >
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="3"
-                android:layout_rowWeight="1"
                 android:layout_column="0"
-                android:layout_columnWeight="1"
                 android:layout_gravity="fill"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
                 android:layout_margin="8dp"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="8dp" />
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_row="3"
-                android:layout_rowWeight="1"
-                android:layout_column="0"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp">
+                app:cardElevation="8dp"
+                >
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:orientation="vertical"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_gravity="center_vertical|center_horizontal">
 
                     <Button
                         android:id="@+id/button_logout_menu_profile"
@@ -289,13 +292,35 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="LOGOUT"
-                        android:textAlignment="center"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textAlignment="center"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center_vertical|center_horizontal">
 
-        </GridLayout>
-    </ScrollView>
+                <ImageView
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    app:srcCompat="@drawable/icon_settings" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SALUTE"
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+
+    </GridLayout>
+   </ScrollView>
 
 </RelativeLayout>
