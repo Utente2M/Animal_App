@@ -35,6 +35,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 
 import it.uniba.dib.sms222315.R;
@@ -49,7 +50,6 @@ public class Fragment_Enti_Create extends Fragment implements SelectPhotoDialog.
     ImageView Photo;
     EditText phoneNumber;
     EditText Name;
-    String sendCategory;
     EditText Description;
     Button createAss;
 
@@ -120,7 +120,43 @@ public class Fragment_Enti_Create extends Fragment implements SelectPhotoDialog.
     }
 
     private void createNewAss() {
+        String linkImg = "uri.toString()" ;
+        String phone = phoneNumber.getText().toString();
+        String nameass = Name.getText().toString();
+        String description = Description.getText().toString();
+        String address = ET_mapsAddress.getText().toString();
 
+
+        User_Class userData = new User_Class();
+
+        String author_id = userData.getPrv_str_UID();
+        String authorName = userData.getPrv_str_nome();
+
+        SimpleDateFormat format = new SimpleDateFormat("d,MM,yyyy,HH:mm:ss");
+        Calendar calendar = Calendar.getInstance();
+        String formatData = format.format(calendar.getTime());
+
+
+        Associations newAssoc = new Associations( nameass, phone, address, description, linkImg, author_id, formatData,
+                "", Arrays.asList(author_id));
+
+
+
+        db.collection("Association")
+                .add(newAssoc)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        createImageIntoDB(documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
     }
 
     private void createImageIntoDB(String id_document) {
@@ -131,7 +167,7 @@ public class Fragment_Enti_Create extends Fragment implements SelectPhotoDialog.
         // Create a storage reference from our app
         StorageReference storageRef = storage.getReference();
         // Create a storage reference from our app
-        String myStringRef = "PostPhoto/"+id_document;
+        String myStringRef = "LogoAssociation/"+id_document;
         final StorageReference profileImagesRef = storageRef.child(myStringRef);
 
         // Get the data from an ImageView as bytes
@@ -177,9 +213,9 @@ public class Fragment_Enti_Create extends Fragment implements SelectPhotoDialog.
     }
 
     private void addLinkToReport(Uri downloadUri, String id_document) {
-        DocumentReference postRef = db.collection("Post").document(id_document);
+        DocumentReference postRef = db.collection("Association").document(id_document);
         postRef
-                .update("prv_linkImg", downloadUri.toString())
+                .update("prv_associationLogo", downloadUri.toString())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -200,7 +236,9 @@ public class Fragment_Enti_Create extends Fragment implements SelectPhotoDialog.
     private void resetFrontEnd() {
         Photo.setImageDrawable(getResources().getDrawable(R.drawable.icon_conferme));
         Description.setText("");
+        Name.setText("");
         ET_mapsAddress.setText("");
+        phoneNumber.setText("");
     }
 
     private boolean verifyPermissions() {
