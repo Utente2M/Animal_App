@@ -8,74 +8,98 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="390dp"
+        android:layout_height="541dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
-        android:layout_marginBottom="212dp"
+        android:layout_marginBottom="94dp"
         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="20dp"
+            android:text="Informazioni di :" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="20dp"
+            android:text="Nome Animale :" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:orientation="horizontal">
+            android:layout_height="152dp"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="183dp"
-                android:layout_height="match_parent"
+            <EditText
+                android:id="@+id/ET_MyPetModify_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:hint="Data nascita" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/ET_MyPetModify_data"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="Data nascita" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="162dp"
-                android:layout_height="match_parent"
+            <EditText
+                android:id="@+id/ET_MyPetModify_mantello"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:hint="Mantello" />
 
-                <EditText
-                    android:id="@+id/ET_MyPetModify_razza"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Razza" />
-
-                <EditText
-                    android:id="@+id/ET_MyPetModify_mantello"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Mantello" />
-            </LinearLayout>
+            <EditText
+                android:id="@+id/ET_MyPetModify_razza"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Razza" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="125dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <EditText
-                android:id="@+id/ET_MyPetModify_segPartic"
-                android:layout_width="wrap_content"
+                android:id="@+id/ET_MyPetModify_segPartic2"
+                android:layout_width="match_parent"
                 android:layout_height="124dp"
                 android:layout_weight="1"
                 android:hint="Segni particolari" />
+
+            <EditText
+                android:id="@+id/ET_MyPetModify_segPartic3"
+                android:layout_width="match_parent"
+                android:layout_height="124dp"
+                android:layout_weight="1"
+                android:hint="Numero Microchip" />
+
+            <EditText
+                android:id="@+id/ET_MyPetModify_segPartic"
+                android:layout_width="match_parent"
+                android:layout_height="124dp"
+                android:layout_weight="1"
+                android:hint="Data di applicazione" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/ET_MyPetModify_mantello"
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:layout_weight="1"
+                android:hint="Indirizzo residenza animale" />
+
         </LinearLayout>
 
 
