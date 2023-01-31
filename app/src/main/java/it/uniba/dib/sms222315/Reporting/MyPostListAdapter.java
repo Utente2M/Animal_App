@@ -49,6 +49,8 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
         TextView street;
         ImageView image;
         ImageButton addLike, addComment;
+
+        TextView category;
     }
     /**
      * Default constructor for the PersonListAdapter
@@ -77,8 +79,11 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
         String linkmyPhoto = getItem(position).getPrv_linkImg();
         String address = getItem(position).getAddressReport();
 
+        String categoryPost = getItem(position).getPrv_category();
 
-        Report reportObj = new Report(linkmyPhoto, author, description , str_numberLike, address);
+
+        Report reportObj = new Report(linkmyPhoto, author, description , str_numberLike,
+                address, categoryPost);
 
         Log.d(TAG , " ok constructor");
 
@@ -105,6 +110,8 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
             holder.street =(TextView) convertView.findViewById(R.id.Adap_Repo_street);
             holder.street.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
+            holder.category = (TextView) convertView.findViewById(R.id.Adap_Repo_Category);
+
            holder.addComment = (ImageButton) convertView.findViewById(R.id.Adap_Repo_addComment);
            holder.addComment.setOnClickListener(new View.OnClickListener() {
                @Override
@@ -126,6 +133,7 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
         }
 
 
+        //scrool animation
         Animation animation = AnimationUtils.loadAnimation(mContext,
                 (position > lastPosition) ? R.anim.load_down_anim : R.anim.load_up_anim);
         result.startAnimation(animation);
@@ -149,6 +157,8 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
         int intLike = reportObj.getPrv_numberLike();
         String str_Like = "Piace a "+Integer.toString(intLike) + " persone";
         holder.NumberOfLike.setText(str_Like);
+
+        holder.category.setText(reportObj.getPrv_category());
 
         holder.street.setText(reportObj.getAddressReport());
         holder.street.setOnClickListener(new View.OnClickListener() {

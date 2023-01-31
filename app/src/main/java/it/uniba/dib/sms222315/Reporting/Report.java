@@ -23,14 +23,17 @@ public class Report {
         prv_authorName = authorName;
         createAtTime = dataCreated;
         addressReport = address;
+
     }
 
-    public Report (String link , String creatorName, String description , String numberLikeSTR, String address ){
+    public Report (String link , String creatorName, String description , String numberLikeSTR,
+                   String address, String category ){
         prv_linkImg = link ;
         prv_authorName = creatorName;
         prv_description = description;
         prv_numberLike = Integer.parseInt(numberLikeSTR);
         addressReport = address;
+        prv_category = category;
     }
     public Report (){}
 
