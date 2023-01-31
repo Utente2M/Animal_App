@@ -313,7 +313,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="LOGOUT"
+                    android:text="ASSOCIATIONS"
                     android:textStyle="bold"
                     android:textAlignment="center"/>
             </LinearLayout>
