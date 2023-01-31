@@ -91,7 +91,7 @@
                     android:id="@+id/FragMenu_IV_associations"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
-                    app:srcCompat="@drawable/icon_expenses_white"
+                    app:srcCompat="@drawable/icon_associations"
                     />
 
                 <TextView
