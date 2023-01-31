@@ -93,6 +93,7 @@ public class Fragment_Enti_Create extends Fragment implements SelectPhotoDialog.
         phoneNumber = my_view.findViewById(R.id.editTextPhone);
         ET_mapsAddress = my_view.findViewById(R.id.autoCompleteTextView);
         Description = my_view.findViewById(R.id.editTextTextMultiLine);
+        createAss = my_view.findViewById(R.id.BT_Frag_newEnte);
 
     }
 
