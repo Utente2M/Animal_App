@@ -79,8 +79,6 @@ public class Fragment_HomePost extends Fragment {
 
         }
 
-
-
         return my_view;
     }//END CREATE VIEW
 
