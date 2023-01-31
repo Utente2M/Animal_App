@@ -69,13 +69,14 @@ public class Fragment_HomePost extends Fragment {
         allFind(my_view);
         setupFilter(my_view);
         //allOnClick();
+        setlistClick(my_view);
 
         if (adapter ==null){
             originalList.clear();
             filteredList.clear();
             popolateList();
             Log.d(TAG , "ok popolateList ");
-            setlistClick(my_view);
+
         }
 
 
@@ -85,9 +86,12 @@ public class Fragment_HomePost extends Fragment {
 
 
     private void setlistClick(View my_view) {
+        Log.d(TAG, "set listener list ");
+
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Log.d(TAG, "Item position : " + position);
 
                 if(!filteredList.isEmpty()){
                     //se è piena
@@ -98,11 +102,12 @@ public class Fragment_HomePost extends Fragment {
                     Report clickReport = originalList.get(position);
                     Log.d(TAG, "Category : " + clickReport.getPrv_category());
                 }
-
-
-
             }
         });
+
+
+
+
     }
 
 
