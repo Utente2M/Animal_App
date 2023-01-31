@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Enti.Fragment_Enti_Create">
 
     <!-- TODO: Update blank fragment layout -->
@@ -11,6 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/IV_Add_ReportPhoto"
+            android:layout_width="281dp"
+            android:layout_height="172dp"
+            android:layout_marginTop="16dp"
+            android:src="@android:drawable/ic_menu_camera"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
         <TextView
             android:id="@+id/textView"

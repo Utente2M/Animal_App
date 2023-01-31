@@ -202,6 +202,7 @@ public class Fragment_Report_Add extends Fragment implements SelectPhotoDialog.O
         }
         return false;
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         verifyPermissions();
