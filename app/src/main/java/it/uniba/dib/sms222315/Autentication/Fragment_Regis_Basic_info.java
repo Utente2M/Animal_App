@@ -116,17 +116,25 @@ public class Fragment_Regis_Basic_info extends Fragment implements DatePickerDia
             }
         } );
 
+        /*
+        ET_DateBorn.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                showDataPickerDialog();
+            }
+        });
+         */
+
         ET_DateBorn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if(MotionEvent.ACTION_UP == motionEvent.getAction()){
                     showDataPickerDialog();
                 }
+
                 return false;
             }
         });
-
-
 
 
         BT_Create = my_view.findViewById(R.id.FragRegi_basiInfo_BT_Create);
@@ -156,8 +164,6 @@ public class Fragment_Regis_Basic_info extends Fragment implements DatePickerDia
 
             }
         });
-
-
 
         // Inflate the layout for this fragment
         return my_view;

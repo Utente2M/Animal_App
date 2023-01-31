@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222315.UserPets;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,22 +9,34 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AutocompletePrediction;
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+import com.google.android.libraries.places.api.model.RectangularBounds;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import it.uniba.dib.sms222315.R;
@@ -41,7 +54,8 @@ public class Fragment_MyPets_Modify extends Fragment  {
     //BUNDLE
     Pets receivedPet;
 
-    EditText data_nasc ,mantello , razza,  segniPart , numeroChip , dataChip, indirizzoAnimale ;
+    EditText data_nasc ,mantello , razza,  segniPart , numeroChip , dataChip ;
+    AutoCompleteTextView indirizzoAnimale;
     ImageButton BT_confermePet , BT_backPet;
 
     //FRAGMENT VAR
@@ -102,39 +116,66 @@ public class Fragment_MyPets_Modify extends Fragment  {
             }
         });
 
-        data_nasc.setOnClickListener(new View.OnClickListener() {
+
+        /*
+         data_nasc.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View view) {
+            public void onFocusChange(View view, boolean b) {
                 showDataPickerDialog(data_nasc);
             }
         });
 
-        dataChip.setOnClickListener(new View.OnClickListener() {
+        dataChip.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View view) {
+            public void onFocusChange(View view, boolean b) {
                 showDataPickerDialog(dataChip);
-            }
-        });
-
-        /*
-        data_nasc.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(MotionEvent.ACTION_UP == motionEvent.getAction()){
-
-                }
-
-                return false;
             }
         });
          */
 
 
+        data_nasc.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(MotionEvent.ACTION_UP == motionEvent.getAction()){
+                    showDataPickerDialog(data_nasc);
+                }
+
+                return false;
+            }
+        });
+        dataChip.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(MotionEvent.ACTION_UP == motionEvent.getAction()){
+                    showDataPickerDialog(dataChip);
+                }
+
+                return false;
+            }
+        });
 
 
+        indirizzoAnimale.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mapsPrediction (charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
     }
+
+
 
     private void updateAnimaleIntoDB() {
 
@@ -242,6 +283,66 @@ public class Fragment_MyPets_Modify extends Fragment  {
         );
         datePickerDialog.show();
     }
+
+    private void mapsPrediction(CharSequence charSequence) {
+
+        Context context = getActivity().getApplicationContext();
+        String apiKey = context.getString(R.string.api_key);
+        if (!Places.isInitialized()) {
+            Places.initialize(getActivity().getApplicationContext(), apiKey);
+        }
+
+
+        String query = String.valueOf(charSequence);
+        ArrayList<String> predictionList = new ArrayList<>();
+
+        // Create a new token for the autocomplete session. Pass this to FindAutocompletePredictionsRequest,
+        // and once again when the user makes a selection (for example when calling fetchPlace()).
+        AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
+
+        // Crea un oggetto RectangularBounds
+        RectangularBounds bounds = RectangularBounds.newInstance(
+                new LatLng(41.894802, 12.485332),
+                new LatLng(45.465422, 9.185924));
+        FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
+                // Chiama setLocationBias() o setLocationRestriction()
+                .setLocationBias(bounds)
+                //.setLocationRestriction(bounds)
+                .setOrigin(new LatLng(41.894802, 12.4853379))
+                .setCountries("IT")
+                //.setTypesFilter(Arrays.asList(TypeFilter.ADDRESS.toString()))
+                .setSessionToken(token)
+                .setQuery(query)
+                .build();
+        Log.d(TAG, "query : " + query);
+
+        PlacesClient placesClient = Places.createClient(getContext());
+
+        placesClient.findAutocompletePredictions(request).addOnSuccessListener((response) -> {
+            for (AutocompletePrediction prediction : response.getAutocompletePredictions()) {
+                Log.i(TAG, prediction.getPlaceId());
+                Log.i(TAG, prediction.getPrimaryText(null).toString());
+
+                predictionList.add(prediction.getFullText(null).toString());
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+                    android.R.layout.simple_dropdown_item_1line, predictionList);
+            indirizzoAnimale.setAdapter(adapter);
+            indirizzoAnimale.showDropDown();
+            Log.d(TAG, "maps risult arrayList : " + predictionList);
+
+
+        }).addOnFailureListener((exception) -> {
+            if (exception instanceof ApiException) {
+                ApiException apiException = (ApiException) exception;
+                Log.e(TAG, "Place not found: " + apiException.getStatusCode());
+            }
+        });
+
+
+    }
+
+
 
 
 }//END CLASS
