@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -62,6 +63,7 @@ public class Fragment_HomePost extends Fragment {
         View my_view = inflater.inflate(R.layout.fragment__home_post, container, false);
 
         //tutti i find e gli onclick
+        setAllClick(my_view);
         allFind(my_view);
         setupFilter(my_view);
         //allOnClick();
@@ -75,6 +77,18 @@ public class Fragment_HomePost extends Fragment {
 
         return my_view;
     }//END CREATE VIEW
+
+    private void setAllClick(View my_view) {
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                //if filter list not null prendi da qui
+                //se è vuota prendi da original
+                Report clickReport = originalList.get(position);
+            }
+        });
+    }
 
 
     private void allFind(View my_view) {
