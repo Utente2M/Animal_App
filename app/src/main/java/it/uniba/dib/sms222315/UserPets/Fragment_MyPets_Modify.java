@@ -13,6 +13,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -115,7 +116,9 @@ public class Fragment_MyPets_Modify extends Fragment  {
             }
         });
 
-        data_nasc.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+        /*
+         data_nasc.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 showDataPickerDialog(data_nasc);
@@ -128,21 +131,30 @@ public class Fragment_MyPets_Modify extends Fragment  {
                 showDataPickerDialog(dataChip);
             }
         });
+         */
 
 
-
-        /*
         data_nasc.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if(MotionEvent.ACTION_UP == motionEvent.getAction()){
-
+                    showDataPickerDialog(data_nasc);
                 }
 
                 return false;
             }
         });
-         */
+        dataChip.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(MotionEvent.ACTION_UP == motionEvent.getAction()){
+                    showDataPickerDialog(dataChip);
+                }
+
+                return false;
+            }
+        });
+
 
         indirizzoAnimale.addTextChangedListener(new TextWatcher() {
             @Override
