@@ -25,8 +25,8 @@ import it.uniba.dib.sms222315.R;
 
 public class Fragment_menu_profile extends Fragment {
 
-    ImageView IV_my_pets , IV_my_expense, IV_my_friends , IV_my_report;
-    Button but_logout , but_menu;
+    ImageView IV_my_pets , IV_my_expense, IV_my_friends , IV_my_report, but_logout;
+    Button but_menu;
 
     private static final String TAG = "TAG_Frag_MENUProfile";
 
