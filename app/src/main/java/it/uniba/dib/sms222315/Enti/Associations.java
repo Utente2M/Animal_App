@@ -69,7 +69,16 @@ public class Associations {
         return prv_associationUID;
     }
 
+    public void setPrv_doc_id(String prv_doc_id) {
+        prv_associationUID = prv_doc_id;
+    }
+
     public List<String> getPrv_Str_member() {
         return prv_Str_member;
     }
+
+
+
+
+
 }
