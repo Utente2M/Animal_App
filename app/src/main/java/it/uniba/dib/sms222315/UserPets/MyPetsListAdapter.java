@@ -38,7 +38,7 @@ public class MyPetsListAdapter extends ArrayAdapter<Pets> {
         TextView sex;
         TextView specie;
         ImageView image;
-        //TODO DA IMPLEMENTARE CON IMMAGINI DA DB
+
     }
 
 

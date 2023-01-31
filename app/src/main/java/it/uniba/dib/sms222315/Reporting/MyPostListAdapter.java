@@ -58,7 +58,8 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
      * @param resource
      * @param objects
      */
-    public MyPostListAdapter(Context context, int resource, ArrayList<Report> objects) {
+    public MyPostListAdapter(Context context, int resource,
+                             ArrayList<Report> objects) {
         super(context, resource, objects);
         mContext = context;
         mResource = resource;

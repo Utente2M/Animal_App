@@ -40,10 +40,10 @@ public class Fragment_Enti_YourAssociations extends Fragment {
     //Control ListView
     ArrayList<Associations> originalList = new ArrayList<>();
     ListView mListView;
-    MyPostListAdapter adapter;
+    MyAssociationAdapter adapter;
     //CONTROL FOR FILTER
     EditText textFilter;
-    ArrayList<Report> filteredList = new ArrayList<>();
+    ArrayList<Associations> filteredList = new ArrayList<>();
 
 
     //DB VARIABLE
@@ -112,8 +112,8 @@ public class Fragment_Enti_YourAssociations extends Fragment {
 
                     }//end for
 
-                    MyPetsListAdapter adapter = new MyPetsListAdapter(getContext(),
-                            R.layout.adapter_my_pets_list, petList);
+                     adapter = new MyAssociationAdapter(getContext(),
+                            R.layout.adapter_association, originalList);
 
                     mListView.setAdapter(adapter);
 
@@ -162,22 +162,22 @@ public class Fragment_Enti_YourAssociations extends Fragment {
 
             for (int k = 0; k < originalList.size() ; k++ ){
 
-                Associations onePost = originalList.get(k);
+                Associations oneGroup = originalList.get(k);
 
                 Log.d(TAG , "charseq : " + charSequence);
 
-                if (onePost.getPrv_authorName().toLowerCase(Locale.ROOT).contains(charSequence.toString().toLowerCase(Locale.ROOT)) ||
-                        onePost.getPrv_description().toLowerCase(Locale.ROOT).contains(charSequence.toString().toLowerCase(Locale.ROOT)) ||
-                        onePost.getPrv_category().toLowerCase(Locale.ROOT).contains(charSequence.toString().toLowerCase(Locale.ROOT))) {
+                if (oneGroup.getPrv_associationName().toLowerCase(Locale.ROOT).contains(charSequence.toString().toLowerCase(Locale.ROOT)) ||
+                        oneGroup.getPrv_description().toLowerCase(Locale.ROOT).contains(charSequence.toString().toLowerCase(Locale.ROOT)) ||
+                        oneGroup.getPrv_address().toLowerCase(Locale.ROOT).contains(charSequence.toString().toLowerCase(Locale.ROOT))) {
 
-                    if (!filteredList.contains(onePost)) {
-                        filteredList.add(onePost);
+                    if (!filteredList.contains(oneGroup)) {
+                        filteredList.add(oneGroup);
                     }
                 }
             } //end for
 
-            adapter = new MyPostListAdapter(getContext(),
-                    R.layout.adapter_report, filteredList);
+            adapter = new MyAssociationAdapter(getContext(),
+                    R.layout.adapter_association, filteredList);
 
 
             mListView.setAdapter(adapter);

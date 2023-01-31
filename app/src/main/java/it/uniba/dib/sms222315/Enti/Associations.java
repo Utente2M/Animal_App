@@ -37,6 +37,15 @@ public class Associations {
 
     }
 
+    public Associations(String str_name, String str_address,
+                        String str_phone, String str_linkimage) {
+        prv_associationName =str_name;
+        prv_address = str_address;
+        prv_phone = str_phone;
+        prv_associationLogo = str_linkimage;
+
+    }
+
     public String getPrv_associationName() {
         return prv_associationName;
     }
