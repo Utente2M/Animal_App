@@ -93,7 +93,7 @@
             android:orientation="vertical">
 
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/ET_MyPetModify_ResidAnimale"
                 android:layout_width="match_parent"
                 android:layout_height="85dp"

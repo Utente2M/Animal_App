@@ -116,15 +116,14 @@ public class Fragment_Regis_Basic_info extends Fragment implements DatePickerDia
             }
         } );
 
-        ET_DateBorn.setOnTouchListener(new View.OnTouchListener() {
+        ET_DateBorn.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(MotionEvent.ACTION_UP == motionEvent.getAction()){
-                    showDataPickerDialog();
-                }
-                return false;
+            public void onFocusChange(View view, boolean b) {
+                showDataPickerDialog();
             }
         });
+
+
 
 
 
@@ -156,8 +155,6 @@ public class Fragment_Regis_Basic_info extends Fragment implements DatePickerDia
 
             }
         });
-
-
 
         // Inflate the layout for this fragment
         return my_view;
