@@ -29,6 +29,8 @@ import java.util.Locale;
 
 import it.uniba.dib.sms222315.Reporting.MyPostListAdapter;
 import it.uniba.dib.sms222315.Reporting.Report;
+import it.uniba.dib.sms222315.UserPets.Fragment_MyPets_Profile;
+import it.uniba.dib.sms222315.UserPets.Pets;
 import it.uniba.dib.sms222315.UserProfile.User_Class;
 
 public class Fragment_HomePost extends Fragment {
@@ -63,7 +65,7 @@ public class Fragment_HomePost extends Fragment {
         View my_view = inflater.inflate(R.layout.fragment__home_post, container, false);
 
         //tutti i find e gli onclick
-        setAllClick(my_view);
+        //setAllClick(my_view);
         allFind(my_view);
         setupFilter(my_view);
         //allOnClick();
@@ -78,17 +80,29 @@ public class Fragment_HomePost extends Fragment {
         return my_view;
     }//END CREATE VIEW
 
+    /*
     private void setAllClick(View my_view) {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                //if filter list not null prendi da qui
-                //se è vuota prendi da original
-                Report clickReport = originalList.get(position);
+                if(!filteredList.isEmpty()){
+                    //se è piena
+                    Report clickReport = filteredList.get(position);
+                    Log.d(TAG, "Category : " + clickReport.getPrv_category());
+
+                }else if(!originalList.isEmpty()){
+                    Report clickReport = originalList.get(position);
+                    Log.d(TAG, "Category : " + clickReport.getPrv_category());
+                }
+
+
+
             }
         });
     }
+     */
+
 
 
     private void allFind(View my_view) {
@@ -190,4 +204,26 @@ public class Fragment_HomePost extends Fragment {
 
         } //end else
     }
+
+
+/*
+ private void openDetailReport(Pets clickPet) {
+        my_fragment = new Fragment_MyPets_Profile();
+        my_frag_manager = getActivity().getSupportFragmentManager();
+        my_frag_trans = my_frag_manager.beginTransaction();
+        Bundle bundle = new Bundle();
+        //this is pass
+        bundle.putParcelable("modPets", clickPet);
+        my_fragment.setArguments(bundle);
+        //si aggiunge il richiamo allo stack
+        my_frag_trans.addToBackStack(null);
+        //add diventa replace
+        my_frag_trans.replace(R.id.Frame_Act_MyPets , my_fragment );
+        my_frag_trans.commit();
+
+    }
+ */
+
+
+
 }//END FRAGMENT
