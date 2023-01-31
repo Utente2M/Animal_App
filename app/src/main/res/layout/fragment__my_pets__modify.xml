@@ -25,7 +25,7 @@
             android:text="Informazioni di :" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/ET_MyPetModify_NomeAnimale"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="130dp"
@@ -66,21 +66,21 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/ET_MyPetModify_segPartic2"
+                android:id="@+id/ET_MyPetModify_segPartic"
                 android:layout_width="match_parent"
                 android:layout_height="124dp"
                 android:layout_weight="1"
                 android:hint="Segni particolari" />
 
             <EditText
-                android:id="@+id/ET_MyPetModify_segPartic3"
+                android:id="@+id/ET_MyPetModify_NumeroChip"
                 android:layout_width="match_parent"
                 android:layout_height="124dp"
                 android:layout_weight="1"
                 android:hint="Numero Microchip" />
 
             <EditText
-                android:id="@+id/ET_MyPetModify_segPartic"
+                android:id="@+id/ET_MyPetModify_DataChip"
                 android:layout_width="match_parent"
                 android:layout_height="124dp"
                 android:layout_weight="1"
@@ -94,7 +94,7 @@
 
 
             <EditText
-                android:id="@+id/ET_MyPetModify_mantello"
+                android:id="@+id/ET_MyPetModify_ResidAnimale"
                 android:layout_width="match_parent"
                 android:layout_height="85dp"
                 android:layout_weight="1"

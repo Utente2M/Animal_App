@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sfondo_registrazione_user"
+
     tools:context=".Autentication.Fragment_Regis_Basic_info">
 
     <TextView
@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="85dp"
-        android:text="Name"
+        android:text="Name and surname"
         android:textColor="#286DC2"
         android:textSize="19sp"
         android:textStyle="bold"/>
@@ -50,7 +50,7 @@
         android:textSize="18sp"
         android:ems="10"
         android:background="@drawable/edittext_background"
-        android:hint="Name Surname"
+        android:hint="John Arbuckle"
         android:inputType="textPersonName"/>
 
         <TextView
@@ -62,18 +62,18 @@
             android:textSize="19sp"
             android:textStyle="bold"/>
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/ET_autocomp_address"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="8dp"
+            android:background="@drawable/edittext_background"
+            android:ems="10"
+            android:hint="Via Orabona Bari"
+            android:inputType="none|text"
             android:padding="8dp"
             android:textColor="#8e8e8e"
-            android:textSize="18sp"
-            android:ems="10"
-            android:background="@drawable/edittext_background"
-            android:hint="Saint John Street 56"
-            android:inputType="none|text"/>
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -100,7 +100,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Phone number"
+            android:text="Date of birth"
             android:layout_marginTop="15dp"
             android:textColor="#286DC2"
             android:textSize="19sp"

@@ -29,7 +29,7 @@ import java.util.Calendar;
 import it.uniba.dib.sms222315.R;
 
 
-public class Fragment_MyPets_Modify extends Fragment implements DatePickerDialog.OnDateSetListener {
+public class Fragment_MyPets_Modify extends Fragment  {
 
     //DB VARIABLE
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -41,7 +41,7 @@ public class Fragment_MyPets_Modify extends Fragment implements DatePickerDialog
     //BUNDLE
     Pets receivedPet;
 
-    EditText data_nasc , razza, mantello , segniPart ;
+    EditText data_nasc ,mantello , razza,  segniPart , numeroChip , dataChip, indirizzoAnimale ;
     ImageButton BT_confermePet , BT_backPet;
 
     //FRAGMENT VAR
@@ -102,17 +102,33 @@ public class Fragment_MyPets_Modify extends Fragment implements DatePickerDialog
             }
         });
 
+        data_nasc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDataPickerDialog(data_nasc);
+            }
+        });
 
+        dataChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDataPickerDialog(dataChip);
+            }
+        });
+
+        /*
         data_nasc.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if(MotionEvent.ACTION_UP == motionEvent.getAction()){
-                    showDataPickerDialog();
+
                 }
 
                 return false;
             }
         });
+         */
+
 
 
 
@@ -130,7 +146,11 @@ public class Fragment_MyPets_Modify extends Fragment implements DatePickerDialog
                 .update("prv_DataNascita", data_nasc.getText().toString() ,
                         "prv_Razza" , razza.getText().toString() ,
                         "prv_Mantello" , mantello.getText().toString() ,
-                        "prv_SegniParticolari" , segniPart.getText().toString() )
+                        "prv_SegniParticolari" , segniPart.getText().toString() ,
+                        "prv_numChip" , numeroChip.getText().toString(),
+                        "prv_dataChip"  , dataChip.getText().toString(),
+                        "prv_addressPet" , indirizzoAnimale.getText().toString()
+                )//end update
 
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -169,6 +189,16 @@ public class Fragment_MyPets_Modify extends Fragment implements DatePickerDialog
             segniPart.setText(receivedPet.getPrv_SegniParticolari());
         }
 
+        if (!receivedPet.getPrv_numChip().isEmpty()){
+            numeroChip.setText(receivedPet.getPrv_numChip());
+        }
+        if (!receivedPet.getPrv_dataChip().isEmpty()){
+            dataChip.setText(receivedPet.getPrv_dataChip());
+        }
+        if (!receivedPet.getPrv_addressPet().isEmpty()){
+            indirizzoAnimale.setText(receivedPet.getPrv_addressPet());
+        }
+
 
     }//END SET TEXT
 
@@ -182,15 +212,30 @@ public class Fragment_MyPets_Modify extends Fragment implements DatePickerDialog
         mantello = my_view.findViewById(R.id.ET_MyPetModify_mantello);
         segniPart = my_view.findViewById(R.id.ET_MyPetModify_segPartic);
 
+        numeroChip = my_view.findViewById(R.id.ET_MyPetModify_NumeroChip);
+        dataChip = my_view.findViewById(R.id.ET_MyPetModify_DataChip);
+        indirizzoAnimale = my_view.findViewById(R.id.ET_MyPetModify_ResidAnimale);
+
+
         BT_backPet = my_view.findViewById(R.id.BT_Back_MyPetsModify);
         BT_confermePet = my_view.findViewById(R.id.BT_Apply_MyPetsModify);
 
     }
 
-    private void showDataPickerDialog (){
+    private void showDataPickerDialog (TextView textView) {
+
+
         DatePickerDialog datePickerDialog = new DatePickerDialog(
-                getActivity() ,
-                this,
+                getActivity(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day_ofYear) {
+                        month += 1;
+                        //"day/month/year : "
+                        String Str_Date = day_ofYear + "/" + month + "/" + year;
+                        textView.setText(Str_Date);
+                    }
+                },
                 Calendar.getInstance().get(Calendar.YEAR),
                 Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
@@ -199,19 +244,4 @@ public class Fragment_MyPets_Modify extends Fragment implements DatePickerDialog
     }
 
 
-
-
-    @Override
-    public void onDateSet(DatePicker datePicker, int year, int month, int day_ofYear) {
-        month +=1;
-        //"day/month/year : "
-        String Str_Date = day_ofYear + "/" + month + "/" + year ;
-
-        new_day=day_ofYear;
-        new_month = month;
-        new_year = year;
-
-        data_nasc.setText(Str_Date);
-
-    }
 }//END CLASS

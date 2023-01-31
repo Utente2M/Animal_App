@@ -53,21 +53,13 @@ public class Fragment_AddNewPet extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        // Inflate the layout for this fragment
         View my_view = inflater.inflate(R.layout.fragment__my_pets_add_new_pet, container, false);
 
         setAllfind(my_view);
         setAllSpinner(my_view);
         setAllButton(my_view);
 
-
-
-
-
-
-
-
-        // Inflate the layout for this fragment
         return my_view;
     }//END CReatView
 
@@ -85,17 +77,6 @@ public class Fragment_AddNewPet extends Fragment {
                 if( sendName.isEmpty()){
                     ET_Name.setError("NAME is required");
                 }
-                /*
-                else if(sendSpecie.isEmpty()){
-                    ET_Specie.setError("SPECIE is required");
-                }
-
-
-                else if(sendSex.isEmpty()){
-                    ET_Sex.setError("SEX is required");
-                }
-                */
-
                 else if(sendRazza.isEmpty()){
                     ET_Razza.setError("Razza is required");
                 }
