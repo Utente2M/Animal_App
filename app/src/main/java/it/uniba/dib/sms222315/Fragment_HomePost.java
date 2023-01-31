@@ -65,7 +65,7 @@ public class Fragment_HomePost extends Fragment {
         View my_view = inflater.inflate(R.layout.fragment__home_post, container, false);
 
         //tutti i find e gli onclick
-        //setAllClick(my_view);
+
         allFind(my_view);
         setupFilter(my_view);
         //allOnClick();
@@ -75,13 +75,16 @@ public class Fragment_HomePost extends Fragment {
             filteredList.clear();
             popolateList();
             Log.d(TAG , "ok popolateList ");
+            setlistClick(my_view);
         }
+
+
 
         return my_view;
     }//END CREATE VIEW
 
-    /*
-    private void setAllClick(View my_view) {
+
+    private void setlistClick(View my_view) {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -101,7 +104,7 @@ public class Fragment_HomePost extends Fragment {
             }
         });
     }
-     */
+
 
 
 
