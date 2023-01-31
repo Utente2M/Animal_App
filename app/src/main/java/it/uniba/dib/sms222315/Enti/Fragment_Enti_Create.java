@@ -121,11 +121,13 @@ public class Fragment_Enti_Create extends Fragment implements SelectPhotoDialog.
 
     private void createNewAss() {
         String linkImg = "uri.toString()" ;
-        String category = sendCategory;
+
         String description = Description.getText().toString();
         String address = ET_mapsAddress.getText().toString();
 
+
         User_Class userData = new User_Class();
+
         String author_id = userData.getPrv_str_UID();
         String authorName = userData.getPrv_str_nome();
 
@@ -133,9 +135,21 @@ public class Fragment_Enti_Create extends Fragment implements SelectPhotoDialog.
         Calendar calendar = Calendar.getInstance();
         String formatData = format.format(calendar.getTime());
 
+
+        Associations newAssoc = new Associations()
+
+
+/*
+
+(String associationName, String phone,
+                        String address, String description,
+                        String associationLogo, String creatorUID,
+                        String creatingTime, String associationUID, List<String> str_member)
+
+
         Report newPost = new Report("", linkImg, category,description,
                 0 ,authorName, author_id ,formatData, address );
-
+*/
         db.collection("Post")
                 .add(newPost)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
