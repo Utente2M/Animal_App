@@ -20,12 +20,20 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,6 +42,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import it.uniba.dib.sms222315.Enti.Associations;
+import it.uniba.dib.sms222315.Enti.MyAssociationAdapter;
 import it.uniba.dib.sms222315.R;
 import it.uniba.dib.sms222315.UserPets.Pets;
 import it.uniba.dib.sms222315.UserProfile.User_Class;
@@ -45,6 +55,10 @@ public class Fragment_Report_Dettails extends Fragment {
 
     EditText textComment;
     ImageButton sendComment;
+
+    ArrayList<Comment> originalList = new ArrayList<>();
+    ListView mListView;
+    CommentAdapter adapter;
 
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -81,6 +95,14 @@ public class Fragment_Report_Dettails extends Fragment {
         setTextfromPost(my_view);
         setAllOnClick();
 
+
+        if (adapter ==null){
+            originalList.clear();
+            //filteredList.clear();
+            popolateList();
+            Log.d(TAG , "ok popolateList ");
+        }
+
         return my_view;
     }
 
@@ -96,7 +118,7 @@ public class Fragment_Report_Dettails extends Fragment {
         address = my_view.findViewById(R.id.post_address);
         sendComment = my_view.findViewById(R.id.IB_sendComment);
         textComment = my_view.findViewById(R.id.ET_textNewComment);
-
+        mListView = my_view.findViewById(R.id.LV_comment);
     }
 
     private void setTextfromPost(View my_view) {
@@ -210,7 +232,8 @@ public class Fragment_Report_Dettails extends Fragment {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-
+                        textComment.setText("");
+                        popolateList();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -221,5 +244,45 @@ public class Fragment_Report_Dettails extends Fragment {
                 });
 
     }
+
+    private void popolateList() {
+        originalList.clear();
+        Log.d(TAG , "inside popolate ");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+
+
+
+        Query postRef = db.collection("Post")
+                .document(receivedReport.getPrv_secretDocID())
+                .collection("Comment");
+
+        postRef.orderBy("prv_Date", Query.Direction.DESCENDING);
+
+
+        postRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, document.getId() + " => " + document.getData());
+
+                        Comment oneComment = document.toObject(Comment.class);
+                        originalList.add(oneComment);
+
+
+                    }//END FOR
+                    adapter = new CommentAdapter(getContext(),
+                            R.layout.adapter_comment, originalList);
+
+
+                    mListView.setAdapter(adapter);
+                }else {
+
+                }
+            }
+        });
+    }
+
 
 }

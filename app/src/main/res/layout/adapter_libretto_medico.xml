@@ -1,45 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="50"
-        android:weightSum="100">
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
-        <ImageView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="62dp"
             android:layout_weight="50"
-            android:id="@+id/image_MyLib"
-            />
+            android:weightSum="100">
 
-        <TextView
-            android:textStyle="bold"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:text="Categoria"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:id="@+id/libretto_categoria"
-            android:layout_weight="50"/>
+            <ImageView
+                android:id="@+id/image_MyLib"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="50"
 
-    </LinearLayout>
+                />
 
+            <TextView
+                android:id="@+id/libretto_categoria"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="50"
+                android:gravity="center"
+                android:text="Categoria"
+                android:textAlignment="center"
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="50">
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:weightSum="100">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/libretto_data"
@@ -48,21 +50,33 @@
                 android:gravity="center"
                 android:text="Data" />
 
+            <TextView
+                android:id="@+id/libretto_nome"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="Nome veterinario"
+
+                />
+
 
         </LinearLayout>
 
-        <TextView
-            android:gravity="center"
-            android:text="Nome padrone"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:id="@+id/tV_ListV_my_pets_sex"
-            android:layout_below="@+id/libretto_nome"/>
-
-
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
 
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/libretto_descrizione"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="this is the description" />
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -84,6 +84,7 @@
                 android:layout_margin="2dp">
 
                 <ListView
+                    android:id="@+id/LV_comment"
                     android:layout_width="match_parent"
                     android:layout_height="276dp">
 

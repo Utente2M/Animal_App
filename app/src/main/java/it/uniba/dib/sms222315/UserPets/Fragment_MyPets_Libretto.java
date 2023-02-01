@@ -98,8 +98,6 @@ public class Fragment_MyPets_Libretto extends Fragment {
         Et_filter = my_view.findViewById(R.id.ET_Libretto);
 
 
-
-
     }
 
     private void setAllclick() {
@@ -154,7 +152,7 @@ public class Fragment_MyPets_Libretto extends Fragment {
 
                     }//end for
 
-                    VisiteAdapter adapter = new VisiteAdapter(getContext(),
+                    adapter = new VisiteAdapter(getContext(),
                             R.layout.adapter_libretto_medico, originalList);
 
                     mListView.setAdapter(adapter);

@@ -15,6 +15,12 @@ public class Comment {
         prv_CommentText = commentText;
     }
 
+    public Comment( String authorName, String date, String commentText) {
+        prv_authorName = authorName;
+        prv_Date = date;
+        prv_CommentText = commentText;
+    }
+
     public Comment() {
 
     }

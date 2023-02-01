@@ -153,8 +153,9 @@ public class Fragment_MyPets_NewLibretto extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                        getActivity().onBackPressed();
+
+                        resetFrontEnd();
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -164,5 +165,12 @@ public class Fragment_MyPets_NewLibretto extends Fragment {
                     }
                 });
 
+    }
+
+    private void resetFrontEnd() {
+        getActivity().onBackPressed();
+        ET_Name.setText("");
+        ET_Data.setText("");
+        ET_Descrizione.setText("");
     }
 }
