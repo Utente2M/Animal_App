@@ -1,5 +1,13 @@
 package it.uniba.dib.sms222315.Reporting;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Paint;
+import android.location.Address;
+import android.location.Geocoder;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,11 +16,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import it.uniba.dib.sms222315.R;
 import it.uniba.dib.sms222315.UserPets.Pets;
 
 public class Fragment_Report_Dettails extends Fragment {
+
+    ImageView logoImage;
+    TextView like , authorName, description, category , address ;
 
     private static final String TAG = "TAG_Fragment_Report_Dettails";
     Report receivedReport;
@@ -42,6 +60,104 @@ public class Fragment_Report_Dettails extends Fragment {
         Log.d(TAG, " oggetto ricevuto : " +receivedReport.getPrv_secretDocID());
         Log.d(TAG, " oggetto ricevuto : " +receivedReport.getPrv_authorName());
 
+        setFind(my_view);
+        setTextfromPost(my_view);
+        setAllOnClick();
+
         return my_view;
     }
+
+
+
+
+    private void setFind(View my_view) {
+        logoImage = my_view.findViewById(R.id.post_image);
+        like = my_view.findViewById(R.id.post_like);
+        authorName = my_view.findViewById(R.id.post_author_name);
+        description = my_view.findViewById(R.id.post_description);
+        category = my_view.findViewById(R.id.post_category);
+        address = my_view.findViewById(R.id.post_address);
+
+    }
+
+    private void setTextfromPost(View my_view) {
+        if (receivedReport.getPrv_linkImg()==(null) ){
+            Log.d(TAG, " no profile image");
+            logoImage.setImageResource(R.drawable.star);
+        }
+        else{
+            new DownloadImageFromInternet((ImageView)
+                    my_view.findViewById(R.id.post_image))
+                    .execute(receivedReport.getPrv_linkImg());
+        }
+
+        int intLike = (receivedReport.getPrv_numberLike());
+        String str_Like = "Piace a "+Integer.toString(intLike) + " persone";
+        like.setText(str_Like);
+
+        authorName.setText(receivedReport.getPrv_authorName());
+        description.setText(receivedReport.getPrv_description());
+        category.setText(receivedReport.getPrv_category());
+        address.setText(receivedReport.getAddressReport());
+        address.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+
+    }
+
+    private void setAllOnClick() {
+        address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchNavigationStep2Step(receivedReport.getAddressReport());
+            }
+        });
+    }
+
+    public void launchNavigationStep2Step (String newAddress){
+        Geocoder geocoder = new Geocoder(getContext());
+        List<Address> addresses = new ArrayList<Address>();
+        try {
+            addresses = geocoder.getFromLocationName(newAddress, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (addresses.size() > 0) {
+            double latitude = addresses.get(0).getLatitude();
+            Log.d(TAG, "latitude :" + latitude);
+            double longitude = addresses.get(0).getLongitude();
+            Log.d(TAG, "longitude :" + longitude);
+            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + latitude + "," + longitude+"&mode=d");
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+
+            if (mapIntent.resolveActivity(getContext().getPackageManager()) != null) {
+                getContext().startActivity(mapIntent);
+            }
+        }
+    }//end launchMap
+
+    private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
+        ImageView imageView;
+        public DownloadImageFromInternet(ImageView imageView) {
+            this.imageView=imageView;
+
+        }
+        protected Bitmap doInBackground(String... urls) {
+            String imageURL=urls[0];
+            Bitmap bimage=null;
+            try {
+                InputStream in=new java.net.URL(imageURL).openStream();
+                bimage= BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error Message", e.getMessage());
+                e.printStackTrace();
+            }
+            return bimage;
+        }
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+        }
+    }
+
+
 }

@@ -6,9 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UserPets.Activity_MyPets">
+
     <FrameLayout
+        android:id="@+id/Frame_Act_MyPets"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/Frame_Act_MyPets" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>
