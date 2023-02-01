@@ -10,27 +10,44 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import it.uniba.dib.sms222315.R;
 import it.uniba.dib.sms222315.UserPets.Pets;
+import it.uniba.dib.sms222315.UserProfile.User_Class;
 
 public class Fragment_Report_Dettails extends Fragment {
 
     ImageView logoImage;
     TextView like , authorName, description, category , address ;
+
+    EditText textComment;
+    ImageButton sendComment;
+
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private static final String TAG = "TAG_Fragment_Report_Dettails";
     Report receivedReport;
@@ -77,6 +94,8 @@ public class Fragment_Report_Dettails extends Fragment {
         description = my_view.findViewById(R.id.post_description);
         category = my_view.findViewById(R.id.post_category);
         address = my_view.findViewById(R.id.post_address);
+        sendComment = my_view.findViewById(R.id.IB_sendComment);
+        textComment = my_view.findViewById(R.id.ET_textNewComment);
 
     }
 
@@ -111,6 +130,15 @@ public class Fragment_Report_Dettails extends Fragment {
                 launchNavigationStep2Step(receivedReport.getAddressReport());
             }
         });
+
+        sendComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createComment();
+            }
+        });
+
+
     }
 
     public void launchNavigationStep2Step (String newAddress){
@@ -159,5 +187,39 @@ public class Fragment_Report_Dettails extends Fragment {
         }
     }
 
+
+    private void createComment() {
+        String str_Comment = textComment.getText().toString();
+
+        SimpleDateFormat format = new SimpleDateFormat("d,MM,yyyy,");
+        Calendar calendar = Calendar.getInstance();
+        String formatData = format.format(calendar.getTime());
+
+        User_Class myInfo =new User_Class();
+        String myUID = myInfo.getPrv_str_UID();
+        String myName = myInfo.getPrv_str_nome();
+
+
+        Comment newComment = new Comment(myUID,myName,formatData,str_Comment);
+
+        db.collection("Post")
+                .document(receivedReport.getPrv_secretDocID())
+                .collection("Comment")
+                .add(newComment)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+
+    }
 
 }

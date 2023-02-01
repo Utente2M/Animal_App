@@ -74,12 +74,14 @@
             android:layout_width="match_parent"
             android:layout_height="321dp"
             android:background="#E0D5E6"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_margin="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="268dp"
-                android:orientation="horizontal">
+                android:layout_height="250dp"
+                android:orientation="horizontal"
+                android:layout_margin="2dp">
 
                 <ListView
                     android:layout_width="match_parent"
@@ -90,19 +92,20 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
+                android:layout_height="45dp"
+                android:orientation="horizontal"
+                android:layout_margin="2dp">
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName2"
-                    android:layout_width="322dp"
+                    android:id="@+id/ET_textNewComment"
+                    android:layout_width="240dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="Edit your comment"
-                    android:inputType="textPersonName" />
+                    android:inputType="textMultiLine" />
 
                 <ImageButton
-                    android:id="@+id/imageButton"
+                    android:id="@+id/IB_sendComment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
