@@ -38,8 +38,9 @@
             android:layout_below="@+id/ET_YourAssociations_myAssociations"
             android:layout_marginStart="0dp"
             android:layout_marginTop="1dp">
-        </ListView>
 
+
+        </ListView>
     </RelativeLayout>
 
 </RelativeLayout>

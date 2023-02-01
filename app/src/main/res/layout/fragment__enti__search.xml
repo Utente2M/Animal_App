@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Enti.Fragment_Enti_Search">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:layout_marginTop="80dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/TV_Search_otherAssociations"
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp"
+            android:text="This is your Post"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/ET_Search_otherAssociations"
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
+            android:layout_below="@+id/TV_Search_otherAssociations"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="2dp"
+            android:ems="10"
+            android:hint="Search your post"
+            android:inputType="text"
+            android:text="" />
+
+        <ListView
+            android:id="@+id/LV_Search_otherAssociations"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/ET_Search_otherAssociations"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="1dp">
+        </ListView>
+
+    </RelativeLayout>
+</RelativeLayout>
