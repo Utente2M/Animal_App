@@ -97,13 +97,13 @@ public class Fragment_Enti_YourAssociations extends Fragment {
         CollectionReference entiRef = db.collection("Association");
         Query myGroup = entiRef.whereArrayContains("prv_Str_member" , userID);
 
+
         myGroup.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId() + " => " + document.getData());
-
 
                         Associations myGroup = document.toObject(Associations.class);
                         myGroup.setPrv_doc_id(document.getId());

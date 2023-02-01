@@ -9,6 +9,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,9 +36,15 @@ import java.util.List;
 import it.uniba.dib.sms222315.Friends.MyFriends;
 import it.uniba.dib.sms222315.Friends.MyFriendsListAdapter;
 import it.uniba.dib.sms222315.R;
+import it.uniba.dib.sms222315.UserPets.Fragment_MyPets_Profile;
+import it.uniba.dib.sms222315.UserPets.Pets;
 
 public class MyPostListAdapter extends ArrayAdapter<Report> {
 
+    //FRAGMENT VAR
+    Fragment my_fragment;
+    FragmentManager my_frag_manager;
+    FragmentTransaction my_frag_trans;
     private static final String TAG = "TAG_MyPostListAdapter";
     private Context mContext;
     private int mResource;
@@ -172,6 +183,7 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
                 Log.d(TAG , "add comment to post number : " +reportObj.getPrv_description());
                 Log.d(TAG , "UDI Document : " +reportObj.getPrv_secretDocID());
                 Log.d(TAG , "Category : " + reportObj.getPrv_category());
+                openDetailReport(reportObj);
             }
         });
 
@@ -225,7 +237,21 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
         }
     }//end launchMap
 
+    private void openDetailReport(Report clickRepo) {
+        my_fragment = new Fragment_Report_Dettails();
+        my_frag_manager = ((FragmentActivity) mContext).getSupportFragmentManager();
+        my_frag_trans = my_frag_manager.beginTransaction();
+        Bundle bundle = new Bundle();
+        //this is pass
+        bundle.putParcelable("clickRepo", clickRepo);
+        my_fragment.setArguments(bundle);
+        //si aggiunge il richiamo allo stack
+        my_frag_trans.addToBackStack(null);
+        //add diventa replace
+        my_frag_trans.replace(R.id.Frame_Act_Main , my_fragment );
+        my_frag_trans.commit();
 
+    }
 
 
 }

@@ -1,6 +1,9 @@
 package it.uniba.dib.sms222315.Reporting;
 
-public class Report {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Report implements Parcelable {
     private String prv_secretDocID;
     private String prv_linkImg;
     private String prv_category;
@@ -37,6 +40,30 @@ public class Report {
         prv_secretDocID = docId;
     }
     public Report (){}
+
+    protected Report(Parcel in) {
+        prv_secretDocID = in.readString();
+        prv_linkImg = in.readString();
+        prv_category = in.readString();
+        prv_description = in.readString();
+        prv_numberLike = in.readInt();
+        prv_authorName = in.readString();
+        prv_authorID = in.readString();
+        createAtTime = in.readString();
+        addressReport = in.readString();
+    }
+
+    public static final Creator<Report> CREATOR = new Creator<Report>() {
+        @Override
+        public Report createFromParcel(Parcel in) {
+            return new Report(in);
+        }
+
+        @Override
+        public Report[] newArray(int size) {
+            return new Report[size];
+        }
+    };
 
     public String getPrv_secretDocID() {
         return prv_secretDocID;
@@ -75,5 +102,23 @@ public class Report {
 
     public String getAddressReport() {
         return addressReport;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(prv_secretDocID);
+        parcel.writeString(prv_linkImg);
+        parcel.writeString(prv_category);
+        parcel.writeString(prv_description);
+        parcel.writeInt(prv_numberLike);
+        parcel.writeString(prv_authorName);
+        parcel.writeString(prv_authorID);
+        parcel.writeString(createAtTime);
+        parcel.writeString(addressReport);
     }
 }
