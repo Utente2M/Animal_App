@@ -1,8 +1,13 @@
 package it.uniba.dib.sms222315.Enti;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Paint;
+import android.location.Address;
+import android.location.Geocoder;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,8 +21,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import it.uniba.dib.sms222315.R;
 import it.uniba.dib.sms222315.Reporting.MyPostListAdapter;
@@ -89,6 +96,7 @@ public class MyAssociationAdapter extends ArrayAdapter<Associations> {
 
             holder.name = (TextView) convertView.findViewById(R.id.Adap_Assoc_Name);
             holder.address = (TextView) convertView.findViewById(R.id.Adap_Assoc_street);
+            holder.address.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
             holder.phone = (TextView) convertView.findViewById(R.id.Adap_Assoc_Phone);
             holder.image =(ImageView) convertView.findViewById(R.id.Adap_Assoc_image);
 
@@ -108,7 +116,14 @@ public class MyAssociationAdapter extends ArrayAdapter<Associations> {
         lastPosition = position;
 
         holder.name.setText(group.getPrv_associationName());
+
         holder.address.setText(group.getPrv_address());
+        holder.address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchNavigationStep2Step(group.getPrv_address());
+            }
+        });
         holder.phone.setText(group.getPrv_phone());
 
         if (group.getPrv_associationLogo()==(null) ){
@@ -147,6 +162,30 @@ public class MyAssociationAdapter extends ArrayAdapter<Associations> {
             imageView.setImageBitmap(result);
         }
     }
+
+    public void launchNavigationStep2Step (String newAddress){
+        Geocoder geocoder = new Geocoder(getContext());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocationName(newAddress, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (addresses.size() > 0) {
+            double latitude = addresses.get(0).getLatitude();
+            Log.d(TAG, "latitude :" + latitude);
+            double longitude = addresses.get(0).getLongitude();
+            Log.d(TAG, "longitude :" + longitude);
+            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + latitude + "," + longitude+"&mode=d");
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+
+            if (mapIntent.resolveActivity(getContext().getPackageManager()) != null) {
+                getContext().startActivity(mapIntent);
+            }
+        }
+    }//end launchMap
+
 
 }
 
