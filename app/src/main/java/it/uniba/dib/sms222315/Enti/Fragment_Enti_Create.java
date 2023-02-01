@@ -1,6 +1,7 @@
 package it.uniba.dib.sms222315.Enti;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -11,10 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,11 +26,19 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AutocompletePrediction;
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+import com.google.android.libraries.places.api.model.RectangularBounds;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -35,8 +47,10 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Locale;
 
 import it.uniba.dib.sms222315.R;
 import it.uniba.dib.sms222315.Reporting.Fragment_Report_Add;
@@ -116,6 +130,23 @@ public class Fragment_Enti_Create extends Fragment implements SelectPhotoDialog.
             @Override
             public void onClick(View view) {
                 createNewAss();
+            }
+        });
+
+        ET_mapsAddress.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mapsPrediction(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
     }
@@ -289,6 +320,64 @@ public class Fragment_Enti_Create extends Fragment implements SelectPhotoDialog.
         Log.d(TAG, "getImageBitmap: setting the image to imageview");
         //qui ricevo bitmap
         Photo.setImageBitmap(bitmap);
+
+    }
+
+
+    private void mapsPrediction(CharSequence charSequence) {
+
+        Context context = getActivity().getApplicationContext();
+        String apiKey = context.getString(R.string.api_key);
+        if (!Places.isInitialized()) {
+            Places.initialize(getActivity().getApplicationContext(), apiKey);
+        }
+
+
+        String query = String.valueOf(charSequence);
+        ArrayList<String> predictionList = new ArrayList<>();
+
+        // Create a new token for the autocomplete session. Pass this to FindAutocompletePredictionsRequest,
+        // and once again when the user makes a selection (for example when calling fetchPlace()).
+        AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
+
+        // Crea un oggetto RectangularBounds
+        RectangularBounds bounds = RectangularBounds.newInstance(
+                new LatLng(41.894802, 12.485332),
+                new LatLng(45.465422, 9.185924));
+        FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
+                // Chiama setLocationBias() o setLocationRestriction()
+                .setLocationBias(bounds)
+                //.setLocationRestriction(bounds)
+                .setOrigin(new LatLng(41.894802, 12.4853379))
+                .setCountries("IT")
+                //.setTypesFilter(Arrays.asList(TypeFilter.ADDRESS.toString()))
+                .setSessionToken(token)
+                .setQuery(query)
+                .build();
+        Log.d(TAG, "query : " + query);
+
+        PlacesClient placesClient = Places.createClient(getContext());
+
+        placesClient.findAutocompletePredictions(request).addOnSuccessListener((response) -> {
+            for (AutocompletePrediction prediction : response.getAutocompletePredictions()) {
+                Log.i(TAG, prediction.getPlaceId());
+                Log.i(TAG, prediction.getPrimaryText(null).toString());
+
+                predictionList.add(prediction.getFullText(null).toString());
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+                    android.R.layout.simple_dropdown_item_1line, predictionList);
+            ET_mapsAddress.setAdapter(adapter);
+            ET_mapsAddress.showDropDown();
+            Log.d(TAG, "maps risult arrayList : " + predictionList);
+
+        }).addOnFailureListener((exception) -> {
+            if (exception instanceof ApiException) {
+                ApiException apiException = (ApiException) exception;
+                Log.e(TAG, "Place not found: " + apiException.getStatusCode());
+            }
+        });
+
 
     }
 
