@@ -50,6 +50,7 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
         ImageView image;
         ImageButton addLike, addComment;
 
+        String UID;
         TextView category;
     }
     /**
@@ -70,9 +71,6 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
 
-
-        Log.d(TAG , " in getView adapter expanse");
-
         String author = getItem(position).getPrv_authorName();
         String description = getItem(position).getPrv_description();
         int numberLike = getItem(position).getPrv_numberLike();
@@ -81,10 +79,11 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
         String address = getItem(position).getAddressReport();
 
         String categoryPost = getItem(position).getPrv_category();
+        String uidDocument = getItem(position).getPrv_secretDocID();
 
 
         Report reportObj = new Report(linkmyPhoto, author, description , str_numberLike,
-                address, categoryPost);
+                address, categoryPost, uidDocument);
 
         Log.d(TAG , " ok constructor");
 
@@ -114,12 +113,7 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
             holder.category = (TextView) convertView.findViewById(R.id.Adap_Repo_Category);
 
            holder.addComment = (ImageButton) convertView.findViewById(R.id.Adap_Repo_addComment);
-           holder.addComment.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View view) {
-                   Log.d(TAG , "add comment to post number : " +getItem(position).getPrv_description());
-               }
-           });
+
 
             Log.d(TAG , " ok find");
 
@@ -160,6 +154,8 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
         holder.NumberOfLike.setText(str_Like);
 
         holder.category.setText(reportObj.getPrv_category());
+        //qusta è solo una stringa
+        holder.UID = reportObj.getPrv_secretDocID();
 
         holder.street.setText(reportObj.getAddressReport());
         holder.street.setOnClickListener(new View.OnClickListener() {
@@ -168,6 +164,14 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
                 //intent per maps
 
                 launchNavigationStep2Step(reportObj.getAddressReport());
+            }
+        });
+        holder.addComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG , "add comment to post number : " +reportObj.getPrv_description());
+                Log.d(TAG , "UDI Document : " +reportObj.getPrv_secretDocID());
+                Log.d(TAG , "Category : " + reportObj.getPrv_category());
             }
         });
 

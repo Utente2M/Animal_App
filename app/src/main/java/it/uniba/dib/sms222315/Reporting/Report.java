@@ -27,18 +27,22 @@ public class Report {
     }
 
     public Report (String link , String creatorName, String description , String numberLikeSTR,
-                   String address, String category ){
+                   String address, String category, String docId ){
         prv_linkImg = link ;
         prv_authorName = creatorName;
         prv_description = description;
         prv_numberLike = Integer.parseInt(numberLikeSTR);
         addressReport = address;
         prv_category = category;
+        prv_secretDocID = docId;
     }
     public Report (){}
 
     public String getPrv_secretDocID() {
         return prv_secretDocID;
+    }
+    public void setPrv_secretDocID(String doc_id) {
+        prv_secretDocID = doc_id;
     }
 
     public String getPrv_linkImg() {

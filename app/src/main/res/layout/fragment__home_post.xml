@@ -9,10 +9,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="20dp">
 
 
         <EditText
@@ -29,9 +30,9 @@
         <ListView
             android:id="@+id/LV_Home_Post"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="558dp"
             android:layout_below="@+id/ET_Home_Filter"
-            android:layout_marginTop="1dp">
+            android:layout_marginTop="-1dp">
 
 
         </ListView>

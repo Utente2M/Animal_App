@@ -159,6 +159,7 @@ public class Fragment_HomePost extends Fragment {
                         Log.d(TAG, document.getId() + " => " + document.getData());
 
                         Report onePost = document.toObject(Report.class);
+                        onePost.setPrv_secretDocID(document.getId());
                         originalList.add(onePost);
 
 
