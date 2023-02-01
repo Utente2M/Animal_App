@@ -44,15 +44,12 @@ public class Fragment_MyPets_NewLibretto extends Fragment {
     Pets receivedPet;
 
     EditText ET_Name , ET_Descrizione ,ET_Data;
-    ListView mListView;
+
     Spinner SP_Attività;
     String sendAttività;
     Button BT_Create;
 
-    VisiteAdapter adapter;
 
-    //Control ListView
-    ArrayList<Visite> originalList = new ArrayList<>();
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -86,63 +83,11 @@ public class Fragment_MyPets_NewLibretto extends Fragment {
         setAllSpinner(my_view);
         setAllButton(my_view);
 
-        if (adapter ==null){
-            originalList.clear();
-            //filteredList.clear();
-            popolateList();
-            Log.d(TAG , "ok popolateList ");
-        }
+
 
 
         return my_view;
     }
-
-    private void popolateList() {
-        originalList.clear();
-
-        /*
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userID = user.getUid();
-        Log.d(TAG,"This is UID " + userID);
-         */
-
-
-        CollectionReference animalRef = db.collection("Animal DB")
-                .document(receivedPet.getPrv_doc_id())
-                .collection("Visite");
-
-        animalRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, document.getId() + " => " + document.getData());
-
-
-                        Visite myvisita = document.toObject(Visite.class);
-                        myvisita.setDocID(document.getId());
-                        originalList.add(myvisita);
-                        Log.d(TAG , "uid doc : " + myvisita.getDocID());
-
-                    }//end for
-
-                    VisiteAdapter adapter = new VisiteAdapter(getContext(),
-                            R.layout.adapter_my_pets_list, originalList);
-
-                    mListView.setAdapter(adapter);
-
-
-                }//end if
-                else {
-                    //nessun animale da mostrare
-                }//fine else
-
-            }//end on complete
-
-        }); //end Listners
-
-
-    }//END popolateList
 
 
 
@@ -209,6 +154,7 @@ public class Fragment_MyPets_NewLibretto extends Fragment {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        getActivity().onBackPressed();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
