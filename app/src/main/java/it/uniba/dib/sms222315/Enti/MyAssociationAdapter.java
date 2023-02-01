@@ -165,7 +165,7 @@ public class MyAssociationAdapter extends ArrayAdapter<Associations> {
 
     public void launchNavigationStep2Step (String newAddress){
         Geocoder geocoder = new Geocoder(getContext());
-        List<Address> addresses = null;
+        List<Address> addresses = new ArrayList<Address>();
         try {
             addresses = geocoder.getFromLocationName(newAddress, 1);
         } catch (IOException e) {
