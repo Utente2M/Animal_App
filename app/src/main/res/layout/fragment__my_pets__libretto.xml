@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Enti.Fragment_Enti_Search">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".UserPets.Fragment_MyPets_Libretto">
 
     <RelativeLayout
         android:layout_marginTop="0dp"
@@ -16,7 +17,7 @@
             android:layout_height="39dp"
             android:layout_alignParentTop="true"
             android:layout_marginTop="0dp"
-            android:text="This is your Post"
+            android:text="This is your Libretto"
             android:textSize="30dp"
             android:textStyle="bold" />
 
@@ -31,7 +32,16 @@
             android:hint="Search your post"
             android:inputType="text"
             android:text="" />
-
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/BT_Act_myPets_Libretto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            android:clickable="true"
+            app:srcCompat="@android:drawable/ic_input_add" />
         <ListView
             android:id="@+id/LV_Search_otherAssociations"
             android:layout_width="match_parent"
@@ -42,4 +52,5 @@
         </ListView>
 
     </RelativeLayout>
-</RelativeLayout>
+
+</FrameLayout>

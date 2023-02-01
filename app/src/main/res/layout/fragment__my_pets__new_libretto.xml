@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserPets.Fragment_MyPets_NewLibretto">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="672dp"
+        android:text="@string/hello_blank_fragment" />
+
+    <EditText
+        android:id="@+id/et_Frag_NewLib_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        android:hint="Nome"
+        android:translationX="60dp"
+        android:translationY="60dp" />
+
+    <EditText
+        android:id="@+id/et_Frag_NewLib_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        android:hint="Data"
+        android:translationX="60dp"
+        android:translationY="120dp" />
+
+    <Spinner
+        android:id="@+id/spinner_attività"
+        android:layout_width="210dp"
+        android:layout_height="36dp"
+        android:translationX="60dp"
+        android:translationY="180dp" />
+
+    <EditText
+        android:id="@+id/et_Frag_NewLib_descrizione"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        android:hint="Descrizione"
+        android:translationX="60dp"
+        android:translationY="240dp" />
+
+    <Button
+        android:id="@+id/bt_Frag_NewLib_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create"
+        android:translationX="120dp"
+        android:translationY="320dp" />
+
+
+</FrameLayout>

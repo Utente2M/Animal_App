@@ -55,9 +55,10 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
     FragmentManager my_frag_manager;
     FragmentTransaction my_frag_trans;
 
+
     TextView nome,data_nasc, sex , specie, razza, mantello , segniPart ;
     ImageView PetImage;
-    Button BT_deletePet , BT_modifyPet, BT_newOwner;
+    Button BT_deletePet , BT_modifyPet, BT_newOwner, BT_libretto;
 
     //ISTANCE DB
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -166,6 +167,24 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
             }
         });
 
+        BT_libretto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                my_fragment = new Fragment_MyPets_Libretto();
+                my_frag_manager = getActivity().getSupportFragmentManager();
+                my_frag_trans = my_frag_manager.beginTransaction();
+                Bundle bundle = new Bundle();
+                //this is pass
+                bundle.putParcelable("modPets", receivedPet);
+                my_fragment.setArguments(bundle);
+                //si aggiunge il richiamo allo stack
+                my_frag_trans.addToBackStack(null);
+                //add diventa replace
+                my_frag_trans.replace(R.id.Frame_Act_MyPets , my_fragment );
+                my_frag_trans.commit();
+            }
+        });
+
         PetImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -246,6 +265,7 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
         BT_deletePet = my_view.findViewById(R.id.BT_DEL_MyPets);
         BT_modifyPet = my_view.findViewById(R.id.BT_MOD_MyPets);
         BT_newOwner = my_view.findViewById(R.id.BT_ADD_RESP_MyPets);
+        BT_libretto = my_view.findViewById(R.id.BT_libretto);
 
     }
 

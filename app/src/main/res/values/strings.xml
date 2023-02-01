@@ -69,6 +69,12 @@
         <item>Find</item>
         <item>Lost</item>
     </string-array>
+    <string-array name="CategoryLibretto">
+        <item>General</item>
+        <item>Vaccino</item>
+        <item>Visita</item>
+        <item>Prenotazione</item>
+    </string-array>
 
 
 </resources>
