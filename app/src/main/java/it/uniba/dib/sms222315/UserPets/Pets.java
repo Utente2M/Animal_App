@@ -59,6 +59,14 @@ public class Pets implements Parcelable {
 
    }
 
+    public Pets (String namePets,String specie , String image){
+        prv_str_namePets = namePets; //required
+        prv_specie = specie; //required
+        linkPhotoPets = image;
+
+
+    }
+
 
     protected Pets(Parcel in) {
         prv_str_namePets = in.readString();

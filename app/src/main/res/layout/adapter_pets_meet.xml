@@ -23,9 +23,9 @@
         android:textSize="20dp" />
 
     <TextView
-        android:id="@+id/TV_razza_meetPet"
+        android:id="@+id/TV_specie_meetPet"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:text="Razza"
+        android:text="Specie"
         android:textSize="20dp" />
 </LinearLayout>

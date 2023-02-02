@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MeetPets.Fragment_PetsMeet_Home">
+    android:orientation="vertical"
+    tools:context=".MeetPets.Fragment_PetsMeet_Home"
+    android:layout_margin="20dp">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <Button
+        android:id="@+id/BT_scanQrcode"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="44dp"
+        android:layout_weight="1"
+        android:text="Add new Pet" />
 
     <GridView
         android:id="@+id/GV_Pets_Meet"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="2"/>
+        android:layout_height="555dp"
+        android:numColumns="2" />
 
-</FrameLayout>
+</LinearLayout>
