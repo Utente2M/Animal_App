@@ -1,6 +1,8 @@
 package it.uniba.dib.sms222315.MeetPets;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
@@ -18,19 +20,26 @@ import android.widget.GridView;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanIntentResult;
 import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import it.uniba.dib.sms222315.Friends.MyFriends;
 import it.uniba.dib.sms222315.R;
 import it.uniba.dib.sms222315.Reporting.MyPostListAdapter;
 import it.uniba.dib.sms222315.Reporting.Report;
@@ -79,7 +88,7 @@ public class Fragment_PetsMeet_Home extends Fragment {
         if (adapter ==null){
             originalList.clear();
 
-            popolateList();
+            popolateModifyList();
             Log.d(TAG , "ok popolateList ");
         }
 
@@ -96,7 +105,7 @@ public class Fragment_PetsMeet_Home extends Fragment {
         mGridView = my_view.findViewById(R.id.GV_Pets_Meet);
     }
 
-    private void popolateList() {
+    private void popolateModifyList() {
         originalList.clear();
 
 
@@ -105,40 +114,75 @@ public class Fragment_PetsMeet_Home extends Fragment {
         Log.d(TAG, "This is UID " + userID);
 
 
-        CollectionReference animalRef = db.collection("Animal DB");
+        List<String> uidDocumList = new ArrayList<>();
 
-        //Query MyPets = animalRef.whereArrayContains("prv_Str_responsabili", userID);
+        CollectionReference uidRef = db.collection("User Basic Info")
+                .document(userID)
+                .collection("Meet Pet");
 
-        animalRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        uidRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId() + " => " + document.getData());
 
+                        MeetPet oneFriend = document.toObject(MeetPet.class);
+                        Log.d(TAG, "PROVA " + oneFriend.getPrv_uidPet());
+                        uidDocumList.add(oneFriend.getPrv_uidPet());
+                    }//END FOR
 
-                        Pets mypet = document.toObject(Pets.class);
-                        mypet.setPrv_doc_id(document.getId());
-                        originalList.add(mypet);
-                        Log.d(TAG, "uid doc : " + mypet.getPrv_doc_id());
+                    //String[] uidDocum = new String[0];
+                    String[] uidDocum = uidDocumList.toArray(new String[0]);
+                    Log.d(TAG, "SONOL'ARRAY DI UID " + uidDocum.length);
 
-                    }//end for
+                    for (int k = 0; k < uidDocum.length; k++) {
 
-                    adapter = new meetAdapter(getContext(),
-                            R.layout.adapter_pets_meet, originalList);
+                        // Codice da eseguire per ogni elemento del vettore uidDocum
+                        DocumentReference animalRef = db.collection("Animal DB")
+                                .document(uidDocum[k]);
 
-                    mGridView.setAdapter(adapter);
+                        //Query MyPets = animalRef.whereArrayContains("prv_Str_responsabili", userID);
+
+                        animalRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                                        Pets mypet = document.toObject(Pets.class);
+                                        mypet.setPrv_doc_id(document.getId());
+                                        originalList.add(mypet);
+                                        Log.d(TAG, "uid doc : " + mypet.getPrv_doc_id());
+
+
+                                        adapter = new meetAdapter(getContext(),
+                                                R.layout.adapter_pets_meet, originalList);
+
+                                        mGridView.setAdapter(adapter);
+
+                                    } else {
+                                        Log.d(TAG, "No such document");
+                                    }
+                                } else {
+                                    Log.d(TAG, "get failed with ", task.getException());
+                                }
+                            }
+                        });
+
+                    }//END FOR
 
 
                 }//end if
-                else {
-                    //nessun animale da mostrare
-                }//fine else
+            }//end task
+        });
 
-            }//end on complete
 
-        }); //end Listners
-    }
+
+    }//end popolate
 
 
     private void allOnClick() {
@@ -165,9 +209,66 @@ public class Fragment_PetsMeet_Home extends Fragment {
 
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result ->{
         if (result.getContents()!=null){
-            Log.d(TAG, "id animale" + result);
+
+            openDialog(result);
         }
     }  );
+
+    private void openDialog(ScanIntentResult result) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Meet new Pet !!");
+        builder.setMessage("Do you want add to your list ?");
+
+        builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            // codice da eseguire quando viene cliccato OK
+
+                saveIntoDB(result);
+            }
+        });
+
+        builder.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // codice da eseguire quando viene cliccato Annulla
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void saveIntoDB(ScanIntentResult result) {
+        Log.d(TAG, "id animale" + result.getContents());
+        String uidPet = result.getContents();
+
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = user.getUid();
+        Log.d(TAG, "This is UID " + userID);
+
+
+        MeetPet newMeet = new MeetPet(uidPet );
+
+        db.collection("User Basic Info")
+                .document(userID)
+                .collection("Meet Pet")
+                .document(newMeet.getPrv_uidPet())
+                .set(newMeet)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+
+                        popolateModifyList();
+                    }
+                });
+
+
+
+    }
 
 
     //check permission
