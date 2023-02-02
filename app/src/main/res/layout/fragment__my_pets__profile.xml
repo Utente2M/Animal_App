@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserPets.Fragment_MyPets_Profile">
+    tools:context=".UserPets.Fragment_MyPets_Profile"
+    android:layout_margin="20dp">
 
     <LinearLayout
         android:id="@+id/PetProfile_FirstRaw"
@@ -188,6 +189,18 @@
                 android:layout_weight="1"
                 android:hint="Segni particolari" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/BT_goToPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <GridView
+            android:id="@+id/GV_PhotoPetsHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="3"/>
 
 
     </LinearLayout>

@@ -12,7 +12,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AlertDialogLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -23,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,6 +32,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -47,11 +50,11 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 
+import it.uniba.dib.sms222315.MeetPets.Fragment_PetsMeet_Home;
 import it.uniba.dib.sms222315.R;
 import it.uniba.dib.sms222315.SelectPhotoDialog;
-import it.uniba.dib.sms222315.UserProfile.Fragment_UserProfile;
-import it.uniba.dib.sms222315.UserProfile.User_Class;
 
 
 public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDialog.OnPhotoSelectedListener {
@@ -66,6 +69,7 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
     ImageView PetImage;
     Button BT_deletePet , BT_modifyPet, BT_newOwner, BT_libretto;
     ImageButton IB_sharePet;
+    Button BT_photoPet;
 
     //ISTANCE DB
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -75,6 +79,11 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
     private static final int REQUEST_CODE = 1;
     private static final String TAG = "TAG_Frag_MyPet_PROFILE";
     Pets receivedPet;
+
+    ArrayList<MyPhoto> originalList = new ArrayList<>();
+    PhotoAdapter adapter;
+    GridView mGridView;
+
 
 
     public Fragment_MyPets_Profile() {
@@ -105,10 +114,19 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
         setTextfromPets(my_view);
         setAllOnClick();
 
+        if (adapter ==null){
+            originalList.clear();
+
+            popolateList();
+            Log.d(TAG , "ok popolateList ");
+        }
+
 
         // Inflate the layout for this fragment
         return my_view;
     }
+
+
 
     private void setAllOnClick() {
         BT_deletePet.setOnClickListener(new View.OnClickListener() {
@@ -133,8 +151,6 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
                 });
                 builder.show();
 
-                //qui
-                //deleteIntoDB();
             }
         });
 
@@ -213,7 +229,28 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
                 sharePet();
             }
         });
-    }
+
+        //listview visite
+        BT_photoPet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                my_fragment = new Fragment_MyPets_Photo();
+                my_frag_manager = getActivity().getSupportFragmentManager();
+                my_frag_trans = my_frag_manager.beginTransaction();
+                Bundle bundle = new Bundle();
+                //this is pass
+                bundle.putParcelable("modPets", receivedPet);
+                my_fragment.setArguments(bundle);
+                //si aggiunge il richiamo allo stack
+                my_frag_trans.addToBackStack(null);
+                //add diventa replace
+                my_frag_trans.replace(R.id.Frame_Act_MyPets , my_fragment );
+                my_frag_trans.commit();
+            }
+        });
+
+
+    }//end set all click
 
 
 
@@ -285,6 +322,9 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
         BT_libretto = my_view.findViewById(R.id.BT_libretto);
         IB_sharePet = my_view.findViewById(R.id.IB_share_MyPets);
 
+        mGridView = my_view.findViewById(R.id.GV_PhotoPetsHome);
+        BT_photoPet = my_view.findViewById(R.id.BT_goToPhoto);
+
     }
 
 
@@ -330,12 +370,7 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
             return true;
             //setupViewPager();
         }else{
-            /*
-            ActivityCompat.requestPermissions(SearchActivity.this,
-                    permissions,
-                    REQUEST_CODE);
-             */
-            //in fragment :
+
             requestPermissions(permissions, REQUEST_CODE);
         }
         return false;
@@ -374,7 +409,7 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
         // Create a storage reference from our app
         StorageReference storageRef = storage.getReference();
         // Create a storage reference from our app
-        String myStringRef = "imagesPets/"+receivedPet.getPrv_doc_id();;
+        String myStringRef = "imagesPets/"+receivedPet.getPrv_doc_id();
         StorageReference profileImagesRef = storageRef.child(myStringRef);
 
         // Get the data from an ImageView as bytes
@@ -465,6 +500,53 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
         {
             e.printStackTrace();
         }
+
+    }
+
+
+    private void popolateList() {
+
+        originalList.clear();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = user.getUid();
+        Log.d(TAG,"This is UID " + userID);
+
+
+        CollectionReference animalRef = db.collection("Animal DB")
+                .document(receivedPet.getPrv_doc_id())
+                .collection("Pet Photo");
+
+
+        animalRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, document.getId() + " => " + document.getData());
+
+
+                        MyPhoto onePhoto = document.toObject(MyPhoto.class);
+                        onePhoto.setPrv_DocID(document.getId());
+                        originalList.add(onePhoto);
+
+
+                    }//end for
+
+                    adapter = new PhotoAdapter(getContext(),
+                            R.layout.adapter_photo, originalList);
+
+                    mGridView.setAdapter(adapter);
+
+
+                }//end if
+                else {
+                    //nessun animale da mostrare
+                }//fine else
+
+            }//end on complete
+
+        }); //end Listners
 
     }
 
