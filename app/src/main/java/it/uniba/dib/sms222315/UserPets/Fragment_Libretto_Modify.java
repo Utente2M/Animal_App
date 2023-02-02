@@ -190,6 +190,9 @@ public class Fragment_Libretto_Modify extends Fragment {
 
 
 
+
+
+
     private void setAllSpinner(View my_view) {
         ArrayAdapter<CharSequence> adapter_spin_categoria = ArrayAdapter.createFromResource(getContext(), R.array.DiagnosiLib, android.R.layout.simple_spinner_item);
         adapter_spin_categoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
