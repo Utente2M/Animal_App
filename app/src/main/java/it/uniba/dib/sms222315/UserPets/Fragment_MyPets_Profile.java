@@ -39,6 +39,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -132,6 +137,7 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
                 //deleteIntoDB();
             }
         });
+
         BT_modifyPet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -168,7 +174,7 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
                 my_frag_trans.commit();
             }
         });
-
+        //listview visite
         BT_libretto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -186,7 +192,7 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
                 my_frag_trans.commit();
             }
         });
-
+        //change image
         PetImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -200,7 +206,16 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
                 }
             }
         });
+
+        IB_sharePet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sharePet();
+            }
+        });
     }
+
+
 
 
     private void deleteIntoDB() {
@@ -415,7 +430,7 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
         DocumentReference publicProfileRef = db.collection("Animal DB").
                 document(receivedPet.getPrv_doc_id());
 
-// Set the "isCapital" field of the city 'DC'
+        // Set the "isCapital" field of the city 'DC'
         publicProfileRef
                 .update("linkPhotoPets", uri)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -432,4 +447,25 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
                 });
     }
 
-}
+
+    private void sharePet() {
+
+
+        MultiFormatWriter writer = new MultiFormatWriter();
+        try{
+            BitMatrix matrix = writer.encode(receivedPet.getPrv_doc_id(), BarcodeFormat.QR_CODE,
+                    500 , 500);
+
+            BarcodeEncoder encoder = new BarcodeEncoder();
+            Bitmap mBitmap = encoder.createBitmap(matrix);
+
+            PetImage.setImageBitmap(mBitmap);
+
+        }catch (WriterException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+}//end class

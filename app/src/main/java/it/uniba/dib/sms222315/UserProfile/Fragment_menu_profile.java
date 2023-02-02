@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import it.uniba.dib.sms222315.Enti.Activity_Enti;
 import it.uniba.dib.sms222315.Friends.Activity_MyFriends;
+import it.uniba.dib.sms222315.MeetPets.Activity_Pets_Meet;
 import it.uniba.dib.sms222315.Reporting.Activity_Reporting;
 import it.uniba.dib.sms222315.UserExpense.Activity_MyExpense;
 import it.uniba.dib.sms222315.UserPets.Activity_MyPets;
@@ -26,7 +27,7 @@ import it.uniba.dib.sms222315.R;
 
 public class Fragment_menu_profile extends Fragment {
 
-    ImageView IV_my_pets , IV_my_expense, IV_my_friends , IV_my_report,IV_Associations , but_logout;
+    ImageView IV_my_pets , IV_my_expense, IV_my_friends , IV_my_report,IV_Associations ,but_meetPet, but_logout;
     Button but_menu;
 
     private static final String TAG = "TAG_Frag_MENUProfile";
@@ -50,6 +51,7 @@ public class Fragment_menu_profile extends Fragment {
         IV_my_friends =my_view.findViewById(R.id.FragMenu_IV_my_friends);
         IV_my_report = my_view.findViewById(R.id.FragMenu_IV_my_report);
         IV_Associations  = my_view.findViewById(R.id.FragMenu_IV_associations);
+        but_meetPet = my_view.findViewById(R.id.button_MeetAnimal);
     }
 
     private void allsetClick() {
@@ -112,6 +114,16 @@ public class Fragment_menu_profile extends Fragment {
 
             }
         });
+
+        //button meet pet
+        but_meetPet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent meet = new Intent(getActivity(), Activity_Pets_Meet.class);
+                startActivity(meet);
+            }
+        });
+
 
         //bottone logout
         but_logout.setOnClickListener(new View.OnClickListener() {
