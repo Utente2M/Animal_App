@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -97,7 +98,6 @@ public class Fragment_MyPets_Libretto extends Fragment {
         mListView = my_view.findViewById(R.id.LV_Libretto);
         Et_filter = my_view.findViewById(R.id.ET_Libretto);
 
-
     }
 
     private void setAllclick() {
@@ -121,6 +121,33 @@ public class Fragment_MyPets_Libretto extends Fragment {
 
             }
         });
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                Visite clickVisite = originalList.get(position);
+                openDetails(clickVisite);
+            }
+        });
+    }
+
+    private void openDetails(Visite clickVisite) {
+        my_fragment = new Fragment_Libretto_Modify();
+        my_frag_manager = getActivity().getSupportFragmentManager();
+        my_frag_trans = my_frag_manager.beginTransaction();
+        Bundle bundle = new Bundle();
+
+        //this is pass
+        bundle.putParcelable("modVisite", clickVisite);
+        bundle.putParcelable("modPet", receivedPet);
+        my_fragment.setArguments(bundle);
+
+        //si aggiunge il richiamo allo stack
+        my_frag_trans.addToBackStack(null);
+        //add diventa replace
+        my_frag_trans.replace(R.id.Frame_Act_MyPets , my_fragment );
+        my_frag_trans.commit();
     }
 
     private void popolateList() {
@@ -136,6 +163,7 @@ public class Fragment_MyPets_Libretto extends Fragment {
         CollectionReference animalRef = db.collection("Animal DB")
                 .document(receivedPet.getPrv_doc_id())
                 .collection("Visite");
+
 
         animalRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

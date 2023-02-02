@@ -1,6 +1,9 @@
 package it.uniba.dib.sms222315.UserPets;
 
-public class Visite {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Visite implements Parcelable {
     private String prv_Name;
     private String prv_Data;
     private String prv_Description;
@@ -31,6 +34,27 @@ public class Visite {
     }
 
 
+    protected Visite(Parcel in) {
+        prv_Name = in.readString();
+        prv_Data = in.readString();
+        prv_Description = in.readString();
+        prv_categoria = in.readString();
+        prv_diagnosi = in.readString();
+        docID = in.readString();
+    }
+
+    public static final Creator<Visite> CREATOR = new Creator<Visite>() {
+        @Override
+        public Visite createFromParcel(Parcel in) {
+            return new Visite(in);
+        }
+
+        @Override
+        public Visite[] newArray(int size) {
+            return new Visite[size];
+        }
+    };
+
     public String getPrv_Name() {
         return prv_Name;
     }
@@ -57,5 +81,20 @@ public class Visite {
 
     public String getPrv_diagnosi() {
         return prv_diagnosi;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(prv_Name);
+        parcel.writeString(prv_Data);
+        parcel.writeString(prv_Description);
+        parcel.writeString(prv_categoria);
+        parcel.writeString(prv_diagnosi);
+        parcel.writeString(docID);
     }
 }

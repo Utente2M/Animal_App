@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.location.Address;
 import android.location.Geocoder;
@@ -187,11 +188,40 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
             }
         });
 
+        String checkcategoria = reportObj.getPrv_category();
+
+        Log.d(TAG, "checkcategoria :" + checkcategoria);
+        if (checkcategoria.equals("General")){
+            holder.category.setTextColor(Color.BLACK);
+
+        }else if (checkcategoria.equals("Pets accommodation")){
+            holder.category.setTextColor(Color.BLUE);
+        }else if (checkcategoria.equals("Talk")){
+            holder.category.setTextColor(Color.GREEN);
+        }else if (checkcategoria.equals("For Fun")){
+            holder.category.setTextColor(Color.GREEN);
+        }else if (checkcategoria.equals("Advisory")){
+            holder.category.setTextColor(Color.GREEN);
+        }else if (checkcategoria.equals("Danger")){
+            holder.category.setTextColor(Color.RED);
+        }else if (checkcategoria.equals("Abandonment")){
+            holder.category.setTextColor(Color.BLUE);
+        }else if (checkcategoria.equals("Find")){
+            holder.category.setTextColor(Color.BLUE);
+        }else if (checkcategoria.equals("Lost")){
+            holder.category.setTextColor(Color.BLUE);
+        }else if (checkcategoria.equals("Adoption")){
+            holder.category.setTextColor(Color.BLUE);
+        }else{
+            Log.d(TAG , "specie not found");
+        }
+
         return convertView;
     }
 
     private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
         ImageView imageView;
+
         public DownloadImageFromInternet(ImageView imageView) {
             this.imageView=imageView;
 
