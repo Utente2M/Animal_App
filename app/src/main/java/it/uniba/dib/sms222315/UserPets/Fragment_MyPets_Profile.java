@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +60,7 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
     TextView nome,data_nasc, sex , specie, razza, mantello , segniPart ;
     ImageView PetImage;
     Button BT_deletePet , BT_modifyPet, BT_newOwner, BT_libretto;
+    ImageButton IB_sharePet;
 
     //ISTANCE DB
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -266,6 +268,7 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
         BT_modifyPet = my_view.findViewById(R.id.BT_MOD_MyPets);
         BT_newOwner = my_view.findViewById(R.id.BT_ADD_RESP_MyPets);
         BT_libretto = my_view.findViewById(R.id.BT_libretto);
+        IB_sharePet = my_view.findViewById(R.id.IB_share_MyPets);
 
     }
 
