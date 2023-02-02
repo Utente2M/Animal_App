@@ -109,6 +109,7 @@ public class PhotoAdapter extends ArrayAdapter<MyPhoto> {
     }
 
 
+
     private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
         ImageView imageView;
         public DownloadImageFromInternet(ImageView imageView) {
