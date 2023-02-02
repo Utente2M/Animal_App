@@ -16,6 +16,7 @@
     <!-- COLOR TEXT -->
     <color name="red">#FF0000</color>
     <color name="green">#32CD32</color>
+    <color name="holo_blue_dark">#33B5E5</color>
 
     <!-- COLORI PROFILO -->
     <color name="colorPrimary">#673AB7</color>
