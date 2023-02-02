@@ -1,8 +1,12 @@
 package it.uniba.dib.sms222315.MeetPets;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -22,6 +26,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.util.ArrayList;
 
@@ -39,6 +45,8 @@ public class Fragment_PetsMeet_Home extends Fragment {
     meetAdapter adapter;
     GridView mGridView;
     Button BT_scanQRCode;
+
+    private static final int REQUEST_CODE = 1;
 
 
     //DB VARIABLE
@@ -65,8 +73,8 @@ public class Fragment_PetsMeet_Home extends Fragment {
         View my_view = inflater.inflate(R.layout.fragment__pets_meet__home, container, false);
 
         allFind(my_view);
-        setupClick(my_view);
-        //allOnClick();
+       // setupClick(my_view);
+        allOnClick();
 
         if (adapter ==null){
             originalList.clear();
@@ -80,8 +88,8 @@ public class Fragment_PetsMeet_Home extends Fragment {
         return my_view;
     }
 
-    private void setupClick(View my_view) {
-    }
+
+
 
     private void allFind(View my_view) {
         BT_scanQRCode = my_view.findViewById(R.id.BT_scanQrcode);
@@ -132,4 +140,55 @@ public class Fragment_PetsMeet_Home extends Fragment {
         }); //end Listners
     }
 
+
+    private void allOnClick() {
+        BT_scanQRCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (verifyPermissions()) {
+                    scanQrCode();
+                }
+
+            }
+        });
     }
+
+    private void scanQrCode() {
+        ScanOptions myoptions = new ScanOptions();
+        myoptions.setPrompt("Volume up to flash on");
+        myoptions.setOrientationLocked(true);
+        myoptions.setBeepEnabled(false);
+
+        //myoptions.setCaptureActivity(ActivityCapture.class);
+        barLauncher.launch(myoptions);
+    }
+
+    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result ->{
+        if (result.getContents()!=null){
+            Log.d(TAG, "id animale" + result);
+        }
+    }  );
+
+
+    //check permission
+    private boolean verifyPermissions() {
+        Log.d(TAG, "verifyPermissions: asking user for permissions");
+        String[] permissions = {Manifest.permission.CAMERA};
+
+        if(ContextCompat.checkSelfPermission(this.getActivity().getApplicationContext(),
+                permissions[0]) == PackageManager.PERMISSION_GRANTED){
+            return true;
+            //setupViewPager();
+        }else{
+
+            requestPermissions(permissions, REQUEST_CODE);
+        }
+        return false;
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        verifyPermissions();
+    }
+
+
+}//end class
