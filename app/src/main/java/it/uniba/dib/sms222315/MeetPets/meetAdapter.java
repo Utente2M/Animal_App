@@ -107,8 +107,8 @@ public class meetAdapter extends ArrayAdapter<Pets> {
         holder.specie.setText(pets.getPrv_specie());
 
 
-
-        if (pets.getLinkPhotoPets()==(null) ){
+        Log.d(TAG, "image: " +pets.getLinkPhotoPets());
+        if (pets.getLinkPhotoPets().isEmpty() ){
             Log.d(TAG, " no profile image");
 
 
