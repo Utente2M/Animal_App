@@ -29,6 +29,7 @@ public class VisiteAdapter extends ArrayAdapter<Visite> {
         TextView namep;
         TextView data;
         TextView categoria;
+        TextView diagnosi;
         TextView description;
         ImageView imagev;
     }
@@ -54,11 +55,12 @@ public class VisiteAdapter extends ArrayAdapter<Visite> {
         String name = getItem(position).getPrv_Name();
         String data = getItem(position).getPrv_Data();
         String str_categoria = getItem(position).getPrv_categoria();
+        String str_diagnosi = getItem(position).getPrv_diagnosi();
         String str_description = getItem(position).getPrv_Description();
 
 
         //Create the pets object with the information
-        Visite newVisit = new Visite(name, data , str_description, str_categoria);
+        Visite newVisit = new Visite(name, data , str_description, str_categoria, str_diagnosi);
 
 
         //create the view result for showing the animation
@@ -76,6 +78,7 @@ public class VisiteAdapter extends ArrayAdapter<Visite> {
             holder.namep = (TextView) convertView.findViewById(R.id.libretto_nome);
             holder.data = (TextView) convertView.findViewById(R.id.libretto_data);
             holder.categoria = (TextView) convertView.findViewById(R.id.libretto_categoria);
+            holder.diagnosi = (TextView) convertView.findViewById(R.id.libretto_stato);
             holder.description =(TextView) convertView.findViewById(R.id.libretto_descrizione);
             holder.imagev =(ImageView) convertView.findViewById(R.id.image_MyLib);
 
@@ -101,6 +104,7 @@ public class VisiteAdapter extends ArrayAdapter<Visite> {
         holder.namep.setText(newVisit.getPrv_Name());
         holder.data.setText(newVisit.getPrv_Data());
         holder.categoria.setText(newVisit.getPrv_categoria());
+        holder.diagnosi.setText(newVisit.getPrv_diagnosi());
         holder.description.setText(newVisit.getPrv_Description());
 
         String checkcategoria = newVisit.getPrv_categoria();
@@ -109,14 +113,18 @@ public class VisiteAdapter extends ArrayAdapter<Visite> {
         if (checkcategoria.equals("General")){
             holder.imagev.setImageResource(R.drawable.icon_dog);
 
-        }else if (checkcategoria.equals("Vaccino")){
+        }else if (checkcategoria.equals("Vaccinazione")){
             holder.imagev.setImageResource(R.drawable.icon_cat);
 
-        }else if (checkcategoria.equals("Visita")){
+        }else if (checkcategoria.equals("Sverminazione")){
             holder.imagev.setImageResource(R.drawable.icon_rabbit);
-        }else if (checkcategoria.equals("Operazione")){
+        }else if (checkcategoria.equals("Sterilizzazione")){
                 holder.imagev.setImageResource(R.drawable.icon_rabbit);
-            }else{
+            }else if (checkcategoria.equals("Intervento")){
+            holder.imagev.setImageResource(R.drawable.icon_rabbit);
+        }else if (checkcategoria.equals("Controllo")){
+            holder.imagev.setImageResource(R.drawable.icon_rabbit);
+        }else{
             Log.d(TAG , "specie not found");
         }
 

@@ -68,12 +68,22 @@
         <item>Abandonment</item>
         <item>Find</item>
         <item>Lost</item>
+        <item>Adoption</item>
     </string-array>
     <string-array name="CategoryLibretto">
         <item>General</item>
-        <item>Vaccino</item>
-        <item>Visita</item>
-        <item>Prenotazione</item>
+        <item>Vaccinazione</item>
+        <item>Sverminazione</item>
+        <item>Sterilizzazione</item>
+        <item>Intervento</item>
+        <item>Controllo</item>
+    </string-array>
+    <string-array name="DiagnosiLib">
+        <item>Non eseguito</item>
+        <item>Completato</item>
+        <item>Da rivedere</item>
+        <item>Positiva</item>
+        <item>Negativa</item>
     </string-array>
 
 

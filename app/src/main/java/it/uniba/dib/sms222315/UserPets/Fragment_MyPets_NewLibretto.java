@@ -1,5 +1,6 @@
 package it.uniba.dib.sms222315.UserPets;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,11 +10,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -46,7 +49,9 @@ public class Fragment_MyPets_NewLibretto extends Fragment {
     EditText ET_Name , ET_Descrizione ,ET_Data;
 
     Spinner SP_Attività;
+    Spinner SP_Diagnosi;
     String sendAttività;
+    String sendDiagnosi;
     Button BT_Create;
 
 
@@ -98,6 +103,16 @@ public class Fragment_MyPets_NewLibretto extends Fragment {
                 createVisitaDB();
             }
         });
+        ET_Data.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(MotionEvent.ACTION_UP == motionEvent.getAction()){
+                    showDataPickerDialog();
+                }
+
+                return false;
+            }
+        });
     }
 
 
@@ -116,6 +131,20 @@ public class Fragment_MyPets_NewLibretto extends Fragment {
 
             }
         });
+        ArrayAdapter <CharSequence> adapter_spin_categoria = ArrayAdapter.createFromResource(getContext(), R.array.DiagnosiLib, android.R.layout.simple_spinner_item);
+        adapter_spin_categoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        SP_Diagnosi.setAdapter(adapter_spin_categoria);
+        SP_Diagnosi.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                sendDiagnosi = adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private void setAllfind(View my_view) {
@@ -123,6 +152,7 @@ public class Fragment_MyPets_NewLibretto extends Fragment {
         ET_Descrizione = my_view.findViewById(R.id.et_Frag_NewLib_descrizione);
         ET_Data = my_view.findViewById(R.id.et_Frag_NewLib_data);
         SP_Attività = my_view.findViewById(R.id.spinner_attività);
+        SP_Diagnosi = my_view.findViewById(R.id.spinner_diagnosi);
         BT_Create = my_view.findViewById(R.id.bt_Frag_NewLib_button);
 
     }
@@ -133,6 +163,7 @@ public class Fragment_MyPets_NewLibretto extends Fragment {
         //data
         //nome vet
         //spinner(vaccino, visita, operazione)
+        //spinner
         //descrizione
         SimpleDateFormat format = new SimpleDateFormat("d,MM,yyyy,HH:mm:ss");
         Calendar calendar = Calendar.getInstance();
@@ -142,7 +173,7 @@ public class Fragment_MyPets_NewLibretto extends Fragment {
         //sendAttività
         String descrizione = ET_Descrizione.getText().toString();
 
-        Visite newVisite = new Visite(nomeVet, formatData, descrizione, sendAttività);
+        Visite newVisite = new Visite(nomeVet, formatData, descrizione, sendAttività, sendDiagnosi);
 
         //PROVA DI CREAZIONE SUBCOLLECTION
 
@@ -166,6 +197,26 @@ public class Fragment_MyPets_NewLibretto extends Fragment {
                 });
 
     }
+
+
+    private void showDataPickerDialog (){
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                getActivity(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day_ofYear) {
+                        month +=1;
+                        String Str_Date = day_ofYear + "/" + month + "/" + year ;
+                        ET_Data.setText(Str_Date);
+                    }
+                },
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        );
+        datePickerDialog.show();
+    }
+
 
     private void resetFrontEnd() {
         getActivity().onBackPressed();
