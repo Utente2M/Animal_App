@@ -16,7 +16,8 @@
         android:layout_marginStart="0dp"
         android:textStyle="bold"
         android:textSize="30dp"
-        android:text="Your Friend's List" />
+        android:text="Your Friend's List"
+        android:background="@drawable/sfondo_registrazione_user"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/BT_NewFriend"

@@ -15,7 +15,8 @@
         android:layout_marginStart="0dp"
         android:textStyle="bold"
         android:textSize="30dp"
-        android:text="Search new Friends" />
+        android:text="Search new Friends"
+        android:background="@drawable/sfondo_registrazione_user"/>
 
     <ListView
         android:id="@+id/listView_NewFriend"
