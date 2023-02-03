@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Friends.Fragment_MyFriends_SearchNewFriend">
+    tools:context=".Friends.Fragment_MyFriends_SearchNewFriend"
+    android:layout_margin="20dp">
 
     <RelativeLayout
         android:layout_marginTop="0dp"

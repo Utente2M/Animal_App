@@ -35,9 +35,8 @@
 
     <androidx.viewpager.widget.ViewPager
         android:background="@color/white"
-
-    android:id="@+id/Act_report_viewpager_cont"
-        android:layout_width="409dp"
+        android:id="@+id/Act_report_viewpager_cont"
+        android:layout_width="match_parent"
         android:layout_height="609dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
