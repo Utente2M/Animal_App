@@ -1,10 +1,15 @@
 package it.uniba.dib.sms222315.UserPets;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -14,9 +19,19 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 
 import it.uniba.dib.sms222315.R;
+import it.uniba.dib.sms222315.Reporting.Report;
 
 
 public class Fragment_MyPets_PhotoDettail extends Fragment {
@@ -28,6 +43,8 @@ public class Fragment_MyPets_PhotoDettail extends Fragment {
 
     ImageButton But_share , But_delete;
     ImageView photoOpenend;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     public Fragment_MyPets_PhotoDettail() {
@@ -54,20 +71,91 @@ public class Fragment_MyPets_PhotoDettail extends Fragment {
 
         setAllFind(my_view);
         openPhoto(my_view);
-        setAllClick();
+        setAllClick(my_view);
 
 
         return my_view;
     }
 
-    private void setAllClick() {
+    private void setAllClick(View view) {
         But_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                shareProfile(receivedPhoto, receivedPet, view);
+            }
+        });
+        But_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deletePhoto();
             }
         });
     }
+
+    private void deletePhoto() {
+
+        DocumentReference animalRef = db.collection("Animal DB")
+                .document(receivedPet.getPrv_doc_id())
+                .collection("Pet Photo")
+                .document(receivedPhoto.getPrv_DocID());
+
+        animalRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                getActivity().onBackPressed();
+            }
+        });
+    }
+
+    private void shareProfile(MyPhoto onePhoto,Pets onePet, View view) {
+
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "HI !"+"\n"+"Look at this photo of "+
+                receivedPet.getPrv_str_namePets());
+        searchBitmap(view);
+
+        try {
+            File cachePath = new File(getContext().getCacheDir(), "images");
+            File imagePath = new File(cachePath, "compressedImage.jpeg");
+            Uri contentUri = FileProvider.getUriForFile(getContext(), "it.uniba.dib.sms222315.fileprovider", imagePath);
+            sendIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+            sendIntent.setType("image/*");
+            sendIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getContext().startActivity(Intent.createChooser(sendIntent, null));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    private void searchBitmap(View view) {
+        //ImageView imageView = view.findViewById(R.id.Adap_Repo_image);
+        Bitmap originalImage = ((BitmapDrawable) photoOpenend.getDrawable()).getBitmap();
+        int maxSize = 1024;
+        if (originalImage.getHeight() > maxSize || originalImage.getWidth() > maxSize) {
+            originalImage = Bitmap.createScaledBitmap(originalImage, maxSize, maxSize, false);
+        }
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        originalImage.compress(Bitmap.CompressFormat.JPEG, 90, stream);
+        byte[] compressedImage = stream.toByteArray();
+
+        try {
+            File cachePath = new File(getContext().getCacheDir(), "images");
+            cachePath.mkdirs();
+            FileOutputStream s = new FileOutputStream(cachePath + "/compressedImage.jpeg");
+            s.write(compressedImage);
+            s.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     private void openPhoto(View my_view) {
 

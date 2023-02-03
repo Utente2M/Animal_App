@@ -1,158 +1,76 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sfondo_registrazione_user"
     tools:context=".UserPets.Fragment_Libretto_Modify">
 
 
-
-
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="650dp"
-        android:orientation="vertical"
-        android:padding="32dp"
-        android:background="@drawable/grey_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment" />
+    <TextView
+        android:id="@+id/et_Frag_ModifyLib_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        android:hint="Nome Specialist"
+        android:translationX="60dp"
+        android:translationY="60dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Specialis Name"
-            android:textColor="#286DC2"
-            android:textSize="19sp"
-            android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/et_Frag_ModifyLib_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        android:hint="Data"
+        android:translationX="60dp"
+        android:translationY="120dp" />
 
-        <TextView
-            android:id="@+id/et_Frag_ModifyLib_name"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:padding="8dp"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:ems="10"
-            android:background="@drawable/edittext_background"
-            android:text=""
-            android:hint="Specialist Name"
-            android:inputType="textPersonName"/>
+    <TextView
+        android:id="@+id/spinner_modifyattività"
+        android:layout_width="210dp"
+        android:layout_height="36dp"
+        android:translationX="60dp"
+        android:translationY="180dp"
+        android:hint="Categoria"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Date"
-            android:layout_marginTop="15dp"
-            android:textColor="#286DC2"
-            android:textSize="19sp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/et_Frag_ModifyLib_data"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:padding="8dp"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:ems="10"
-            android:background="@drawable/edittext_background"
-            android:text=""
-            android:hint="Date"
-            android:inputType="textPersonName"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Activity"
-            android:layout_marginTop="15dp"
-            android:textColor="#286DC2"
-            android:textSize="19sp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/spinner_modifyattività"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:padding="8dp"
-            android:textColor="#8e8e8e"
-            android:textSize="18sp"
-            android:ems="10"
-            android:hint="Activity"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Diagnosis"
-            android:layout_marginTop="15dp"
-            android:textColor="#286DC2"
-            android:textSize="19sp"
-            android:textStyle="bold"/>
-
-        <Spinner
-            android:id="@+id/spinner_modifydiagnosi"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:padding="8dp"
-            android:textColor="#8e8e8e"
-            android:textSize="18sp"
-            android:ems="10"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Descriptiom"
-            android:textColor="#286DC2"
-            android:textSize="19sp"
-            android:textStyle="bold"/>
-
-        <EditText
-            android:id="@+id/et_Frag_MofidyLib_descrizione"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:padding="8dp"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:ems="10"
-            android:background="@drawable/edittext_background"
-            android:text=""
-            android:hint="Description"
-            android:inputType="textPersonName"/>
+    <Spinner
+        android:id="@+id/spinner_modifydiagnosi"
+        android:layout_width="210dp"
+        android:layout_height="36dp"
+        android:translationX="60dp"
+        android:translationY="240dp" />
 
 
+    <EditText
+        android:id="@+id/et_Frag_MofidyLib_descrizione"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        android:hint="Description"
+        android:translationX="60dp"
+        android:translationY="300dp" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bt_Frag_ModifyLib_button_Cre"
-            android:layout_width="180dp"
-            android:layout_height="45dp"
-            android:textColor="@color/white"
-            android:background="@drawable/button_background"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:text="Modify" />
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bt_Frag_MofifyLib_button_Elim"
-            android:layout_width="180dp"
-            android:layout_height="45dp"
-            android:textColor="@color/white"
-            android:background="@drawable/button_background"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:text="Eliminate" />
-
-    </LinearLayout>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/bt_Frag_ModifyLib_button_Cre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create"
+        android:translationX="120dp"
+        android:translationY="360dp" />
+    <Button
+        android:id="@+id/bt_Frag_MofifyLib_button_Elim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Elimina"
+        android:translationX="120dp"
+        android:translationY="420dp" />
+</FrameLayout>
