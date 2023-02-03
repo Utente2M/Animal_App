@@ -61,6 +61,14 @@ public class Fragment_Report_MyReport extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        originalList.clear();
+        filteredList.clear();
+        popolateList();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View my_view = inflater.inflate(R.layout.fragment__report__my_report, container, false);

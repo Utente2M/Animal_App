@@ -81,13 +81,13 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="8dp"
+            android:background="@drawable/edittext_background"
+            android:ems="10"
+            android:hint="Adress"
+            android:inputType="text"
             android:padding="8dp"
             android:textColor="#8e8e8e"
-            android:textSize="18sp"
-            android:ems="10"
-            android:background="@drawable/edittext_background"
-            android:hint="Adress"
-            android:inputType="phone"/>
+            android:textSize="18sp" />
 
 
         <androidx.appcompat.widget.AppCompatButton
