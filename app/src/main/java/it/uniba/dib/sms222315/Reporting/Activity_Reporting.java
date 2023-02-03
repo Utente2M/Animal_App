@@ -35,14 +35,14 @@ public class Activity_Reporting extends AppCompatActivity {
         mPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mPagerAdapter.addFragment(new Fragment_Report_MyReport());
         mPagerAdapter.addFragment(new Fragment_Report_Add());
-        mPagerAdapter.addFragment(new Fragment_Report_FriendReport());
+        //mPagerAdapter.addFragment(new Fragment_Report_FriendReport());
         //mPagerAdapter.addFragment(new AccountFragment());
 
         mViewPager.setAdapter(mPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.getTabAt(0).setText("My Post");
         mTabLayout.getTabAt(1).setText("Create Post");
-        mTabLayout.getTabAt(2).setText("Friend's Post");
+        //mTabLayout.getTabAt(2).setText("Friend's Post");
         //mTabLayout.getTabAt(3).setText(getString(R.string.fragment_account));
 
     }

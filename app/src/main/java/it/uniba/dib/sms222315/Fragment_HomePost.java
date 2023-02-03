@@ -60,6 +60,14 @@ public class Fragment_HomePost extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        originalList.clear();
+        filteredList.clear();
+        popolateList();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View my_view = inflater.inflate(R.layout.fragment__home_post, container, false);
