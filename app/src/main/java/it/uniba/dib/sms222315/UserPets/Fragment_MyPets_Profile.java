@@ -12,6 +12,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -68,9 +69,10 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
 
     TextView nome,data_nasc, sex , specie, razza, mantello , segniPart ;
     ImageView PetImage;
-    Button BT_deletePet , BT_modifyPet, BT_newOwner, BT_libretto;
-    ImageButton IB_sharePet;
-    Button BT_photoPet;
+    AppCompatButton BT_deletePet , BT_modifyPet, BT_newOwner, BT_libretto , IB_sharePet , BT_photoPet ;
+
+
+    TextView numMicrochip , hownerName, address;
 
     //ISTANCE DB
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -306,6 +308,10 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
         mantello.setText(receivedPet.getPrv_Mantello());
         segniPart.setText(receivedPet.getPrv_SegniParticolari());
 
+        numMicrochip.setText(receivedPet.getPrv_numChip());
+        hownerName.setText(receivedPet.getPrv_dataChip());
+        address.setText(receivedPet.getPrv_addressPet());
+
 
         if (!receivedPet.getLinkPhotoPets().isEmpty()){
             new DownloadImageFromInternet((ImageView) my_view.findViewById(R.id.IV_MyPetProfile_picture)).
@@ -348,6 +354,9 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
         mGridView = my_view.findViewById(R.id.GV_PhotoPetsHome);
         BT_photoPet = my_view.findViewById(R.id.BT_goToPhoto);
 
+        numMicrochip = my_view.findViewById(R.id.numMicorchip);
+        hownerName = my_view.findViewById(R.id.ownarName);
+        address= my_view.findViewById(R.id.addressPet);
     }
 
 

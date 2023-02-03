@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_centerInParent="true"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+        <androidx.cardview.widget.CardView
+            app:cardCornerRadius="15dp"
+            android:layout_marginTop="40dp"
+            app:cardElevation="10dp"
+            app:cardUseCompatPadding="true"
+            card_view:cardCornerRAdius="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="240dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="23dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TV_MyPetProfile_name"
+                    android:layout_marginTop="15dp"
+                    android:text="Lucky"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/TV_MyPetProfile_specie"
+                    android:layout_marginTop="2dp"
+                    android:text="Dog"
+                    android:textSize="13sp"
+                    android:textStyle="normal"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <View
+                    android:background="#79D6D1D1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fillViewport="true">
+
+                    <LinearLayout
+                        android:id="@+id/PetProfile_FirstRaw"
+                        android:orientation="horizontal"
+                        android:weightSum="5"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <Button
+                            android:id="@+id/BT_MOD_MyPets"
+                            android:text="Edit Profile"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textStyle="italic"
+                            android:textSize="14sp"
+                            android:background="@color/white"
+                            android:textColor="@color/black"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"/>
+
+                        <View
+                            android:background="#79D6D1D1"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"/>
+
+                        <Button
+                            android:id="@+id/BT_ADD_RESP_MyPets"
+                            android:text="Edit owner"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textStyle="italic"
+                            android:background="@color/white"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"/>
+
+                        <View
+                            android:background="#79D6D1D1"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"/>
+
+                        <Button
+                            android:id="@+id/BT_libretto"
+                            android:text="Health booklet"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textStyle="italic"
+                            android:background="@color/white"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"/>
+
+                        <View
+                            android:background="#79D6D1D1"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"/>
+
+                        <Button
+                            android:id="@+id/IB_share_MyPets"
+                            android:text="Share profile"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textStyle="italic"
+                            android:textSize="14sp"
+                            android:background="@color/white"
+                            android:textColor="@color/black"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"/>
+
+                        <View
+                            android:background="#79D6D1D1"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"/>
+
+                        <Button
+                            android:id="@+id/BT_DEL_MyPets"
+                            android:text="Delete profile"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textStyle="italic"
+                            android:background="@color/white"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"/>
+
+                        <View
+                            android:background="#79D6D1D1"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"/>
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/IV_MyPetProfile_picture"
+        android:src="@drawable/profile_image_dog"
+        app:shapeAppearanceOverlay="@style/Circular"
+        android:elevation="15dp"
+        android:padding="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="98dp"
+        android:layout_height="98dp"/>
+
+
+</RelativeLayout>
