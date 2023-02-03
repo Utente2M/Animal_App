@@ -8,9 +8,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="338dp"
+        android:layout_height="309dp"
         android:background="@color/white"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:backgroundTint="@color/grey"
+        >
 
         <ImageView
             android:id="@+id/Adap_Repo_image"
@@ -22,7 +24,7 @@
         <TextView
             android:id="@+id/Adap_Repo_numberLike"
             android:layout_width="match_parent"
-            android:layout_height="73dp"
+            android:layout_height="80dp"
             android:layout_weight="3"
             android:text="Reaction .."
             android:textStyle="bold" />
@@ -30,31 +32,31 @@
         <TextView
             android:id="@+id/Adap_Repo_authorName"
             android:layout_width="match_parent"
-            android:layout_height="87dp"
-            android:layout_weight="4"
+            android:layout_height="80dp"
+            android:layout_weight="3"
             android:text="My Name : "
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/Adap_Repo_Category"
             android:layout_width="match_parent"
-            android:layout_height="87dp"
-            android:layout_weight="4"
+            android:layout_height="80dp"
+            android:layout_weight="3"
             android:text="Category : "
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/Adap_Repo_description"
             android:layout_width="match_parent"
-            android:layout_height="139dp"
-            android:layout_weight="3"
+            android:layout_height="80dp"
+            android:layout_weight="2"
             android:text="text about the post " />
 
         <TextView
             android:id="@+id/Adap_Repo_street"
             android:layout_width="match_parent"
-            android:layout_height="104dp"
-            android:layout_weight="3"
+            android:layout_height="50dp"
+            android:layout_weight="1"
             android:text="street report "
             android:textColor="@color/blue_pastel"
             android:textStyle="" />
@@ -71,13 +73,15 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="4"
-            app:srcCompat="@drawable/icon_add_reaction" />
+            android:backgroundTint="@color/orange_pastel"
+            app:srcCompat="@drawable/icon_add_reaction_24" />
 
         <ImageButton
             android:id="@+id/Adap_Repo_addComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="4"
+            android:backgroundTint="@color/orange_pastel"
             app:srcCompat="@drawable/ic_question_answer" />
 
         <ImageButton
@@ -85,6 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="4"
+            android:backgroundTint="@color/orange_pastel"
             app:srcCompat="@android:drawable/ic_menu_share" />
 
     </LinearLayout>
