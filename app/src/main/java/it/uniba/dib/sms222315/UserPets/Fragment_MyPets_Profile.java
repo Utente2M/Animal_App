@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -146,7 +147,7 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        dialogInterface.dismiss();
                     }
                 });
                 builder.show();
@@ -249,10 +250,32 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
             }
         });
 
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                MyPhoto clickPhoto = originalList.get(i);
+                openPhotoDettail(clickPhoto);
+            }
+        });
+
 
     }//end set all click
 
-
+    public void openPhotoDettail(MyPhoto clickPhoto) {
+        my_fragment = new Fragment_MyPets_PhotoDettail();
+        my_frag_manager = getActivity().getSupportFragmentManager();
+        my_frag_trans = my_frag_manager.beginTransaction();
+        Bundle bundle = new Bundle();
+        //this is pass
+        bundle.putParcelable("modPhoto" , clickPhoto);
+        bundle.putParcelable("modPets", receivedPet);
+        my_fragment.setArguments(bundle);
+        //si aggiunge il richiamo allo stack
+        my_frag_trans.addToBackStack(null);
+        //add diventa replace
+        my_frag_trans.replace(R.id.Frame_Act_MyPets, my_fragment);
+        my_frag_trans.commit();
+    }
 
 
     private void deleteIntoDB() {
