@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -53,10 +54,10 @@ public class Fragment_MyPets_Modify extends Fragment  {
 
     //BUNDLE
     Pets receivedPet;
-
-    EditText data_nasc ,mantello , razza,  segniPart , numeroChip , dataChip ;
+    TextView razza;
+    EditText data_nasc ,mantello ,  segniPart , numeroChip , dataChip ;
     AutoCompleteTextView indirizzoAnimale;
-    ImageButton BT_confermePet , BT_backPet;
+    AppCompatButton BT_confermePet , BT_backPet;
 
     //FRAGMENT VAR
     Fragment my_fragment;

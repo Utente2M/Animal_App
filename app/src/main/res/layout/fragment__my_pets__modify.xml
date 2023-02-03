@@ -6,11 +6,6 @@
     android:background="@drawable/sfondo_registrazione_user"
     tools:context=".UserPets.Fragment_MyPets_Modify">
 
-   <ScrollView
-       android:layout_width="match_parent"
-       android:layout_height="match_parent" />
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="650dp"
@@ -21,6 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,30 +26,7 @@
             android:textStyle="bold"/>
 
         <EditText
-            android:id="@+id/et_Frag_ModifyLib_name"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:padding="8dp"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:ems="10"
-            android:background="@drawable/edittext_background"
-            android:text=""
-            android:hint="Specialist Name"
-            android:inputType="textPersonName"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Color"
-            android:layout_marginTop="15dp"
-            android:textColor="#286DC2"
-            android:textSize="19sp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/et_Frag_ModifyLib_data"
+            android:id="@+id/ET_MyPetModify_data"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="8dp"
@@ -69,6 +42,29 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Color"
+            android:layout_marginTop="15dp"
+            android:textColor="#286DC2"
+            android:textSize="19sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/ET_MyPetModify_mantello"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:ems="10"
+            android:background="@drawable/edittext_background"
+            android:text=""
+            android:hint="Color"
+            android:inputType="textPersonName"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="Race"
             android:layout_marginTop="15dp"
             android:textColor="#286DC2"
@@ -76,7 +72,7 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/spinner_modifyattività"
+            android:id="@+id/ET_MyPetModify_razza"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="8dp"
@@ -84,7 +80,7 @@
             android:textColor="#8e8e8e"
             android:textSize="18sp"
             android:ems="10"
-            android:hint="Activity"
+            android:hint="Race"
             />
 
         <TextView
@@ -96,25 +92,8 @@
             android:textSize="19sp"
             android:textStyle="bold"/>
 
-        <Spinner
-            android:id="@+id/spinner_modifydiagnosi"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:padding="8dp"
-            android:textColor="#8e8e8e"
-            android:textSize="18sp"
-            android:ems="10"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Number chip"
-            android:textColor="#286DC2"
-            android:textSize="19sp"
-            android:textStyle="bold"/>
-
         <EditText
-            android:id="@+id/et_Frag_MofidyLib_descrizione"
+            android:id="@+id/ET_MyPetModify_segPartic"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="8dp"
@@ -124,7 +103,28 @@
             android:ems="10"
             android:background="@drawable/edittext_background"
             android:text=""
-            android:hint="Description"
+            android:hint="Distinguishing features"
+            android:inputType="textPersonName"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Number chip"
+            android:textColor="#286DC2"
+            android:textSize="19sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/ET_MyPetModify_NumeroChip"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:ems="10"
+            android:background="@drawable/edittext_background"
+            android:text=""
+            android:hint="Number chip"
             android:inputType="textPersonName"/>
         <TextView
             android:layout_width="match_parent"
@@ -135,7 +135,7 @@
             android:textStyle="bold"/>
 
         <EditText
-            android:id="@+id/et_Frag_MofidyLib_descrizione"
+            android:id="@+id/ET_MyPetModify_DataChip"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="8dp"
@@ -145,7 +145,7 @@
             android:ems="10"
             android:background="@drawable/edittext_background"
             android:text=""
-            android:hint="Description"
+            android:hint="Date chip"
             android:inputType="textPersonName"/>
         <TextView
             android:layout_width="match_parent"
@@ -155,8 +155,8 @@
             android:textSize="19sp"
             android:textStyle="bold"/>
 
-        <EditText
-            android:id="@+id/et_Frag_MofidyLib_descrizione"
+        <AutoCompleteTextView
+            android:id="@+id/ET_MyPetModify_ResidAnimale"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="8dp"
@@ -172,24 +172,24 @@
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bt_Frag_ModifyLib_button_Cre"
+            android:id="@+id/BT_Back_MyPetsModify"
             android:layout_width="180dp"
             android:layout_height="45dp"
             android:textColor="@color/white"
             android:background="@drawable/button_background"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="5dp"
             android:layout_gravity="center"
             android:textAlignment="center"
             android:textSize="17sp"
             android:textStyle="bold"
             android:text="Modify" />
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bt_Frag_MofifyLib_button_Elim"
+            android:id="@+id/BT_Apply_MyPetsModify"
             android:layout_width="180dp"
             android:layout_height="45dp"
             android:textColor="@color/white"
             android:background="@drawable/button_background"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="5dp"
             android:layout_gravity="center"
             android:textAlignment="center"
             android:textSize="17sp"
