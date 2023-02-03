@@ -1,128 +1,202 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sfondo_registrazione_user"
     tools:context=".UserPets.Fragment_MyPets_Modify">
+
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="541dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="94dp"
-        android:orientation="vertical">
+        android:layout_height="650dp"
+        android:orientation="vertical"
+        android:padding="32dp"
+        android:background="@drawable/grey_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:id="@+id/textView10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="130dp"
-            android:layout_marginTop="20dp"
-            android:text="Informazioni di :" />
+            android:text="Date"
+            android:textColor="#286DC2"
+            android:textSize="19sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/et_Frag_ModifyLib_name"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:ems="10"
+            android:background="@drawable/edittext_background"
+            android:text=""
+            android:hint="Specialist Name"
+            android:inputType="textPersonName"/>
 
         <TextView
-            android:id="@+id/ET_MyPetModify_NomeAnimale"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="130dp"
-            android:layout_marginTop="20dp"
-            android:text="Nome Animale :" />
+            android:text="Color"
+            android:layout_marginTop="15dp"
+            android:textColor="#286DC2"
+            android:textSize="19sp"
+            android:textStyle="bold"/>
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/et_Frag_ModifyLib_data"
             android:layout_width="match_parent"
-            android:layout_height="152dp"
-            android:orientation="vertical">
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:ems="10"
+            android:background="@drawable/edittext_background"
+            android:text=""
+            android:hint="Date"
+            android:inputType="textPersonName"/>
 
-            <EditText
-                android:id="@+id/ET_MyPetModify_data"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Data nascita" />
-
-            <EditText
-                android:id="@+id/ET_MyPetModify_mantello"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Mantello" />
-
-            <EditText
-                android:id="@+id/ET_MyPetModify_razza"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Razza" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="125dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:text="Race"
+            android:layout_marginTop="15dp"
+            android:textColor="#286DC2"
+            android:textSize="19sp"
+            android:textStyle="bold"/>
 
-            <EditText
-                android:id="@+id/ET_MyPetModify_segPartic"
-                android:layout_width="match_parent"
-                android:layout_height="124dp"
-                android:layout_weight="1"
-                android:hint="Segni particolari" />
-
-            <EditText
-                android:id="@+id/ET_MyPetModify_NumeroChip"
-                android:layout_width="match_parent"
-                android:layout_height="124dp"
-                android:layout_weight="1"
-                android:hint="Numero Microchip" />
-
-            <EditText
-                android:id="@+id/ET_MyPetModify_DataChip"
-                android:layout_width="match_parent"
-                android:layout_height="124dp"
-                android:layout_weight="1"
-                android:hint="Data di applicazione" />
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/spinner_modifyattività"
             android:layout_width="match_parent"
-            android:layout_height="67dp"
-            android:orientation="vertical">
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:textColor="#8e8e8e"
+            android:textSize="18sp"
+            android:ems="10"
+            android:hint="Activity"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Distinguishing features"
+            android:layout_marginTop="15dp"
+            android:textColor="#286DC2"
+            android:textSize="19sp"
+            android:textStyle="bold"/>
+
+        <Spinner
+            android:id="@+id/spinner_modifydiagnosi"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:textColor="#8e8e8e"
+            android:textSize="18sp"
+            android:ems="10"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Number chip"
+            android:textColor="#286DC2"
+            android:textSize="19sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/et_Frag_MofidyLib_descrizione"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:ems="10"
+            android:background="@drawable/edittext_background"
+            android:text=""
+            android:hint="Description"
+            android:inputType="textPersonName"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date chip"
+            android:textColor="#286DC2"
+            android:textSize="19sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/et_Frag_MofidyLib_descrizione"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:ems="10"
+            android:background="@drawable/edittext_background"
+            android:text=""
+            android:hint="Description"
+            android:inputType="textPersonName"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Address Animal"
+            android:textColor="#286DC2"
+            android:textSize="19sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/et_Frag_MofidyLib_descrizione"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:ems="10"
+            android:background="@drawable/edittext_background"
+            android:text=""
+            android:hint="Description"
+            android:inputType="textPersonName"/>
 
 
-            <AutoCompleteTextView
-                android:id="@+id/ET_MyPetModify_ResidAnimale"
-                android:layout_width="match_parent"
-                android:layout_height="85dp"
-                android:layout_weight="1"
-                android:hint="Indirizzo residenza animale" />
 
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="236dp"
-            android:layout_height="wrap_content">
-
-            <ImageButton
-                android:id="@+id/BT_Back_MyPetsModify"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/ic_arrow_back_24dp" />
-
-            <ImageButton
-                android:id="@+id/BT_Apply_MyPetsModify"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@android:drawable/ic_input_add" />
-        </LinearLayout>
-
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_Frag_ModifyLib_button_Cre"
+            android:layout_width="180dp"
+            android:layout_height="45dp"
+            android:textColor="@color/white"
+            android:background="@drawable/button_background"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:text="Modify" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_Frag_MofifyLib_button_Elim"
+            android:layout_width="180dp"
+            android:layout_height="45dp"
+            android:textColor="@color/white"
+            android:background="@drawable/button_background"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:text="Eliminate" />
 
     </LinearLayout>
 
-</RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
