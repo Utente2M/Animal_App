@@ -139,7 +139,7 @@
             android:layout_width="180dp"
             android:layout_height="45dp"
             android:textColor="@color/white"
-            android:background="@drawable/button_background"
+            android:background="@color/red"
             android:layout_marginTop="20dp"
             android:layout_gravity="center"
             android:textAlignment="center"
