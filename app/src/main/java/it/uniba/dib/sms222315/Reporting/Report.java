@@ -121,4 +121,8 @@ public class Report implements Parcelable {
         parcel.writeString(createAtTime);
         parcel.writeString(addressReport);
     }
+
+    public void setPrv_numberLike(int i) {
+        prv_numberLike = i;
+    }
 }

@@ -18,8 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,6 +31,12 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,11 +45,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.uniba.dib.sms222315.Friends.MyFriends;
-import it.uniba.dib.sms222315.Friends.MyFriendsListAdapter;
 import it.uniba.dib.sms222315.R;
-import it.uniba.dib.sms222315.UserPets.Fragment_MyPets_Profile;
-import it.uniba.dib.sms222315.UserPets.Pets;
 
 public class MyPostListAdapter extends ArrayAdapter<Report> {
 
@@ -55,6 +57,8 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
     private Context mContext;
     private int mResource;
     private int lastPosition = -1;
+
+    private ArrayList<Report> mReports;
 
     /**
      * Holds variables in a View
@@ -81,6 +85,7 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
         super(context, resource, objects);
         mContext = context;
         mResource = resource;
+        mReports = objects;
     }
 
     @NonNull
@@ -123,7 +128,7 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
             holder.textPost = (TextView) convertView.findViewById(R.id.Adap_Repo_description);
             holder.NumberOfLike = (TextView) convertView.findViewById(R.id.Adap_Repo_numberLike);
             holder.image = (ImageView) convertView.findViewById(R.id.Adap_Repo_image);
-            //holder.addLike = ..
+
             holder.street =(TextView) convertView.findViewById(R.id.Adap_Repo_street);
             holder.street.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
@@ -131,7 +136,7 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
 
             holder.addComment = (ImageButton) convertView.findViewById(R.id.Adap_Repo_addComment);
             holder.share = (ImageButton) convertView.findViewById(R.id.Adap_Repo_share);
-
+            holder.addLike = (ImageButton) convertView.findViewById(R.id.Adap_Repo_addLike);
 
             Log.d(TAG , " ok find");
 
@@ -146,10 +151,10 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
         }
 
 
-        //scrool animation
-        Animation animation = AnimationUtils.loadAnimation(mContext,
-                (position > lastPosition) ? R.anim.load_down_anim : R.anim.load_up_anim);
-        result.startAnimation(animation);
+        // scroll animation
+        TranslateAnimation anim = new TranslateAnimation(0, 0, 500, 0);
+        anim.setDuration(500);
+        result.startAnimation(anim);
         lastPosition = position;
 
 
@@ -191,6 +196,15 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
                 Log.d(TAG , "UDI Document : " +reportObj.getPrv_secretDocID());
                 Log.d(TAG , "Category : " + reportObj.getPrv_category());
                 openDetailReport(reportObj);
+            }
+        });
+        holder.addLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Report report = mReports.get(position);
+                report.setPrv_numberLike(report.getPrv_numberLike() + 1);
+                addlike(reportObj);
+                notifyDataSetChanged();
             }
         });
 
@@ -235,6 +249,23 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
 
 
         return convertView;
+    }
+
+    private void addlike(Report reportObj) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference washingtonRef = db.collection("Post").
+                document(reportObj.getPrv_secretDocID());
+
+// Atomically increment the population of the city by 50.
+        washingtonRef.update("prv_numberLike", FieldValue.increment(1)).
+                addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                    }
+                });
+
+
     }
 
     private void shareProfile(Report reportObj, View view) {
