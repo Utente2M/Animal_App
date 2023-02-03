@@ -39,15 +39,16 @@
                     android:layout_height="wrap_content"/>
 
                 <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="Eliminare ID?"
-                    android:textSize="13sp"
-                    android:textStyle="normal"
                     android:layout_marginBottom="10dp"
                     android:gravity="center"
+                    android:text="Eliminare ID?"
                     android:textColor="@color/black"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="13sp"
+                    android:textStyle="normal"
+                    android:visibility="gone" />
 
                 <View
                     android:background="#79D6D1D1"
@@ -55,51 +56,52 @@
                     android:layout_height="1dp"/>
 
                 <LinearLayout
-                    android:orientation="horizontal"
-                    android:weightSum="3"
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    android:weightSum="3">
 
                     <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Personal Info"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
                         android:textColor="@color/black"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <View
-                        android:background="#79D6D1D1"
                         android:layout_width="1dp"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent"
+                        android:background="#79D6D1D1" />
 
                     <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="Description"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
                         android:textColor="#636262"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <View
-                        android:background="#79D6D1D1"
                         android:layout_width="1dp"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent"
+                        android:background="#79D6D1D1" />
 
                     <TextView
-                        android:text="Groups"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
+                        android:text="Groups"
                         android:textColor="#636262"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 

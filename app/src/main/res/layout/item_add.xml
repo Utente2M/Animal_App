@@ -59,7 +59,8 @@
                     android:layout_height="35dp"/>
 
                 <TextView
-                    android:text="Add Information"
+                    android:id="@+id/TV_changeInformationUser"
+                    android:text="Modify Information"
                     android:textSize="16sp"
                     android:layout_margin="5dp"
                     android:textStyle="bold|normal"

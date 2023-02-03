@@ -60,6 +60,7 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
     private double mProgress = 0;
 
     //TV_UID , but_logout ,
+    TextView modifyInformation;
     TextView TV_email , TV_name , TV_phone , TV_street;
     Button  but_menu ;
     ImageView Img_profileUser , but_back ;
@@ -197,6 +198,13 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
 
             }
         });
+
+        modifyInformation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //modifca informazioni utente
+            }
+        });
     }
 
     private boolean verifyPermissions() {
@@ -240,6 +248,7 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
         but_menu = my_view.findViewById(R.id.button_menu);
         but_back = my_view.findViewById(R.id.back_button);
         Img_profileUser = my_view.findViewById(R.id.frag_userbasic_imageView_UserProfile);
+        modifyInformation = my_view.findViewById(R.id.TV_changeInformationUser);
     }
 
 
