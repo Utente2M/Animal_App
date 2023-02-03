@@ -229,15 +229,17 @@ public class Fragment_MyPets_Photo extends Fragment implements SelectPhotoDialog
         String userID = user.getUid();
         Log.d(TAG,"This is UID " + userID);
 
-        MyPhoto onePhoto = new MyPhoto(uri.toString());
+        MyPhoto onePhoto = new MyPhoto(uri.toString(), "");
 
 
         CollectionReference animalRef = db.collection("Animal DB")
                 .document(receivedPet.getPrv_doc_id())
                 .collection("Pet Photo");
+
         animalRef.add(onePhoto).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
+
                 popolateList();
             }
         });

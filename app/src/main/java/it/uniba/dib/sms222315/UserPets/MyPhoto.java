@@ -1,11 +1,16 @@
 package it.uniba.dib.sms222315.UserPets;
 
 public class MyPhoto {
-    private String prv_photoLink;
+    private String photoLink;
     private String prv_DocID;
 
-    public MyPhoto(String linkimage) {
-        prv_photoLink = linkimage;
+    public MyPhoto(String linkimage , String docId) {
+        photoLink = linkimage;
+        prv_DocID = docId;
+    }
+
+    public MyPhoto (String linkImage ){
+        photoLink = linkImage;
     }
 
     public MyPhoto(){
@@ -13,7 +18,7 @@ public class MyPhoto {
     }
 
     public String getPhotoLink() {
-        return prv_photoLink;
+        return photoLink;
     }
 
 
@@ -21,7 +26,7 @@ public class MyPhoto {
         return prv_DocID;
     }
 
-    public void setPrv_DocID(String prv_DocID) {
-        this.prv_DocID = prv_DocID;
+    public void setPrv_DocID(String DocID) {
+        prv_DocID = DocID;
     }
 }
