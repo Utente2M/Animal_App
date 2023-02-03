@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Animal App</string>
+    <string name="app_name">Pet Planner</string>
     <string name="Button_CreateAccount">Create Account</string>
     <string name="Button_Logout">Logout</string>
     <string name="Text_fild_email_login" />
