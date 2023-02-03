@@ -162,8 +162,7 @@
                     android:id="@+id/FragMenu_IV_my_report"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
-
-                    app:srcCompat="@drawable/icon_report" />
+                    app:srcCompat="@drawable/icon_new_post_blog" />
 
                 <TextView
                     android:layout_width="wrap_content"
