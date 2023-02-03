@@ -24,6 +24,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -50,8 +52,14 @@ import java.util.Map;
 import it.uniba.dib.sms222315.MainActivity;
 import it.uniba.dib.sms222315.R;
 import it.uniba.dib.sms222315.SelectPhotoDialog;
+import it.uniba.dib.sms222315.UserPets.Fragment_MyPets_Modify;
 
 public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.OnPhotoSelectedListener {
+
+    //FRAGMENT VAR
+    Fragment my_fragment;
+    FragmentManager my_frag_manager;
+    FragmentTransaction my_frag_trans;
 
     //vars
     private Bitmap mSelectedBitmap;
@@ -203,8 +211,20 @@ public class Fragment_UserProfile extends Fragment implements SelectPhotoDialog.
             @Override
             public void onClick(View view) {
                 //modifca informazioni utente
+                modifyUserInfo();
             }
         });
+    }
+
+    private void modifyUserInfo() {
+        my_fragment = new Fragment_modifyUserInfo();
+        my_frag_manager = getActivity().getSupportFragmentManager();
+        my_frag_trans = my_frag_manager.beginTransaction();
+        //si aggiunge il richiamo allo stack
+        my_frag_trans.addToBackStack(null);
+        //add diventa replace
+        my_frag_trans.replace(R.id.FragProfileUser , my_fragment );
+        my_frag_trans.commit();
     }
 
     private boolean verifyPermissions() {
