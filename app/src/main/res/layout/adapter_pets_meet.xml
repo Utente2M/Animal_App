@@ -11,7 +11,7 @@
     <ImageView
         android:id="@+id/IV_meetPet"
         android:layout_width="130dp"
-        android:layout_height="wrap_content"
+        android:layout_height="130dp"
 
         tools:srcCompat="@tools:sample/avatars" />
 
