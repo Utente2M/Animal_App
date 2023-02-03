@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -24,11 +25,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -60,7 +65,7 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
         TextView NumberOfLike;
         TextView street;
         ImageView image;
-        ImageButton addLike, addComment;
+        ImageButton addLike, addComment , share;
 
         String UID;
         TextView category;
@@ -125,6 +130,7 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
             holder.category = (TextView) convertView.findViewById(R.id.Adap_Repo_Category);
 
            holder.addComment = (ImageButton) convertView.findViewById(R.id.Adap_Repo_addComment);
+            holder.share = (ImageButton) convertView.findViewById(R.id.Adap_Repo_share);
 
 
             Log.d(TAG , " ok find");
@@ -216,7 +222,67 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
             Log.d(TAG , "specie not found");
         }
 
+        View finalConvertView = convertView;
+        holder.share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG , "add comment to post number : " +reportObj.getPrv_description());
+                Log.d(TAG , "UDI Document : " +reportObj.getPrv_secretDocID());
+                Log.d(TAG , "Category : " + reportObj.getPrv_category());
+                shareProfile(reportObj, finalConvertView);
+            }
+        });
+
+
         return convertView;
+    }
+
+    private void shareProfile(Report reportObj, View view) {
+
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, reportObj.getPrv_category()+": "+"\n"+
+                reportObj.getPrv_description()+": "+"\n"+reportObj.getAddressReport());
+        searchBitmap(view);
+
+        try {
+            File cachePath = new File(getContext().getCacheDir(), "images");
+            File imagePath = new File(cachePath, "compressedImage.jpeg");
+            Uri contentUri = FileProvider.getUriForFile(getContext(), "it.uniba.dib.sms222315.fileprovider", imagePath);
+            sendIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+            sendIntent.setType("image/*");
+            sendIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getContext().startActivity(Intent.createChooser(sendIntent, null));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    private void searchBitmap(View view) {
+        ImageView imageView = view.findViewById(R.id.Adap_Repo_image);
+        Bitmap originalImage = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        int maxSize = 1024;
+        if (originalImage.getHeight() > maxSize || originalImage.getWidth() > maxSize) {
+            originalImage = Bitmap.createScaledBitmap(originalImage, maxSize, maxSize, false);
+        }
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        originalImage.compress(Bitmap.CompressFormat.JPEG, 90, stream);
+        byte[] compressedImage = stream.toByteArray();
+
+        try {
+            File cachePath = new File(getContext().getCacheDir(), "images");
+            cachePath.mkdirs();
+            FileOutputStream s = new FileOutputStream(cachePath + "/compressedImage.jpeg");
+            s.write(compressedImage);
+            s.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
