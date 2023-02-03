@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="4"
-            app:srcCompat="@android:drawable/ic_input_add" />
+            app:srcCompat="@drawable/icon_add_reaction" />
 
         <ImageButton
             android:id="@+id/Adap_Repo_addComment"
