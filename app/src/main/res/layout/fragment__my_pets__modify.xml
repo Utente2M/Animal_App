@@ -6,197 +6,209 @@
     android:background="@drawable/sfondo_registrazione_user"
     tools:context=".UserPets.Fragment_MyPets_Modify">
 
-   <ScrollView
-       android:layout_width="match_parent"
-       android:layout_height="match_parent" />
 
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="650dp"
-        android:orientation="vertical"
-        android:padding="32dp"
-        android:background="@drawable/grey_background"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Date"
-            android:textColor="#286DC2"
-            android:textSize="19sp"
-            android:textStyle="bold"/>
+            android:layout_height="650dp"
+            android:background="@drawable/grey_background"
+            android:orientation="vertical"
+            android:padding="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-        <EditText
-            android:id="@+id/et_Frag_ModifyLib_name"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:padding="8dp"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:ems="10"
-            android:background="@drawable/edittext_background"
-            android:text=""
-            android:hint="Specialist Name"
-            android:inputType="textPersonName"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Date"
+                android:textColor="#286DC2"
+                android:textSize="19sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Color"
-            android:layout_marginTop="15dp"
-            android:textColor="#286DC2"
-            android:textSize="19sp"
-            android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/ET_MyPetModify_data"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:hint="Date"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/et_Frag_ModifyLib_data"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:padding="8dp"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:ems="10"
-            android:background="@drawable/edittext_background"
-            android:text=""
-            android:hint="Date"
-            android:inputType="textPersonName"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Color"
+                android:textColor="#286DC2"
+                android:textSize="19sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Race"
-            android:layout_marginTop="15dp"
-            android:textColor="#286DC2"
-            android:textSize="19sp"
-            android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/ET_MyPetModify_mantello"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:hint="Date"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/spinner_modifyattività"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:padding="8dp"
-            android:textColor="#8e8e8e"
-            android:textSize="18sp"
-            android:ems="10"
-            android:hint="Activity"
-            />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Race"
+                android:textColor="#286DC2"
+                android:textSize="19sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Distinguishing features"
-            android:layout_marginTop="15dp"
-            android:textColor="#286DC2"
-            android:textSize="19sp"
-            android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/ET_MyPetModify_razza"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="Activity"
+                android:padding="8dp"
+                android:textColor="#8e8e8e"
+                android:textSize="18sp" />
 
-        <Spinner
-            android:id="@+id/spinner_modifydiagnosi"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:padding="8dp"
-            android:textColor="#8e8e8e"
-            android:textSize="18sp"
-            android:ems="10"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Number chip"
-            android:textColor="#286DC2"
-            android:textSize="19sp"
-            android:textStyle="bold"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Distinguishing features"
+                android:textColor="#286DC2"
+                android:textSize="19sp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/et_Frag_MofidyLib_descrizione"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:padding="8dp"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:ems="10"
-            android:background="@drawable/edittext_background"
-            android:text=""
-            android:hint="Description"
-            android:inputType="textPersonName"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Date chip"
-            android:textColor="#286DC2"
-            android:textSize="19sp"
-            android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/ET_MyPetModify_segPartic"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:hint="Distinguishing features"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/et_Frag_MofidyLib_descrizione"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:padding="8dp"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:ems="10"
-            android:background="@drawable/edittext_background"
-            android:text=""
-            android:hint="Description"
-            android:inputType="textPersonName"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Address Animal"
-            android:textColor="#286DC2"
-            android:textSize="19sp"
-            android:textStyle="bold"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Number chip"
+                android:textColor="#286DC2"
+                android:textSize="19sp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/et_Frag_MofidyLib_descrizione"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:padding="8dp"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:ems="10"
-            android:background="@drawable/edittext_background"
-            android:text=""
-            android:hint="Description"
-            android:inputType="textPersonName"/>
+            <EditText
+                android:id="@+id/ET_MyPetModify_NumeroChip"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:hint="Number chip"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Date chip"
+                android:textColor="#286DC2"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/ET_MyPetModify_DataChip"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:hint="Date chip"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Address Animal"
+                android:textColor="#286DC2"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+
+            <AutoCompleteTextView
+                android:id="@+id/ET_MyPetModify_ResidAnimale"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:hint="Address"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/BT_Apply_MyPetsModify"
+                android:layout_width="180dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/button_background"
+                android:text="Modify"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bt_Frag_ModifyLib_button_Cre"
-            android:layout_width="180dp"
-            android:layout_height="45dp"
-            android:textColor="@color/white"
-            android:background="@drawable/button_background"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:text="Modify" />
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bt_Frag_MofifyLib_button_Elim"
-            android:layout_width="180dp"
-            android:layout_height="45dp"
-            android:textColor="@color/white"
-            android:background="@drawable/button_background"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:text="Eliminate" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/BT_Back_MyPetsModify"
+                android:layout_width="180dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/button_background"
+                android:text="Eliminate"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
-    </LinearLayout>
+        </LinearLayout>
 
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
