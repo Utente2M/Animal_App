@@ -10,12 +10,15 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 
@@ -44,6 +47,10 @@ import it.uniba.dib.sms222315.SelectPhotoDialog;
 
 public class Fragment_MyPets_Photo extends Fragment implements SelectPhotoDialog.OnPhotoSelectedListener {
 
+    //FRAGMENT VAR
+    Fragment my_fragment;
+    FragmentManager my_frag_manager;
+    FragmentTransaction my_frag_trans;
 
     Pets receivedPet;
 
@@ -118,6 +125,31 @@ public class Fragment_MyPets_Photo extends Fragment implements SelectPhotoDialog
                 }
             }
         });
+
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                MyPhoto clickPhoto = originalList.get(position);
+                openPhotoDettail(clickPhoto);
+
+            }
+        });
+    }
+
+    public void openPhotoDettail(MyPhoto clickPhoto) {
+        my_fragment = new Fragment_MyPets_PhotoDettail();
+        my_frag_manager = getActivity().getSupportFragmentManager();
+        my_frag_trans = my_frag_manager.beginTransaction();
+        Bundle bundle = new Bundle();
+        //this is pass
+        bundle.putParcelable("modPhoto" , clickPhoto);
+        bundle.putParcelable("modPets", receivedPet);
+        my_fragment.setArguments(bundle);
+        //si aggiunge il richiamo allo stack
+        my_frag_trans.addToBackStack(null);
+        //add diventa replace
+        my_frag_trans.replace(R.id.Frame_Act_MyPets, my_fragment);
+        my_frag_trans.commit();
     }
 
     //check permission
@@ -229,15 +261,17 @@ public class Fragment_MyPets_Photo extends Fragment implements SelectPhotoDialog
         String userID = user.getUid();
         Log.d(TAG,"This is UID " + userID);
 
-        MyPhoto onePhoto = new MyPhoto(uri.toString());
+        MyPhoto onePhoto = new MyPhoto(uri.toString(), "");
 
 
         CollectionReference animalRef = db.collection("Animal DB")
                 .document(receivedPet.getPrv_doc_id())
                 .collection("Pet Photo");
+
         animalRef.add(onePhoto).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
+
                 popolateList();
             }
         });

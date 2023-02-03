@@ -194,7 +194,7 @@
             android:id="@+id/BT_goToPhoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="Gallery" />
 
         <GridView
             android:id="@+id/GV_PhotoPetsHome"

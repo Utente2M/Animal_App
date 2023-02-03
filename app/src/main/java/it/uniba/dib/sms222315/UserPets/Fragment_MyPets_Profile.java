@@ -525,8 +525,8 @@ public class Fragment_MyPets_Profile extends Fragment implements SelectPhotoDial
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId() + " => " + document.getData());
 
-
                         MyPhoto onePhoto = document.toObject(MyPhoto.class);
+                        Log.d(TAG, "link immagine inside on complete" + onePhoto.getPhotoLink());
                         onePhoto.setPrv_DocID(document.getId());
                         originalList.add(onePhoto);
 
