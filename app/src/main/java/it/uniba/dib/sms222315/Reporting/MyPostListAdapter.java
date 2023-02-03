@@ -173,7 +173,7 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
         holder.textPost.setText(reportObj.getPrv_description());
 
         int intLike = reportObj.getPrv_numberLike();
-        String str_Like = "Piace a "+Integer.toString(intLike) + " persone";
+        String str_Like = "Have "+Integer.toString(intLike) + " reaction";
         holder.NumberOfLike.setText(str_Like);
 
         holder.category.setText(reportObj.getPrv_category());
