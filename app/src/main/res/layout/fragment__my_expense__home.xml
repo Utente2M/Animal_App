@@ -90,7 +90,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="0dp"
             android:layout_toEndOf="@+id/ET_descr_MyExpense"
-            android:text="Create" />
+            android:text="+" />
 
   <LinearLayout
       android:layout_width="match_parent"
