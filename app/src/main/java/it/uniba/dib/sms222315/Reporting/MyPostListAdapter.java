@@ -129,7 +129,7 @@ public class MyPostListAdapter extends ArrayAdapter<Report> {
 
             holder.category = (TextView) convertView.findViewById(R.id.Adap_Repo_Category);
 
-           holder.addComment = (ImageButton) convertView.findViewById(R.id.Adap_Repo_addComment);
+            holder.addComment = (ImageButton) convertView.findViewById(R.id.Adap_Repo_addComment);
             holder.share = (ImageButton) convertView.findViewById(R.id.Adap_Repo_share);
 
 
