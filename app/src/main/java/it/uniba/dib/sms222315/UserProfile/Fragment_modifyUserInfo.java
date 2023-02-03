@@ -246,6 +246,21 @@ public class Fragment_modifyUserInfo extends Fragment {
     }
     private void modifyInfoProfile() {
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = user.getUid();
+
+        DocumentReference userRef = db.collection("User Basic Info").
+                document(userID);
+
+        userRef.update("Phone" , phoneNumber.getText().toString()
+        , "dateBorn" , dateBorn.getText().toString() , "address" , address.getText().toString()
+                ).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                getActivity().onBackPressed();
+            }
+        });
+
     }
 
 }
