@@ -21,6 +21,7 @@ public class User_Class {
     private String prv_str_email;
     private String prv_phone;
     private String prv_street;
+    private String prv_DateBorn;
     private String prv_str_UID;
     private Uri prv_Uri_ProfImg;
 
@@ -36,15 +37,18 @@ public class User_Class {
 
         infoAut_current_user();
         Log.d(TAG , "info profile init.");
-        infoProfileBasic();
+        //infoProfileBasic();
         Log.d(TAG , "info ok.");
 
     }
 
     private void infoProfileBasic() {
+        // Add a new document with a document = ID
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = user.getUid();
 
         DocumentReference userRef = db.collection("User Basic Info").
-                document(prv_str_UID);
+                document(userID);
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -61,6 +65,10 @@ public class User_Class {
                         if(data.containsKey("address")){
                             prv_street = data.get("address").toString();
                             Log.d(TAG,"CLASS_address : " + prv_street);
+                        }
+                        if(data.containsKey("dateBorn")){
+                            prv_DateBorn = data.get("dateBorn").toString();
+                            Log.d(TAG,"CLASS_dateBorn : " + prv_DateBorn);
                         }
                     } else {
                         Log.d(TAG, "No such document");
@@ -101,6 +109,8 @@ public class User_Class {
             Log.d(TAG, "CLASS_UID : " + uid);
             prv_str_UID = uid;
 
+            infoProfileBasic();
+
 
 
         }
@@ -131,6 +141,9 @@ public class User_Class {
 
     public String getPrv_phone() {
         return prv_phone;
+    }
+    public String getPrv_dateBorn() {
+        return prv_DateBorn;
     }
 }//END CLASS
 
