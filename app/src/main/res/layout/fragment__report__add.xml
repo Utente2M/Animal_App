@@ -4,66 +4,105 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Reporting.Fragment_Report_Add">
+    android:background="@drawable/sfondo_registrazione_user"
+    tools:context=".Enti.Fragment_Enti_Create">
 
     <ImageView
         android:id="@+id/IV_Add_ReportPhoto"
-        android:layout_width="281dp"
-        android:layout_height="172dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="250dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/add_image_background"
         android:src="@android:drawable/ic_menu_camera"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/spin_Add_Report"
-        android:layout_width="404dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="12dp"
+        android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/IV_Add_ReportPhoto" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <EditText
-        android:id="@+id/ET_Add_descriptionReport"
-        android:layout_width="382dp"
-        android:layout_height="98dp"
-        android:ems="10"
-        android:hint="Describe your post"
-        android:inputType="textPersonName"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:orientation="vertical"
+        android:padding="32dp"
+        android:background="@drawable/grey_background"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spin_Add_Report" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <AutoCompleteTextView
-        android:id="@+id/ET_autocomp_report"
-        android:layout_width="379dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="48dp"
-        android:ems="10"
-        android:hint="Insert address"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Report"
+            android:textColor="#286DC2"
+            android:textSize="19sp"
+            android:textStyle="bold"/>
 
-        android:inputType="none|text"
-        android:text=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ET_Add_descriptionReport" />
+        <Spinner
+            android:id="@+id/spin_Add_Report"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+           />
 
-    <Button
-        android:id="@+id/BT_Add_Report"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:backgroundTint="@color/green"
-        android:text="Create"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ET_autocomp_report" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:layout_marginTop="15dp"
+            android:textColor="#286DC2"
+            android:textSize="19sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/ET_Add_descriptionReport"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edittext_background"
+            android:ems="10"
+            android:hint="Description"
+            android:inputType="none|text"
+            android:padding="8dp"
+            android:textColor="#8e8e8e"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Address"
+            android:layout_marginTop="15dp"
+            android:textColor="#286DC2"
+            android:textSize="19sp"
+            android:textStyle="bold"/>
+
+        <AutoCompleteTextView
+            android:id="@+id/ET_autocomp_report"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:textColor="#8e8e8e"
+            android:textSize="18sp"
+            android:ems="10"
+            android:background="@drawable/edittext_background"
+            android:hint="Adress"
+            android:inputType="phone"/>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/BT_Add_Report"
+            android:layout_width="180dp"
+            android:layout_height="45dp"
+            android:textColor="@color/white"
+            android:background="@drawable/button_background"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:text="Create" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
